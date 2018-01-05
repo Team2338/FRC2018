@@ -1,4 +1,4 @@
-package frc.team0000.robot;
+package team.gif.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
