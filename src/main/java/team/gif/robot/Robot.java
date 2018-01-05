@@ -1,33 +1,55 @@
 package team.gif.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import team.gif.robot.subsystems.Drivetrain;
 
 public class Robot extends IterativeRobot {
-    @Override
-    public void robotInit() { }
+
+    private Drivetrain drivetrain = Drivetrain.getInstance();
 
     @Override
-    public void disabledInit() { }
+    public void robotInit() {
+
+    }
 
     @Override
-    public void autonomousInit() { }
+    public void disabledInit() {
+
+    }
 
     @Override
-    public void teleopInit() { }
+    public void autonomousInit() {
+
+    }
 
     @Override
-    public void testInit() { }
+    public void teleopInit() {
+
+    }
+
+    @Override
+    public void testInit() {
+
+    }
 
 
     @Override
-    public void disabledPeriodic() { }
+    public void disabledPeriodic() {
+
+    }
     
     @Override
-    public void autonomousPeriodic() { }
+    public void autonomousPeriodic() {
+
+    }
 
     @Override
-    public void teleopPeriodic() { }
+    public void teleopPeriodic() {
+
+    }
 
     @Override
-    public void testPeriodic() { }
+    public void testPeriodic() {
+
+    }
 }
