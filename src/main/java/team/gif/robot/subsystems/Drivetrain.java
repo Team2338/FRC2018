@@ -33,11 +33,10 @@ public class Drivetrain extends Subsystem {
     }
 
     public void curvatureDrive(double speed, double rotation, boolean isQuickTurn) {
-        curvatureDrive(speed, rotation, isQuickTurn);
+        drive.curvatureDrive(speed, rotation, isQuickTurn);
     }
 
     protected void initDefaultCommand() {
         setDefaultCommand(new Drive());
     }
-
 }
