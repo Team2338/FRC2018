@@ -3,8 +3,6 @@ package team.gif.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.drive.RobotDriveBase;
 import team.gif.lib.GIFDrive;
 import team.gif.robot.RobotMap;
 import team.gif.robot.commands.Drive;
@@ -14,7 +12,10 @@ public class Drivetrain extends Subsystem {
     private static Drivetrain instance = null;
 
     public static Drivetrain getInstance() {
-        return instance == null ? new Drivetrain() : instance;
+        if (instance == null) {
+            instance = new Drivetrain();
+        }
+        return instance;
     }
 
     // Hardware
@@ -33,7 +34,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public void curvatureDrive(double speed, double rotation, boolean isQuickTurn) {
-        curvatureDrive(speed, rotation, isQuickTurn);
+        drive.curvatureDrive(speed, rotation, isQuickTurn);
     }
 
     protected void initDefaultCommand() {

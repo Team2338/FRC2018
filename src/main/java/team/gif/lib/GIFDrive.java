@@ -3,6 +3,7 @@ package team.gif.lib;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.gif.robot.Globals;
 
 import static team.gif.lib.GIFMath.applyDeadband;
@@ -50,7 +51,7 @@ import static team.gif.lib.GIFMath.limit;
  * points down. Rotations follow the right-hand rule, so clockwise rotation around the Z axis is
  * positive.
  *
- * <p>Inputs smaller then {@value team.gif.robot.Globals.Drivetrain#DEFAULT_DEADBAND} will
+ * <p>Inputs smaller then {@value team.gif.robot.Globals#DEFAULT_DEADBAND} will
  * be set to 0, and larger values will be scaled so that the full range is still used. This
  * deadband value can be changed with {@link #setDeadband}.
  *
@@ -69,11 +70,11 @@ public class GIFDrive {
     private TalonSRX leftMotor;
     private TalonSRX rightMotor;
 
-    private double quickStopThreshold = Globals.Drivetrain.DEFAULT_QUICK_STOP_THRESHOLD;
-    private double quickStopAlpha = Globals.Drivetrain.DEFAULT_QUICK_STOP_ALPHA;
+    private double quickStopThreshold = Globals.DEFAULT_QUICK_STOP_THRESHOLD;
+    private double quickStopAlpha = Globals.DEFAULT_QUICK_STOP_ALPHA;
     private double quickStopAccumulator = 0.0;
-    private double deadband = Globals.Drivetrain.DEFAULT_DEADBAND;
-    private double maxOutput = Globals.Drivetrain.MAX_OUTPUT;
+    private double deadband = Globals.DEFAULT_DEADBAND;
+    private double maxOutput = Globals.MAX_OUTPUT;
 
     /**
      * Construct a GIFDrive.
@@ -81,6 +82,7 @@ public class GIFDrive {
     public GIFDrive(TalonSRX leftMotor, TalonSRX rightMotor) {
         this.leftMotor = leftMotor;
         this.rightMotor = rightMotor;
+        SmartDashboard.putString("Status", "I exist");
     }
 
     /**
@@ -287,7 +289,7 @@ public class GIFDrive {
 
     /**
      * Change the default value for deadband scaling. The default value is
-     * {@value team.gif.robot.Globals.Drivetrain#DEFAULT_DEADBAND}. Values
+     * {@value team.gif.robot.Globals#DEFAULT_DEADBAND}. Values
      * smaller then the deadband are set to 0, while values larger then the
      * deadband are scaled from 0.0 to 1.0.
      *
@@ -301,7 +303,7 @@ public class GIFDrive {
      * Configure the scaling factor for using drive methods with motor controllers in a mode other
      * than PercentVbus or to limit the maximum output.
      *
-     * <p>The default value is {@value team.gif.robot.Globals.Drivetrain#MAX_OUTPUT}.
+     * <p>The default value is {@value team.gif.robot.Globals#MAX_OUTPUT}.
      *
      * @param maxOutput Multiplied with the output percentage computed by the drive functions.
      */

@@ -1,6 +1,7 @@
 package team.gif.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import team.gif.robot.subsystems.Drivetrain;
 
 public class Robot extends IterativeRobot {
@@ -9,7 +10,6 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotInit() {
-
     }
 
     @Override
@@ -35,17 +35,17 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void disabledPeriodic() {
-
+        Scheduler.getInstance().run();
     }
     
     @Override
     public void autonomousPeriodic() {
-
+        Scheduler.getInstance().run();
     }
 
     @Override
     public void teleopPeriodic() {
-
+        Scheduler.getInstance().run();
     }
 
     @Override
