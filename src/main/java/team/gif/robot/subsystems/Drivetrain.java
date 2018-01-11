@@ -2,6 +2,7 @@ package team.gif.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.lib.GIFDrive;
 import team.gif.robot.RobotMap;
@@ -23,6 +24,8 @@ public class Drivetrain extends Subsystem {
     private TalonSRX leftFollower = new TalonSRX(RobotMap.Drivetrain.LEFT_FOLLOWER_ID);
     private TalonSRX rightMaster = new TalonSRX(RobotMap.Drivetrain.RIGHT_MASTER_ID);
     private TalonSRX rightFollower = new TalonSRX(RobotMap.Drivetrain.RIGHT_FOLLOWER_ID);
+
+    private Solenoid shifter = new Solenoid(RobotMap.Drivetrain.SHIFTER_CHANNEL);
 
     private GIFDrive drive = new GIFDrive(leftMaster, rightMaster);
 
