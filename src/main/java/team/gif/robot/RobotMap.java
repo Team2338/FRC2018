@@ -8,12 +8,12 @@ public class RobotMap {
         public static final int LEFT_FOLLOWER_ID = 1;
         public static final int RIGHT_MASTER_ID = 2;
         public static final int RIGHT_FOLLOWER_ID = 3;
-        public static final int SHIFTER_CHANNEL = 0;
+        public static final int SHIFTER_ID = 0;
     }
 
     public static class OI {
         // Operator Interface Ports
-        public static final int DRIVER_CONTROLLER_PORT = 0;
-        public static final int AUX_CONTROLLER_PORT = 1;
+        public static final int DRIVER_CONTROLLER_ID = 0;
+        public static final int AUX_CONTROLLER_ID = 1;
     }
 }

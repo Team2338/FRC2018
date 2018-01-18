@@ -14,8 +14,8 @@ public class OI {
     public XboxController aux;
 
     private OI() {
-        driver = new XboxController(RobotMap.OI.DRIVER_CONTROLLER_PORT);
-        aux = new XboxController(RobotMap.OI.AUX_CONTROLLER_PORT);
+        driver = new XboxController(RobotMap.OI.DRIVER_CONTROLLER_ID);
+        aux = new XboxController(RobotMap.OI.AUX_CONTROLLER_ID);
     }
 
 }

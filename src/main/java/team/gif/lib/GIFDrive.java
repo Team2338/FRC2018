@@ -178,7 +178,7 @@ public class GIFDrive {
                         + quickStopAlpha * limit(rotation) * 2;
             }
             overPower = true;
-            angularPower = rotation;
+            angularPower = rotation * 0.75;
         } else {
             overPower = false;
             angularPower = Math.abs(speed) * rotation - quickStopAccumulator;
@@ -212,6 +212,8 @@ public class GIFDrive {
             }
         }
 
+        System.out.println("Left motor output: " + leftMotorOutput * maxOutput);
+        System.out.println("Right motor output: " + -rightMotorOutput * maxOutput);
         leftMotor.set(ControlMode.PercentOutput, leftMotorOutput * maxOutput);
         rightMotor.set(ControlMode.PercentOutput, -rightMotorOutput * maxOutput);
     }

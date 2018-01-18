@@ -21,6 +21,9 @@ public class Drive extends Command {
         double inputRotation = OI.getInstance().driver.getX(GenericHID.Hand.kRight);
         boolean isQuickTurn = OI.getInstance().driver.getBumper(GenericHID.Hand.kRight);
 
+        OI.getInstance().driver.setRumble(GenericHID.RumbleType.kLeftRumble, 0.2 * Drivetrain.getInstance().getLeftCurrent());
+        OI.getInstance().driver.setRumble(GenericHID.RumbleType.kRightRumble, 0.2 * Drivetrain.getInstance().getRightCurrent());
+
         Drivetrain.getInstance().curvatureDrive(inputSpeed, inputRotation, isQuickTurn);
     }
 
