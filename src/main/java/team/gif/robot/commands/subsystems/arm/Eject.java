@@ -1,10 +1,10 @@
-package team.gif.robot.commands.teleop;
+package team.gif.robot.commands.subsystems.arm;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ArmScale extends Command {
+public class Eject extends Command {
 
-    public ArmScale() {
+    public Eject() {
 
     }
 

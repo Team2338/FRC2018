@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.lib.GIFDrive;
 import team.gif.robot.RobotMap;
-import team.gif.robot.commands.teleop.DrivetrainTeleOp;
+import team.gif.robot.commands.subsystems.drivetrain.DrivetrainTeleOp;
 
 public class Drivetrain extends Subsystem {
 

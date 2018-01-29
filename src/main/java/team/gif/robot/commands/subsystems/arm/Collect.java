@@ -1,4 +1,4 @@
-package team.gif.robot.commands.teleop;
+package team.gif.robot.commands.subsystems.arm;
 
 import edu.wpi.first.wpilibj.command.Command;
 

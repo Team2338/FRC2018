@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import team.gif.robot.commands.DoNothing;
+import team.gif.robot.commands.system.DoNothing;
 import team.gif.robot.commands.auto.*;
 import team.gif.robot.subsystems.Drivetrain;
 

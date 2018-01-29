@@ -1,10 +1,10 @@
-package team.gif.robot.commands;
+package team.gif.robot.commands.subsystems.ramp;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DoNothing extends Command {
+public class LiftRamp extends Command {
 
-    public DoNothing () {
+    public LiftRamp() {
 
     }
 

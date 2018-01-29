@@ -2,12 +2,13 @@ package team.gif.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.robot.Globals;
 import team.gif.robot.RobotMap;
-import team.gif.robot.commands.DoNothing;
+import team.gif.robot.commands.system.DoNothing;
 
 public class Arm extends Subsystem {
 
@@ -46,6 +47,8 @@ public class Arm extends Subsystem {
         dart.config_kP(0, Globals.DART_P, 0);
         dart.config_kI(0, Globals.DART_I, 0);
         dart.config_kD(0, Globals.DART_D, 0);
+
+        frontLeft.configVelocityMeasurementPeriod(VelocityMeasPeriod.Period_100Ms, 0);
     }
 
     public void setFront(double speed) {

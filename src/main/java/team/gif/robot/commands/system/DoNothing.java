@@ -1,10 +1,10 @@
-package team.gif.robot.commands.teleop;
+package team.gif.robot.commands.system;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ArmGround extends Command {
+public class DoNothing extends Command {
 
-    public ArmGround() {
+    public DoNothing () {
 
     }
 

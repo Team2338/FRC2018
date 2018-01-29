@@ -1,10 +1,10 @@
-package team.gif.robot.commands.teleop;
+package team.gif.robot.commands.subsystems.arm;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftRamp extends Command {
+public class ZeroArm extends Command {
 
-    public LiftRamp() {
+    public ZeroArm() {
 
     }
 

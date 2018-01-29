@@ -3,7 +3,7 @@ package team.gif.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.robot.RobotMap;
-import team.gif.robot.commands.DoNothing;
+import team.gif.robot.commands.system.DoNothing;
 
 public class Ramp extends Subsystem{
     private static Ramp instance = null;
