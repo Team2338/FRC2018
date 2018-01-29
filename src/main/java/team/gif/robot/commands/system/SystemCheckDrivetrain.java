@@ -1,4 +1,4 @@
-package team.gif.robot.commands;
+package team.gif.robot.commands.system;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;

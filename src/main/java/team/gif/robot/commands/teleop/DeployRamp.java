@@ -1,10 +1,10 @@
-package team.gif.robot.commands.auto;
+package team.gif.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DoNothing extends Command {
+public class DeployRamp extends Command {
 
-    public DoNothing () {
+    public DeployRamp() {
 
     }
 

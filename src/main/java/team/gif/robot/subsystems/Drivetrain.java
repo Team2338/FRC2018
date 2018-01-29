@@ -1,14 +1,12 @@
 package team.gif.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.lib.GIFDrive;
 import team.gif.robot.RobotMap;
-import team.gif.robot.commands.Drive;
+import team.gif.robot.commands.teleop.DrivetrainTeleOp;
 
 public class Drivetrain extends Subsystem {
 
@@ -27,8 +25,6 @@ public class Drivetrain extends Subsystem {
     private TalonSRX rightMaster = new TalonSRX(RobotMap.Drivetrain.RIGHT_MASTER_ID);
     private TalonSRX rightFollower = new TalonSRX(RobotMap.Drivetrain.RIGHT_FOLLOWER_ID);
 
-//    private Solenoid shifter = new Solenoid(RobotMap.Drivetrain.SHIFTER_ID);
-
     private GIFDrive drive = new GIFDrive(leftMaster, rightMaster);
 
     private Drivetrain() {
@@ -40,22 +36,6 @@ public class Drivetrain extends Subsystem {
 
     public void curvatureDrive(double speed, double rotation, boolean isQuickTurn) {
         drive.curvatureDrive(speed, rotation, isQuickTurn);
-    }
-
-    public double getLeftCurrent() {
-        return leftMaster.getOutputCurrent();
-    }
-
-    public double getRightCurrent() {
-        return rightMaster.getOutputCurrent();
-    }
-
-    public double getLeftOutputPercent() {
-        return leftMaster.getMotorOutputPercent();
-    }
-
-    public double getRightOutputPercent() {
-        return rightMaster.getMotorOutputPercent();
     }
 
     public boolean checkSystem() {
@@ -174,6 +154,6 @@ public class Drivetrain extends Subsystem {
     }
 
     protected void initDefaultCommand() {
-        setDefaultCommand(new Drive());
+        setDefaultCommand(new DrivetrainTeleOp());
     }
 }

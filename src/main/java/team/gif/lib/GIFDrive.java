@@ -82,7 +82,6 @@ public class GIFDrive {
     public GIFDrive(TalonSRX leftMotor, TalonSRX rightMotor) {
         this.leftMotor = leftMotor;
         this.rightMotor = rightMotor;
-        SmartDashboard.putString("Status", "I exist");
     }
 
     /**
