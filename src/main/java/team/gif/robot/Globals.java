@@ -17,4 +17,6 @@ public class Globals {
     public static final double DART_P = 0.0;
     public static final double DART_I = 0.0;
     public static final double DART_D = 0.0;
+
+    public static final int SPEED_TOLERANCE = 100;
 }

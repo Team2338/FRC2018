@@ -14,12 +14,13 @@ public class TalonSRXConfigurator {
         public NeutralMode NEUTRAL_MODE = NeutralMode.Coast;
         public boolean ENABLE_CURRENT_LIMIT = false;
         public boolean ENABLE_SOFT_LIMIT = false;
-        public int CURRENT_LIMIT = 0;
-        public double EXPIRATION_TIMEOUT_SECONDS = MotorSafety.DEFAULT_SAFETY_EXPIRATION;
-        public double FORWARD_SOFT_LIMIT = 0;
+        public int CURRENT_LIMIT = 35;
+        public int PEAK_CURRENT_LIMIT = 0;
+        public int PEAK_CURRENT_DURATION = 0;
+        public int FORWARD_SOFT_LIMIT = 0;
+        public int REVERSE_SOFT_LIMIT = 0;
         public boolean INVERTED = false;
         public double NOMINAL_CLOSED_LOOP_VOLTAGE = 12;
-        public double REVERSE_SOFT_LIMIT = 0;
         public boolean SAFETY_ENABLED = false;
 
         public int CONTROL_FRAME_PERIOD_MS = 5;
@@ -81,7 +82,20 @@ public class TalonSRXConfigurator {
         talon.configForwardSoftLimitEnable(config.ENABLE_SOFT_LIMIT, 0);
         talon.configReverseSoftLimitEnable(config.ENABLE_SOFT_LIMIT, 0);
         talon.setInverted(config.INVERTED);
+        talon.configContinuousCurrentLimit(config.CURRENT_LIMIT, 0);
+        talon.configPeakCurrentLimit(config.PEAK_CURRENT_LIMIT, 0);
+        talon.configPeakCurrentDuration(config.PEAK_CURRENT_DURATION, 0);
+        talon.configForwardSoftLimitThreshold(config.FORWARD_SOFT_LIMIT, 0);
+        talon.configReverseSoftLimitThreshold(config.REVERSE_SOFT_LIMIT, 0);
+        talon.setSelectedSensorPosition(0, 0, 0);
+        talon.selectProfileSlot(0, 0);
+        talon.configVelocityMeasurementPeriod(config.VELOCITY_MEASUREMENT_PERIOD, 0);
+        talon.configVelocityMeasurementWindow(config.VELOCITY_MEASUREMENT_ROLLING_AVERAGE_WINDOW, 0);
+        talon.configOpenloopRamp(config.VOLTAGE_RAMP_RATE, 0);
 
+        talon.setStatusFramePeriod(StatusFrame.Status_1_General, config.GENERAL_STATUS_FRAME_RATE_MS, 0);
+        talon.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, config.FEEDBACK_STATUS_FRAME_RATE_MS, 0);
+        talon.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, config.ANALOG_TEMP_VBAT_STATUS_FRAME_RATE_MS, 0);
         return talon;
     }
 }

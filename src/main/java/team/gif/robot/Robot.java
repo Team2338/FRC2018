@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.gif.robot.commands.system.DoNothing;
 import team.gif.robot.commands.auto.*;
+import team.gif.robot.subsystems.Arm;
 import team.gif.robot.subsystems.Drivetrain;
+import team.gif.robot.subsystems.Ramp;
 
 public class Robot extends IterativeRobot {
 
@@ -27,6 +29,8 @@ public class Robot extends IterativeRobot {
     private String gameData;
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
+    private Arm arm = Arm.getInstance();
+    private Ramp ramp = Ramp.getInstance();
 
     @Override
     public void robotInit() {

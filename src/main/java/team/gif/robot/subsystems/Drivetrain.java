@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.lib.GIFDrive;
+import team.gif.lib.TalonSRXConfigurator;
 import team.gif.robot.RobotMap;
 import team.gif.robot.commands.subsystems.drivetrain.DrivetrainTeleOp;
 
@@ -20,18 +21,16 @@ public class Drivetrain extends Subsystem {
     }
 
     // Hardware
-    private TalonSRX leftMaster = new TalonSRX(RobotMap.Drivetrain.LEFT_MASTER_ID);
-    private TalonSRX leftFollower = new TalonSRX(RobotMap.Drivetrain.LEFT_FOLLOWER_ID);
-    private TalonSRX rightMaster = new TalonSRX(RobotMap.Drivetrain.RIGHT_MASTER_ID);
-    private TalonSRX rightFollower = new TalonSRX(RobotMap.Drivetrain.RIGHT_FOLLOWER_ID);
+    private TalonSRX leftMaster = TalonSRXConfigurator.createDefaultTalon(RobotMap.Drivetrain.LEFT_MASTER_ID);
+    private TalonSRX leftFollower = TalonSRXConfigurator.createFollowerTalon(RobotMap.Drivetrain.LEFT_FOLLOWER_ID, RobotMap.Drivetrain.LEFT_MASTER_ID);
+    private TalonSRX rightMaster = TalonSRXConfigurator.createDefaultTalon(RobotMap.Drivetrain.RIGHT_MASTER_ID);
+    private TalonSRX rightFollower = TalonSRXConfigurator.createFollowerTalon(RobotMap.Drivetrain.LEFT_FOLLOWER_ID, RobotMap.Drivetrain.LEFT_MASTER_ID);
 
     private GIFDrive drive = new GIFDrive(leftMaster, rightMaster);
 
     private Drivetrain() {
         leftMaster.set(ControlMode.PercentOutput, 0);
-        leftFollower.follow(leftMaster);
         rightMaster.set(ControlMode.PercentOutput, 0);
-        rightFollower.follow(rightMaster);
     }
 
     public void curvatureDrive(double speed, double rotation, boolean isQuickTurn) {
@@ -148,6 +147,11 @@ public class Drivetrain extends Subsystem {
         if (Math.abs(rpmRightMaster - rpmRightFollower) > 250) {
             failure = true;
             System.out.println("!!!!!!!!!!!!!!!!!!! Right Drive RPMs different !!!!!!!!!!!!!!!!!!!");
+        }
+
+        if ((rpmLeftMaster + rpmLeftFollower) / 2 - (rpmRightMaster + rpmRightFollower) / 2 > 250) {
+            failure = true;
+            System.out.println("!!!!!!!!!!!!!!!!!!! Drive RPMs different !!!!!!!!!!!!!!!!!!!");
         }
 
         return !failure;
