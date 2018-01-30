@@ -5,9 +5,9 @@ import team.gif.robot.subsystems.Arm;
 
 public class SetArmPosition extends Command {
 
-    private double position;
+    private int position;
 
-    public SetArmPosition(double position) {
+    public SetArmPosition(int position) {
         this.position = position;
         requires(Arm.getInstance());
     }

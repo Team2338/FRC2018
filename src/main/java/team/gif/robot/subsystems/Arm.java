@@ -88,7 +88,7 @@ public class Arm extends Subsystem {
         rightPiston.set(false);
     }
 
-    public void setDartPosition(double position) {
+    public void setDartPosition(int position) {
         dart.set(ControlMode.Position, position);
     }
 
