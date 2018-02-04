@@ -11,7 +11,7 @@ public class TalonSRXConfigurator {
         public double MAX_OUTPUT_VOLTAGE = 12;
         public double NOMINAL_OUTPUT = 0;
         public double PEAK_OUTPUT = 1;
-        public NeutralMode NEUTRAL_MODE = NeutralMode.Coast;
+        public NeutralMode NEUTRAL_MODE = NeutralMode.Brake;
         public boolean ENABLE_CURRENT_LIMIT = false;
         public boolean ENABLE_SOFT_LIMIT = false;
         public int CURRENT_LIMIT = 35;
@@ -56,7 +56,7 @@ public class TalonSRXConfigurator {
     }
 
     public static TalonSRX createFollowerTalon(int id, int masterid) {
-        final TalonSRX talon = createTalon(id, FOLLOWER_CONFIGURATION);
+        final TalonSRX talon = createTalon(id, DEFAULT_CONFIGURATION);
         talon.set(ControlMode.Follower, masterid);
         return talon;
     }

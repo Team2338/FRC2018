@@ -1,27 +1,20 @@
 package team.gif.robot.commands.subsystems.arm;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import team.gif.robot.subsystems.Arm;
 
-public class Eject extends Command {
+public class Open extends InstantCommand {
 
-    public Eject() {
+    public Open() {
         requires(Arm.getInstance());
     }
 
     protected void initialize() {
-
-    }
-
-    protected void execute() {
-        Arm.getInstance().setFront(-0.5);
-    }
-
-    protected boolean isFinished() {
-        return false;
+        Arm.getInstance().open();
     }
 
     protected void end() {
-        Arm.getInstance().setFront(0.0);
+        Arm.getInstance().close();
     }
 }

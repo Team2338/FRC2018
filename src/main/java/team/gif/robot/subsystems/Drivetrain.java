@@ -24,7 +24,7 @@ public class Drivetrain extends Subsystem {
     private TalonSRX leftMaster = TalonSRXConfigurator.createDefaultTalon(RobotMap.Drivetrain.LEFT_MASTER_ID);
     private TalonSRX leftFollower = TalonSRXConfigurator.createFollowerTalon(RobotMap.Drivetrain.LEFT_FOLLOWER_ID, RobotMap.Drivetrain.LEFT_MASTER_ID);
     private TalonSRX rightMaster = TalonSRXConfigurator.createDefaultTalon(RobotMap.Drivetrain.RIGHT_MASTER_ID);
-    private TalonSRX rightFollower = TalonSRXConfigurator.createFollowerTalon(RobotMap.Drivetrain.LEFT_FOLLOWER_ID, RobotMap.Drivetrain.LEFT_MASTER_ID);
+    private TalonSRX rightFollower = TalonSRXConfigurator.createFollowerTalon(RobotMap.Drivetrain.RIGHT_FOLLOWER_ID, RobotMap.Drivetrain.RIGHT_MASTER_ID);
 
     private GIFDrive drive = new GIFDrive(leftMaster, rightMaster);
 

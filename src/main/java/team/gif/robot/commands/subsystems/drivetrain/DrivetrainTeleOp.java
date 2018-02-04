@@ -16,12 +16,12 @@ public class DrivetrainTeleOp extends Command {
     }
 
     protected void execute() {
-        double inputSpeed = OI.getInstance().driver.getY(GenericHID.Hand.kLeft);
+        double inputSpeed = -OI.getInstance().driver.getY(GenericHID.Hand.kLeft);
         double inputRotation = OI.getInstance().driver.getX(GenericHID.Hand.kRight);
         boolean isQuickTurn = OI.getInstance().driver.getBumper(GenericHID.Hand.kRight);
 
-        OI.getInstance().driver.setRumble(GenericHID.RumbleType.kLeftRumble, Math.abs(inputSpeed + inputRotation));
-        OI.getInstance().driver.setRumble(GenericHID.RumbleType.kRightRumble, Math.abs(inputSpeed - inputRotation));
+        OI.getInstance().driver.setRumble(GenericHID.RumbleType.kLeftRumble, Math.abs(inputSpeed));
+        OI.getInstance().driver.setRumble(GenericHID.RumbleType.kRightRumble, Math.abs(inputSpeed));
 
         Drivetrain.getInstance().curvatureDrive(inputSpeed, inputRotation, isQuickTurn);
     }

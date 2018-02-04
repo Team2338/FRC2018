@@ -1,6 +1,8 @@
 package team.gif.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.lib.TalonSRXConfigurator;
 import team.gif.robot.RobotMap;
@@ -22,11 +24,13 @@ public class Ramp extends Subsystem{
     private TalonSRX rightMaster = TalonSRXConfigurator.createDefaultTalon(RobotMap.Ramp.RIGHT_MASTER_ID);
     private TalonSRX rightFollower = TalonSRXConfigurator.createFollowerTalon(RobotMap.Ramp.RIGHT_FOLLOWER_ID, RobotMap.Ramp.RIGHT_MASTER_ID);
 
+    private Solenoid release = new Solenoid(RobotMap.Ramp.RELEASE_SOLENOID_ID);
+
     private Ramp() {
 
     }
 
     protected void initDefaultCommand() {
-        setDefaultCommand(new DoNothing());
+//        setDefaultCommand(new DoNothing());
     }
 }

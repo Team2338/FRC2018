@@ -14,14 +14,14 @@ public class Collect extends Command {
     }
 
     protected void execute() {
-
+        Arm.getInstance().setFront(0.5);
     }
 
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     protected void end() {
-
+        Arm.getInstance().setFront(0);
     }
 }
