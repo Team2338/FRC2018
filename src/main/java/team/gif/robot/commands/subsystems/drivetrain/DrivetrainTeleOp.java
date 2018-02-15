@@ -7,8 +7,10 @@ import team.gif.robot.subsystems.Drivetrain;
 
 public class DrivetrainTeleOp extends Command {
 
+    private Drivetrain drivetrain = Drivetrain.getInstance();
+
     public DrivetrainTeleOp() {
-        requires(Drivetrain.getInstance());
+        requires(drivetrain);
     }
 
     protected void initialize() {
@@ -23,7 +25,7 @@ public class DrivetrainTeleOp extends Command {
         OI.getInstance().driver.setRumble(GenericHID.RumbleType.kLeftRumble, Math.abs(inputSpeed));
         OI.getInstance().driver.setRumble(GenericHID.RumbleType.kRightRumble, Math.abs(inputSpeed));
 
-        Drivetrain.getInstance().curvatureDrive(inputSpeed, inputRotation, isQuickTurn);
+        drivetrain.curvatureDrive(inputSpeed, inputRotation, isQuickTurn);
     }
 
     protected boolean isFinished() {

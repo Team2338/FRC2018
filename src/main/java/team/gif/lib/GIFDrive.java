@@ -211,8 +211,6 @@ public class GIFDrive {
             }
         }
 
-        System.out.println("Left motor output: " + leftMotorOutput * maxOutput);
-        System.out.println("Right motor output: " + -rightMotorOutput * maxOutput);
         leftMotor.set(ControlMode.PercentOutput, leftMotorOutput * maxOutput);
         rightMotor.set(ControlMode.PercentOutput, -rightMotorOutput * maxOutput);
     }

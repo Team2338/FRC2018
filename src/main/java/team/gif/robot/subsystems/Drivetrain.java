@@ -2,6 +2,7 @@ package team.gif.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.lib.GIFDrive;
@@ -26,6 +27,8 @@ public class Drivetrain extends Subsystem {
     private TalonSRX rightMaster = TalonSRXConfigurator.createDefaultTalon(RobotMap.Drivetrain.RIGHT_MASTER_ID);
     private TalonSRX rightFollower = TalonSRXConfigurator.createFollowerTalon(RobotMap.Drivetrain.RIGHT_FOLLOWER_ID, RobotMap.Drivetrain.RIGHT_MASTER_ID);
 
+    private PigeonIMU pigeon = new PigeonIMU(leftMaster);
+
     private GIFDrive drive = new GIFDrive(leftMaster, rightMaster);
 
     private Drivetrain() {
@@ -35,6 +38,14 @@ public class Drivetrain extends Subsystem {
 
     public void curvatureDrive(double speed, double rotation, boolean isQuickTurn) {
         drive.curvatureDrive(speed, rotation, isQuickTurn);
+    }
+
+    public int getLeftEncPosition() {
+        return leftMaster.getSelectedSensorPosition(0);
+    }
+
+    public int getRightEncPosition() {
+        return rightMaster.getSelectedSensorPosition(0);
     }
 
     public boolean checkSystem() {

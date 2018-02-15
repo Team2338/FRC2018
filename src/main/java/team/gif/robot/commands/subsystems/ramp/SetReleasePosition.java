@@ -1,20 +1,20 @@
 package team.gif.robot.commands.subsystems.ramp;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.gif.robot.subsystems.Ramp;
 
-public class DeployRamp extends Command {
+public class SetReleasePosition extends Command {
 
     private Ramp ramp = Ramp.getInstance();
-    private boolean deploy;
 
-    public DeployRamp(boolean deploy) {
-        requires(Ramp.getInstance());
-        this.deploy = deploy;
+
+    public SetReleasePosition() {
+        SmartDashboard.putNumber("Servo Position", 0.5);
     }
 
     protected void initialize() {
-        ramp.deployRamps(deploy);
+        ramp.setReleasePosition(SmartDashboard.getNumber("Servo Position", 0.5));
     }
 
     protected void execute() {

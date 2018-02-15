@@ -13,6 +13,7 @@ public class SetArmPosition extends Command {
     }
 
     protected void initialize() {
+        Arm.getInstance().tareDartPosition();
         Arm.getInstance().setDartPosition(position);
     }
 

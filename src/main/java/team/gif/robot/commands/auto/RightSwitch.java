@@ -6,7 +6,7 @@ public class RightSwitch extends CommandGroup {
 
     public RightSwitch(String gameData) {
         if (gameData.charAt(1) == 'L') {
-
+            
         } else {
 
         }

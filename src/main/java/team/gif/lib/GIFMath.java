@@ -40,7 +40,7 @@ public class GIFMath {
      *
      * <p>Does not constrain values to within the range, because out-of-range values are sometimes intended and useful.
      * Note that the "lower bounds" of either range may be larger or smaller than the "upper bounds" so the
-     * {@link #map(long, long, long, long, long)} function may be used to reverse a range of numbers, for example:
+     * {@link #map(int, int, int, int, int)} function may be used to reverse a range of numbers, for example:
      *
      * <pre><code>
      *     y = map(x, 1, 50, 50, 1);
@@ -54,7 +54,7 @@ public class GIFMath {
      *
      * <p>is also valid and works well.
      *
-     * <p>The {@link #map(long, long, long, long, long)} function uses integer math so will not generate fractions, when
+     * <p>The {@link #map(int, int, int, int, int)} function uses integer math so will not generate fractions, when
      * the math might indicate that it should do so. Fractional remainders are truncated,
      * and are not rounded or averaged.
      *
@@ -65,7 +65,7 @@ public class GIFMath {
      * @param outMax    the upper bound of the value's target range
      * @return the mapped value
      */
-    public static long map(long value, long inMin, long inMax, long outMin, long outMax) {
+    public static int map(int value, int inMin, int inMax, int outMin, int outMax) {
         return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
     }
 }

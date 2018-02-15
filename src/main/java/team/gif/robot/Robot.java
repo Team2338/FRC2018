@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import team.gif.lib.GIFMath;
 import team.gif.robot.commands.system.DoNothing;
 import team.gif.robot.commands.auto.*;
 import team.gif.robot.subsystems.Arm;
@@ -51,10 +52,11 @@ public class Robot extends IterativeRobot {
     }
 
     public void disabledInit() {
-
+        arm.tareDartPosition();
     }
 
     public void disabledPeriodic() {
+        update();
         Scheduler.getInstance().run();
     }
 
@@ -72,6 +74,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putBoolean("Mid Right", !midLeft && alliance.equals(DriverStation.Alliance.Blue));
         SmartDashboard.putBoolean("Front Left", frontLeft && alliance.equals(DriverStation.Alliance.Blue));
         SmartDashboard.putBoolean("Front Right", !frontLeft && alliance.equals(DriverStation.Alliance.Blue));
+        arm.tareDartPosition();
 
         if (strategy == Strategy.MOBILITY) {
             if (startPosition == StartPosition.LEFT) {
@@ -116,14 +119,17 @@ public class Robot extends IterativeRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        update();
     }
 
     public void teleopInit() {
+        arm.tareDartPosition();
         if (auto != null) auto.cancel();
     }
 
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        update();
     }
 
     public void testInit() {
@@ -136,5 +142,10 @@ public class Robot extends IterativeRobot {
 
     public void update() {
         SmartDashboard.putNumber("Voltage", RobotController.getInputVoltage());
+        SmartDashboard.putNumber("Dart Encoder", arm.getEncoderPosition());
+        SmartDashboard.putNumber("Dart Potentiometer", arm.getPotPosition());
+
+//        if (Math.abs(arm.getEncoderPosition() - GIFMath.map(arm.getPotPosition(), 600, 3200, 0, 468000)) > 1000)
+//            arm.tareDartPosition();
     }
 }

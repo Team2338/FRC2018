@@ -1,28 +1,28 @@
 package team.gif.robot.commands.subsystems.ramp;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
+import team.gif.robot.OI;
 import team.gif.robot.subsystems.Ramp;
 
-public class DeployRamp extends Command {
+public class RampTeleOp extends Command {
 
     private Ramp ramp = Ramp.getInstance();
-    private boolean deploy;
 
-    public DeployRamp(boolean deploy) {
-        requires(Ramp.getInstance());
-        this.deploy = deploy;
+    public RampTeleOp() {
+        requires(ramp);
     }
 
     protected void initialize() {
-        ramp.deployRamps(deploy);
+
     }
 
     protected void execute() {
-
+        ramp.set(OI.getInstance().aux.getY(GenericHID.Hand.kLeft));
     }
 
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     protected void end() {

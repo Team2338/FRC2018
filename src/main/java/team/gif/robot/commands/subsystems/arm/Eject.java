@@ -14,7 +14,7 @@ public class Eject extends Command {
     }
 
     protected void execute() {
-        Arm.getInstance().setFront(-0.5);
+        Arm.getInstance().setFront(-1);
     }
 
     protected boolean isFinished() {

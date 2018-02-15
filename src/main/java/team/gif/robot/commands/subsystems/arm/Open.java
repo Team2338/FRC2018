@@ -1,10 +1,9 @@
 package team.gif.robot.commands.subsystems.arm;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.InstantCommand;
 import team.gif.robot.subsystems.Arm;
 
-public class Open extends InstantCommand {
+public class Open extends Command {
 
     public Open() {
         requires(Arm.getInstance());
@@ -12,6 +11,10 @@ public class Open extends InstantCommand {
 
     protected void initialize() {
         Arm.getInstance().open();
+    }
+
+    protected boolean isFinished() {
+        return false;
     }
 
     protected void end() {
