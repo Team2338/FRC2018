@@ -2,7 +2,7 @@ plugins {
     id "java"
     id "eclipse"
     id "idea"
-    id "jaci.openrio.gradle.GradleRIO" version "2018.01.22"
+    id "jaci.openrio.gradle.GradleRIO" version "2018.02.17"
 }
 
 def TEAM = 2338
@@ -28,10 +28,8 @@ deploy {
 dependencies {
     compile wpilib()
     compile ctre()
-    compile navx()
+//    compile navx()
     compile pathfinder()
-
-//    implementation(group: "edu.wpi.first.shuffleboard", name: "api", version: '1.0.0')
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

@@ -1,15 +1,16 @@
 package team.gif.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.gif.lib.AxisButton;
-import team.gif.robot.commands.subsystems.arm.Collect;
-import team.gif.robot.commands.subsystems.arm.Eject;
-import team.gif.robot.commands.subsystems.arm.Open;
-import team.gif.robot.commands.subsystems.arm.SetArmPosition;
-import team.gif.robot.commands.subsystems.ramp.DeployRamp;
-import team.gif.robot.commands.subsystems.ramp.SetReleasePosition;
+import team.gif.lib.DualButton;
+import team.gif.lib.POVButton;
+import team.gif.robot.commands.auto.ForwardOneMeter;
+import team.gif.robot.commands.subsystem.arm.*;
+import team.gif.robot.commands.subsystem.ramps.RampsDeploy;
+import team.gif.robot.commands.subsystem.ramps.RampsLift;
 
 public class OI {
 
@@ -47,12 +48,49 @@ public class OI {
     AxisButton aLT = new AxisButton(aux, 2, 0.1);
     AxisButton aRT = new AxisButton(aux, 3, 0.1);
 
+    DualButton menuButons = new DualButton(aux, 7, 8);
+
+    POVButton dpadLeft = new POVButton(aux, POVButton.Direction.WEST);
+    POVButton dpadUp = new POVButton(aux, POVButton.Direction.NORTH);
+    POVButton dpadRight = new POVButton(aux, POVButton.Direction.EAST);
+    POVButton dpadDown = new POVButton(aux, POVButton.Direction.SOUTH);
+
     private OI() {
-        SmartDashboard.putData("Set Servo Position", new SetReleasePosition());
 
-        SmartDashboard.putData("Arm: Switch", new SetArmPosition(265000));
-        SmartDashboard.putData("Arm: Zero", new SetArmPosition(0));
-        SmartDashboard.putData("Arm: Collect", new SetArmPosition(-67500));
+        // Arm Positions
+        dLT.whenPressed(new ArmSetPosition(Globals.ARM_SWITCH_POSITION));
+        dLB.whenPressed(new ArmSetPosition(Globals.ARM_SECOND_POSITION));
+        dRB.whenPressed(new ArmSetPosition(Globals.ARM_COLLECT_POSITION));
 
+        // Arm Functions
+        aLB.whileHeld(new ArmEject());
+        aRB.whileHeld(new ArmCollect());
+        aA.whenPressed(new ArmOpen(true));
+        aA.whenReleased(new ArmOpen(false));
+        aB.whenPressed(new ArmLaunch());
+
+        // Ramp Stuff
+        menuButons.whenPressed(new RampsDeploy());
+        aLT.whileHeld(new RampsLift(RampsLift.RampSide.RIGHT)); // Hold Y to invert
+        aRT.whileHeld(new RampsLift(RampsLift.RampSide.LEFT)); // Hold Y to invert
+
+        SmartDashboard.putData("Arm: Start", new ArmSetPosition(Globals.ARM_START_POSITION));
+        SmartDashboard.putData("Arm: Switch", new ArmSetPosition(Globals.ARM_SWITCH_POSITION));
+        SmartDashboard.putData("Arm: Second", new ArmSetPosition(Globals.ARM_SECOND_POSITION));
+        SmartDashboard.putData("Arm: Travel", new ArmSetPosition(Globals.ARM_TRAVEL_POSITION));
+        SmartDashboard.putData("Arm: Collect", new ArmSetPosition(Globals.ARM_COLLECT_POSITION));
+        SmartDashboard.putData("Ramps: Deploy", new RampsDeploy());
+
+        SmartDashboard.putData("Forward One Meter", new ForwardOneMeter("LRL"));
+    }
+
+    public void rumble(XboxController controller, boolean rumble) {
+        if (rumble) {
+            controller.setRumble(GenericHID.RumbleType.kLeftRumble, 1.0);
+            controller.setRumble(GenericHID.RumbleType.kRightRumble, 1.0);
+        } else {
+            controller.setRumble(GenericHID.RumbleType.kLeftRumble, 0.0);
+            controller.setRumble(GenericHID.RumbleType.kRightRumble, 0.0);
+        }
     }
 }

@@ -212,7 +212,7 @@ public class GIFDrive {
         }
 
         leftMotor.set(ControlMode.PercentOutput, leftMotorOutput * maxOutput);
-        rightMotor.set(ControlMode.PercentOutput, -rightMotorOutput * maxOutput);
+        rightMotor.set(ControlMode.PercentOutput, rightMotorOutput * maxOutput);
     }
 
     /**

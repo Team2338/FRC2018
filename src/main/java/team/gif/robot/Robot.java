@@ -5,12 +5,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import team.gif.lib.GIFMath;
 import team.gif.robot.commands.system.DoNothing;
 import team.gif.robot.commands.auto.*;
 import team.gif.robot.subsystems.Arm;
 import team.gif.robot.subsystems.Drivetrain;
-import team.gif.robot.subsystems.Ramp;
+import team.gif.robot.subsystems.Ramps;
 
 public class Robot extends IterativeRobot {
 
@@ -22,8 +21,6 @@ public class Robot extends IterativeRobot {
         MOBILITY, SWITCH, NULL_ZONE, DO_NOTHING
     }
 
-    private StartPosition startPosition = StartPosition.LEFT;
-    private Strategy strategy = Strategy.MOBILITY;
     private SendableChooser<StartPosition> startPositionChooser;
     private SendableChooser<Strategy> strategyChooser;
     private Command auto;
@@ -31,10 +28,12 @@ public class Robot extends IterativeRobot {
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
     private Arm arm = Arm.getInstance();
-    private Ramp ramp = Ramp.getInstance();
+    private Ramps ramps = Ramps.getInstance();
 
     @Override
     public void robotInit() {
+        init();
+
         startPositionChooser = new SendableChooser<>();
         strategyChooser = new SendableChooser<>();
 
@@ -52,67 +51,58 @@ public class Robot extends IterativeRobot {
     }
 
     public void disabledInit() {
-        arm.tareDartPosition();
+        init();
     }
 
     public void disabledPeriodic() {
-        update();
         Scheduler.getInstance().run();
+        update();
     }
 
     public void autonomousInit() {
-        startPosition = startPositionChooser.getSelected();
-        strategy = strategyChooser.getSelected();
+        init();
+        StartPosition startPosition = startPositionChooser.getSelected();
+        Strategy strategy = strategyChooser.getSelected();
         gameData = DriverStation.getInstance().getGameSpecificMessage();
-        DriverStation.Alliance alliance = DriverStation.getInstance().getAlliance();
-        boolean backLeft = gameData.charAt(2) == 'L';
+        boolean closeLeft = gameData.charAt(0) == 'L';
         boolean midLeft = gameData.charAt(1) == 'L';
-        boolean frontLeft = gameData.charAt(0) == 'L';
-        SmartDashboard.putBoolean("Back Left", backLeft && alliance.equals(DriverStation.Alliance.Blue));
-        SmartDashboard.putBoolean("Back Right", !backLeft && alliance.equals(DriverStation.Alliance.Blue));
-        SmartDashboard.putBoolean("Mid Left", midLeft && alliance.equals(DriverStation.Alliance.Blue));
-        SmartDashboard.putBoolean("Mid Right", !midLeft && alliance.equals(DriverStation.Alliance.Blue));
-        SmartDashboard.putBoolean("Front Left", frontLeft && alliance.equals(DriverStation.Alliance.Blue));
-        SmartDashboard.putBoolean("Front Right", !frontLeft && alliance.equals(DriverStation.Alliance.Blue));
-        arm.tareDartPosition();
+        boolean farLeft = gameData.charAt(2) == 'L';
+        SmartDashboard.putBoolean("Close Left", closeLeft);
+        SmartDashboard.putBoolean("Close Right", !closeLeft);
+        SmartDashboard.putBoolean("Mid Left", midLeft);
+        SmartDashboard.putBoolean("Mid Right", !midLeft);
+        SmartDashboard.putBoolean("Far Left", farLeft);
+        SmartDashboard.putBoolean("Far Right", !farLeft);
 
         if (strategy == Strategy.MOBILITY) {
             if (startPosition == StartPosition.LEFT) {
                 auto = new LeftMobility(gameData);
-                SmartDashboard.putString("Status", "LeftMobility");
             } else if (startPosition == StartPosition.CENTER) {
                 auto = new CenterMobility(gameData);
-                SmartDashboard.putString("Status", "CenterMobility");
-            } else {
+            } else if (startPosition == StartPosition.CENTER){
                 auto = new RightMobility(gameData);
-                SmartDashboard.putString("Status", "RightMobility");
             }
         } else if (strategy == Strategy.SWITCH) {
             if (startPosition == StartPosition.LEFT) {
                 auto = new LeftSwitch(gameData);
-                SmartDashboard.putString("Status", "LeftSwitch");
             } else if (startPosition == StartPosition.CENTER) {
                 auto = new CenterSwitch(gameData);
-                SmartDashboard.putString("Status", "CenterSwitch");
             } else {
                 auto = new RightSwitch(gameData);
-                SmartDashboard.putString("Status", "RightSwitch");
             }
         } else if (strategy == Strategy.NULL_ZONE) {
             if (startPosition == StartPosition.LEFT) {
                 auto = new LeftNull(gameData);
-                SmartDashboard.putString("Status", "LeftNull");
             } else if (startPosition == StartPosition.CENTER) {
                 auto = new CenterNull(gameData);
-                SmartDashboard.putString("Status", "CenterNull");
             } else {
                 auto = new RightNull(gameData);
-                SmartDashboard.putString("Status", "RightNull");
             }
-        } else {
+        } else if (strategy == Strategy.DO_NOTHING){
             auto = new DoNothing();
-            SmartDashboard.putString("Status", "Do Nothing");
         }
+
+        if (gameData == null) { auto = new DoNothing(); }
 
         if (auto != null) auto.start();
     }
@@ -123,29 +113,54 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-        arm.tareDartPosition();
+        init();
         if (auto != null) auto.cancel();
     }
 
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         update();
+
+        if (getMatchTime() <= 30.0 && getMatchTime() > 29.5) {
+            OI.getInstance().rumble(OI.getInstance().driver, true);
+            OI.getInstance().rumble(OI.getInstance().aux, true);
+        } else if (getMatchTime() <= 29.0 && getMatchTime() > 28.5) {
+            OI.getInstance().rumble(OI.getInstance().driver, true);
+            OI.getInstance().rumble(OI.getInstance().aux, true);
+        } else {
+            OI.getInstance().rumble(OI.getInstance().driver, false);
+            OI.getInstance().rumble(OI.getInstance().aux, false);
+        }
     }
 
     public void testInit() {
-
+        init();
     }
 
     public void testPeriodic() {
+        Scheduler.getInstance().run();
+        update();
+    }
 
+    public double getMatchTime() {
+        return DriverStation.getInstance().getMatchTime();
+    }
+
+    public void init() {
+        arm.tareDartPosition();
     }
 
     public void update() {
-        SmartDashboard.putNumber("Voltage", RobotController.getInputVoltage());
-        SmartDashboard.putNumber("Dart Encoder", arm.getEncoderPosition());
-        SmartDashboard.putNumber("Dart Potentiometer", arm.getPotPosition());
+        SmartDashboard.putNumber("Dart Encoder", arm.getDartEncoderPosition());
+        SmartDashboard.putNumber("Dart Potentiometer", arm.getDartPotPosition());
+        SmartDashboard.putNumber("Heading", drivetrain.getHeading());
 
-//        if (Math.abs(arm.getEncoderPosition() - GIFMath.map(arm.getPotPosition(), 600, 3200, 0, 468000)) > 1000)
-//            arm.tareDartPosition();
+        SmartDashboard.putNumber("Left Drive", drivetrain.getLeftEncPosition());
+        SmartDashboard.putNumber("Right Drive", drivetrain.getRightEncPosition());
+
+        SmartDashboard.putBoolean("Arm Prox", arm.hasCube());
+
+        System.out.println("Left Limit Status: " + ramps.getLeftLimit());
+        System.out.println("Right Limit Status: " + ramps.getRightLimit());
     }
 }

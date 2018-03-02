@@ -1,4 +1,4 @@
-package team.gif.robot.commands.subsystems.drivetrain;
+package team.gif.robot.commands.subsystem.drivetrain;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
@@ -20,10 +20,7 @@ public class DrivetrainTeleOp extends Command {
     protected void execute() {
         double inputSpeed = -OI.getInstance().driver.getY(GenericHID.Hand.kLeft);
         double inputRotation = OI.getInstance().driver.getX(GenericHID.Hand.kRight);
-        boolean isQuickTurn = OI.getInstance().driver.getBumper(GenericHID.Hand.kRight);
-
-        OI.getInstance().driver.setRumble(GenericHID.RumbleType.kLeftRumble, Math.abs(inputSpeed));
-        OI.getInstance().driver.setRumble(GenericHID.RumbleType.kRightRumble, Math.abs(inputSpeed));
+        boolean isQuickTurn = OI.getInstance().driver.getRawAxis(3) > 0.1;
 
         drivetrain.curvatureDrive(inputSpeed, inputRotation, isQuickTurn);
     }

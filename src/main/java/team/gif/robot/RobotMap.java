@@ -1,6 +1,6 @@
 package team.gif.robot;
 
-public class RobotMap {
+public abstract class RobotMap {
 
     // Drivetrain IDs
     public static class Drivetrain {
@@ -11,12 +11,14 @@ public class RobotMap {
     }
 
     // Ramp IDs
-    public static class Ramp {
+    public static class Ramps {
         public static final int LEFT_MASTER_ID = 4;
         public static final int LEFT_FOLLOWER_ID = 5;
         public static final int RIGHT_MASTER_ID = 6;
         public static final int RIGHT_FOLLOWER_ID = 7;
         public static final int RELEASE_SERVO_ID = 9;
+        public static final int LEFT_LIMIT_ID = 9;
+        public static final int RIGHT_LIMIT_ID = 8;
     }
 
     // Arm IDs
@@ -25,7 +27,10 @@ public class RobotMap {
         public static final int RIGHT_ID = 9;
         public static final int DART_ID = 10;
         public static final int ACTUATOR_SOLENOID_ID = 0;
+        public static final int LEFT_PUNCH_ID = 1;
+        public static final int RIGHT_PUNCH_ID = 2;
         public static final int DART_POT_ID = 0;
+        public static final int CUBE_SENSOR_ID = 7;
     }
 
     public static class OI {
