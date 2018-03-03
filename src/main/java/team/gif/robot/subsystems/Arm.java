@@ -40,15 +40,15 @@ public class Arm extends Subsystem {
         dart.setInverted(false);
         dart.configForwardSoftLimitEnable(true, 0);
         dart.configReverseSoftLimitEnable(true, 0);
-        dart.configForwardSoftLimitThreshold(Globals.ARM_UPPER_SOFT_LIMIT, 0);
-        dart.configReverseSoftLimitThreshold(Globals.ARM_LOWER_SOFT_LIMIT, 0);
+        dart.configForwardSoftLimitThreshold(Globals.Arm.ARM_UPPER_SOFT_LIMIT, 0);
+        dart.configReverseSoftLimitThreshold(Globals.Arm.ARM_LOWER_SOFT_LIMIT, 0);
         dart.enableCurrentLimit(true);
         dart.configContinuousCurrentLimit(30, 0);
         dart.configPeakCurrentLimit(50, 0);
         dart.configPeakCurrentDuration(500, 0);
-        dart.config_kP(0, Globals.DART_P, 0);
-        dart.config_kI(0, Globals.DART_I, 0);
-        dart.config_kD(0, Globals.DART_D, 0);
+        dart.config_kP(0, Globals.Arm.DART_P, 0);
+        dart.config_kI(0, Globals.Arm.DART_I, 0);
+        dart.config_kD(0, Globals.Arm.DART_D, 0);
     }
 
     public void setIntakeSpeed(double speed) {
@@ -73,7 +73,7 @@ public class Arm extends Subsystem {
     }
 
     public void tareDartPosition() {
-        dart.setSelectedSensorPosition(GIFMath.map(dartPot.getValue(), Globals.ARM_POT_ZERO_POSITION, Globals.ARM_POT_ZERO_POSITION + 2500,
+        dart.setSelectedSensorPosition(GIFMath.map(dartPot.getValue(), Globals.Arm.ARM_POT_ZERO_POSITION, Globals.Arm.ARM_POT_ZERO_POSITION + 2500,
                 0 , 450000), 0, 0);
     }
 

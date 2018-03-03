@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.gif.lib.AxisButton;
 import team.gif.lib.DualButton;
 import team.gif.lib.POVButton;
-import team.gif.robot.commands.auto.ForwardOneMeter;
 import team.gif.robot.commands.subsystem.arm.*;
 import team.gif.robot.commands.subsystem.ramps.RampsDeploy;
 import team.gif.robot.commands.subsystem.ramps.RampsLift;
@@ -58,15 +57,14 @@ public class OI {
     private OI() {
 
         // Arm Positions
-        dLT.whenPressed(new ArmSetPosition(Globals.ARM_SWITCH_POSITION));
-        dLB.whenPressed(new ArmSetPosition(Globals.ARM_SECOND_POSITION));
-        dRB.whenPressed(new ArmSetPosition(Globals.ARM_COLLECT_POSITION));
+        dLT.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+        dLB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SECOND_POSITION));
+        dRB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
 
         // Arm Functions
         aLB.whileHeld(new ArmEject());
         aRB.whileHeld(new ArmCollect());
-        aA.whenPressed(new ArmOpen(true));
-        aA.whenReleased(new ArmOpen(false));
+        aA.whileHeld(new ArmOpen());
         aB.whenPressed(new ArmLaunch());
 
         // Ramp Stuff
@@ -74,11 +72,11 @@ public class OI {
         aLT.whileHeld(new RampsLift(RampsLift.RampSide.RIGHT)); // Hold Y to invert
         aRT.whileHeld(new RampsLift(RampsLift.RampSide.LEFT)); // Hold Y to invert
 
-        SmartDashboard.putData("Arm: Start", new ArmSetPosition(Globals.ARM_START_POSITION));
-        SmartDashboard.putData("Arm: Switch", new ArmSetPosition(Globals.ARM_SWITCH_POSITION));
-        SmartDashboard.putData("Arm: Second", new ArmSetPosition(Globals.ARM_SECOND_POSITION));
-        SmartDashboard.putData("Arm: Travel", new ArmSetPosition(Globals.ARM_TRAVEL_POSITION));
-        SmartDashboard.putData("Arm: Collect", new ArmSetPosition(Globals.ARM_COLLECT_POSITION));
+        SmartDashboard.putData("Arm: Start", new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
+        SmartDashboard.putData("Arm: Switch", new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+        SmartDashboard.putData("Arm: Second", new ArmSetPosition(Globals.Arm.ARM_SECOND_POSITION));
+        SmartDashboard.putData("Arm: Travel", new ArmSetPosition(Globals.Arm.ARM_TRAVEL_POSITION));
+        SmartDashboard.putData("Arm: Collect", new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
         SmartDashboard.putData("Ramps: Deploy", new RampsDeploy());
 
         SmartDashboard.putData("Forward One Meter", new ForwardOneMeter("LRL"));

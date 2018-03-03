@@ -31,11 +31,11 @@ public class ArmTeleOp extends Command {
             arm.setIntakeSpeed(0.0);
         }
 
-        if (arm.hasCube() && arm.getDartEncoderPosition() < Globals.ARM_TRAVEL_POSITION - 300) {
-            arm.setDartPosition(Globals.ARM_TRAVEL_POSITION);
+        if (arm.hasCube() && arm.getDartEncoderPosition() < Globals.Arm.ARM_TRAVEL_POSITION - 300) {
+            arm.setDartPosition(Globals.Arm.ARM_TRAVEL_POSITION);
         }
 
-        if ((OI.getInstance().aux.getAButton()) && arm.getDartEncoderPosition() < Globals.ARM_OPEN_SOFT_LIMIT) {
+        if ((OI.getInstance().aux.getAButton()) && arm.getDartEncoderPosition() < Globals.Arm.ARM_OPEN_SOFT_LIMIT) {
             arm.setOpen(true);
         } else {
             arm.setOpen(false);

@@ -1,30 +1,32 @@
 package team.gif.robot;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import team.gif.lib.GameDataCommandGroup;
 import team.gif.robot.commands.system.DoNothing;
 import team.gif.robot.commands.auto.*;
 import team.gif.robot.subsystems.Arm;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Ramps;
 
-public class Robot extends IterativeRobot {
+public class Robot extends TimedRobot {
 
     private enum StartPosition {
         LEFT, CENTER, RIGHT
     }
 
     private enum Strategy {
-        MOBILITY, SWITCH, NULL_ZONE, DO_NOTHING
+        DO_NOTHING, MOBILITY, FRONT_SWITCH, DOUBLE_SWITCH, SWITCH_SCALE, SWITCH_EXCHANGE
     }
 
     private SendableChooser<StartPosition> startPositionChooser;
     private SendableChooser<Strategy> strategyChooser;
-    private Command auto;
-    private String gameData;
+    private StartPosition startPosition;
+    private Strategy strategy;
+    private GameDataCommandGroup auto;
+    private String gameData = "";
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
     private Arm arm = Arm.getInstance();
@@ -41,10 +43,12 @@ public class Robot extends IterativeRobot {
         startPositionChooser.addObject("Center", StartPosition.CENTER);
         startPositionChooser.addObject("Right", StartPosition.RIGHT);
 
-        strategyChooser.addDefault("Mobility", Strategy.MOBILITY);
-        strategyChooser.addObject("Switch", Strategy.SWITCH);
-        strategyChooser.addObject("Null Zone", Strategy.NULL_ZONE);
-        strategyChooser.addObject("Do Nothing", Strategy.DO_NOTHING);
+        strategyChooser.addDefault("Do Nothing", Strategy.DO_NOTHING);
+        strategyChooser.addObject("Mobility", Strategy.MOBILITY);
+        strategyChooser.addObject("Front Switch", Strategy.FRONT_SWITCH);
+        strategyChooser.addObject("Double Switch", Strategy.DOUBLE_SWITCH);
+        strategyChooser.addObject("Switch & Scale", Strategy.SWITCH_SCALE);
+        strategyChooser.addObject("Switch & Exchange", Strategy.SWITCH_EXCHANGE);
 
         SmartDashboard.putData("Strategy", strategyChooser);
         SmartDashboard.putData("Start Position", startPositionChooser);
@@ -57,13 +61,64 @@ public class Robot extends IterativeRobot {
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
         update();
+
+        if (startPositionChooser.getSelected() != startPosition || strategyChooser.getSelected() != strategy) {
+            if (strategy == Strategy.DO_NOTHING) {
+                auto = new DoNothing();
+            } else if (strategy == Strategy.MOBILITY) {
+                if (startPosition == StartPosition.LEFT) {
+                    auto = new MobilityLeft();
+                } else if (startPosition == StartPosition.CENTER) {
+                    auto = new MobilityCenter();
+                } else if (startPosition == StartPosition.RIGHT){
+                    auto = new MobilityRight();
+                }
+            } else if (strategy == Strategy.FRONT_SWITCH) {
+                if (startPosition == StartPosition.LEFT) {
+                    auto = new FrontSwitchLeft();
+                } else if (startPosition == StartPosition.CENTER) {
+                    auto = new FrontSwitchCenter();
+                } else if (startPosition == StartPosition.RIGHT){
+                    auto = new FrontSwitchRight();
+                }
+            } else if (strategy == Strategy.DOUBLE_SWITCH) {
+                if (startPosition == StartPosition.LEFT) {
+                    auto = new DoubleSwitchLeft();
+                } else if (startPosition == StartPosition.CENTER) {
+                    auto = new DoubleSwitchCenter();
+                } else if (startPosition == StartPosition.RIGHT){
+                    auto = new DoubleSwitchRight();
+                }
+            } else if (strategy == Strategy.SWITCH_SCALE) {
+                if (startPosition == StartPosition.LEFT) {
+                    auto = new SwitchScaleLeft();
+                } else if (startPosition == StartPosition.CENTER) {
+                    auto = new SwitchScaleCenter();
+                } else if (startPosition == StartPosition.RIGHT){
+                    auto = new SwitchScaleRight();
+                }
+            } else if (strategy == Strategy.SWITCH_EXCHANGE) {
+                if (startPosition == StartPosition.LEFT) {
+                    auto = new SwitchExchangeLeft();
+                } else if (startPosition == StartPosition.CENTER) {
+                    auto = new SwitchExchangeCenter();
+                } else if (startPosition == StartPosition.RIGHT){
+                    auto = new SwitchExchangeRight();
+                }
+            }
+        }
+
+        SmartDashboard.putString("Selected Auto", auto.getName());
+
+        startPosition = startPositionChooser.getSelected();
+        strategy = strategyChooser.getSelected();
     }
 
     public void autonomousInit() {
         init();
-        StartPosition startPosition = startPositionChooser.getSelected();
-        Strategy strategy = strategyChooser.getSelected();
-        gameData = DriverStation.getInstance().getGameSpecificMessage();
+        do { gameData = DriverStation.getInstance().getGameSpecificMessage(); } while (gameData.length() < 3);
+        auto.setGameData(gameData);
+
         boolean closeLeft = gameData.charAt(0) == 'L';
         boolean midLeft = gameData.charAt(1) == 'L';
         boolean farLeft = gameData.charAt(2) == 'L';
@@ -73,34 +128,6 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putBoolean("Mid Right", !midLeft);
         SmartDashboard.putBoolean("Far Left", farLeft);
         SmartDashboard.putBoolean("Far Right", !farLeft);
-
-        if (strategy == Strategy.MOBILITY) {
-            if (startPosition == StartPosition.LEFT) {
-                auto = new LeftMobility(gameData);
-            } else if (startPosition == StartPosition.CENTER) {
-                auto = new CenterMobility(gameData);
-            } else if (startPosition == StartPosition.CENTER){
-                auto = new RightMobility(gameData);
-            }
-        } else if (strategy == Strategy.SWITCH) {
-            if (startPosition == StartPosition.LEFT) {
-                auto = new LeftSwitch(gameData);
-            } else if (startPosition == StartPosition.CENTER) {
-                auto = new CenterSwitch(gameData);
-            } else {
-                auto = new RightSwitch(gameData);
-            }
-        } else if (strategy == Strategy.NULL_ZONE) {
-            if (startPosition == StartPosition.LEFT) {
-                auto = new LeftNull(gameData);
-            } else if (startPosition == StartPosition.CENTER) {
-                auto = new CenterNull(gameData);
-            } else {
-                auto = new RightNull(gameData);
-            }
-        } else if (strategy == Strategy.DO_NOTHING){
-            auto = new DoNothing();
-        }
 
         if (gameData == null) { auto = new DoNothing(); }
 
@@ -144,6 +171,10 @@ public class Robot extends IterativeRobot {
 
     public double getMatchTime() {
         return DriverStation.getInstance().getMatchTime();
+    }
+
+    public String getGameData() {
+        return DriverStation.getInstance().getGameSpecificMessage();
     }
 
     public void init() {

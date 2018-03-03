@@ -4,31 +4,38 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
+import team.gif.lib.GameDataCommandGroup;
 import team.gif.robot.Globals;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
 
-public class CenterSwitch extends CommandGroup {
+public class MobilityRight extends GameDataCommandGroup {
 
     private Waypoint[] leftPoints = new Waypoint[] {
-            new Waypoint(120.625 * 0.0254, 0, 0),               // Waypoint @ x=-4, y=-1, exit angle=-45 degrees
-            new Waypoint(55.563 * 0.0254, 101 * 0.0254, 0)      // Waypoint @ x=-2, y=-2, exit angle=0 radians             // Waypoint @ x=0, y=0,   exit angle=0 radians
+            new Waypoint(0, 0, 0),
+            new Waypoint(1.395, 2.565, 0)
     };
 
     private Waypoint[] rightPoints = new Waypoint[] {
-            new Waypoint(120.625 * 0.0254, 0, 0),               // Waypoint @ x=-4, y=-1, exit angle=-45 degrees
-            new Waypoint(175.563 * 0.0254, 101 * 0.0254, 0)     // Waypoint @ x=0, y=0,   exit angle=0 radians
+            new Waypoint(0, 0, 0),
+            new Waypoint( -1.653, 2.565, 0)
     };
 
     private Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
-            Globals.TIME_STEP, Globals.MAX_VELOCITY, Globals.MAX_ACCELERATION, Globals.MAX_JERK);
+            Globals.Drivetrain.TIME_STEP, Globals.Drivetrain.MAX_VELOCITY, Globals.Drivetrain.MAX_ACCELERATION, Globals.Drivetrain.MAX_JERK);
     Trajectory leftPath = Pathfinder.generate(leftPoints, config);
     Trajectory rightPath = Pathfinder.generate(rightPoints, config);
 
-    public CenterSwitch(String gameData) {
-        if (gameData.charAt(1) == 'L') {
+    private String gameData;
+
+    public MobilityRight() {
+        if (gameData.charAt(0) == 'L') {
             addSequential(new DrivetrainFollowPath(leftPath));
         } else {
             addSequential(new DrivetrainFollowPath(rightPath));
         }
+    }
+
+    public void setGameData(String gameData) {
+        this.gameData = gameData;
     }
 }

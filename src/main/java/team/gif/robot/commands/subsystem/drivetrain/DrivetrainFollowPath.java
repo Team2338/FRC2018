@@ -17,18 +17,20 @@ public class DrivetrainFollowPath extends Command {
 
     public DrivetrainFollowPath(Trajectory trajectory) {
         requires(drivetrain);
-        modifier = new TankModifier(trajectory).modify(Globals.WHEELBASE_WIDTH_M);
+        modifier = new TankModifier(trajectory).modify(Globals.Drivetrain.WHEELBASE_WIDTH_M);
     }
 
     protected void initialize() {
         left = new EncoderFollower(modifier.getLeftTrajectory());
         right = new EncoderFollower(modifier.getRightTrajectory());
 
-        left.configureEncoder(drivetrain.getLeftEncPosition(), Globals.TICKS_PER_REVOLUTION, Globals.WHEEL_DIAMETER_M);
-        right.configureEncoder(drivetrain.getRightEncPosition(), Globals.TICKS_PER_REVOLUTION, Globals.WHEEL_DIAMETER_M);
+        left.configureEncoder(drivetrain.getLeftEncPosition(), Globals.Drivetrain.TICKS_PER_REVOLUTION, Globals.Drivetrain.WHEEL_DIAMETER_M);
+        right.configureEncoder(drivetrain.getRightEncPosition(), Globals.Drivetrain.TICKS_PER_REVOLUTION, Globals.Drivetrain.WHEEL_DIAMETER_M);
 
-        left.configurePIDVA(Globals.DRIVE_P, Globals.DRIVE_I, Globals.DRIVE_D, 1 / Globals.MAX_VELOCITY, 0.1);
-        right.configurePIDVA(Globals.DRIVE_P, Globals.DRIVE_I, Globals.DRIVE_D, 1 / Globals.MAX_VELOCITY, 0.1);
+        left.configurePIDVA(Globals.Drivetrain.DRIVE_P, Globals.Drivetrain.DRIVE_I,
+                Globals.Drivetrain.DRIVE_D, 1 / Globals.Drivetrain.MAX_VELOCITY, 0.1);
+        right.configurePIDVA(Globals.Drivetrain.DRIVE_P, Globals.Drivetrain.DRIVE_I,
+                Globals.Drivetrain.DRIVE_D, 1 / Globals.Drivetrain.MAX_VELOCITY, 0.1);
     }
 
     protected void execute() {

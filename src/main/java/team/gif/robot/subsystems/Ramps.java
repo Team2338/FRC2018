@@ -48,11 +48,11 @@ public class Ramps extends Subsystem {
         rightMaster.setSensorPhase(true);
         leftFollower.setSensorPhase(true);
 
-        release.set(Globals.SERVO_IDLE_POSITION);
+        release.set(Globals.Ramps.SERVO_IDLE_POSITION);
     }
 
     public void deploy(boolean deploy) {
-        release.set(deploy ? Globals.SERVO_RELEASE_POSITION : Globals.SERVO_IDLE_POSITION);
+        release.set(deploy ? Globals.Ramps.SERVO_RELEASE_POSITION : Globals.Ramps.SERVO_IDLE_POSITION);
         deployed = true;
     }
 

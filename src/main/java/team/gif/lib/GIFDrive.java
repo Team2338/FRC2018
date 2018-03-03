@@ -70,11 +70,11 @@ public class GIFDrive {
     private TalonSRX leftMotor;
     private TalonSRX rightMotor;
 
-    private double quickStopThreshold = Globals.DEFAULT_QUICK_STOP_THRESHOLD;
-    private double quickStopAlpha = Globals.DEFAULT_QUICK_STOP_ALPHA;
+    private double quickStopThreshold = Globals.Drivetrain.DEFAULT_QUICK_STOP_THRESHOLD;
+    private double quickStopAlpha = Globals.Drivetrain.DEFAULT_QUICK_STOP_ALPHA;
     private double quickStopAccumulator = 0.0;
-    private double deadband = Globals.DEFAULT_DEADBAND;
-    private double maxOutput = Globals.MAX_OUTPUT;
+    private double deadband = Globals.Drivetrain.DEFAULT_DEADBAND;
+    private double maxOutput = Globals.Drivetrain.MAX_OUTPUT;
 
     /**
      * Construct a GIFDrive.

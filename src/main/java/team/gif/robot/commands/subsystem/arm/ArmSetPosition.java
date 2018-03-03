@@ -16,7 +16,7 @@ public class ArmSetPosition extends InstantCommand {
     }
 
     protected void execute() {
-        if (arm.hasCube() && position < Globals.ARM_TRAVEL_POSITION) { position = Globals.ARM_TRAVEL_POSITION; }
+        if (arm.hasCube() && position < Globals.Arm.ARM_TRAVEL_POSITION) { position = Globals.Arm.ARM_TRAVEL_POSITION; }
         arm.setDartPosition(position);
     }
 }

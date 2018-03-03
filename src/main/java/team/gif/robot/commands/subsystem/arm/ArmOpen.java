@@ -1,19 +1,27 @@
 package team.gif.robot.commands.subsystem.arm;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
+import team.gif.robot.Globals;
 import team.gif.robot.subsystems.Arm;
 
-public class ArmOpen extends InstantCommand {
+public class ArmOpen extends Command {
 
     private Arm arm = Arm.getInstance();
 
-    private boolean open;
-
-    public ArmOpen(boolean open) {
-        this.open = open;
-    }
+    public ArmOpen() {}
 
     protected void execute() {
-        arm.setOpen(open);
+        if (arm.getDartEncoderPosition() < Globals.Arm.ARM_OPEN_SOFT_LIMIT) {
+            arm.setOpen(true);
+        }
+    }
+
+    protected boolean isFinished() {
+        return false;
+    }
+
+    protected void end() {
+        arm.setOpen(false);
     }
 }
