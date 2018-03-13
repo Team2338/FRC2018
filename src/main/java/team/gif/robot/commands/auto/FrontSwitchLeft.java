@@ -3,42 +3,28 @@ package team.gif.robot.commands.auto;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.Waypoint;
-import team.gif.lib.GameDataCommandGroup;
 import team.gif.robot.Globals;
+import team.gif.robot.commands.subsystem.arm.ArmEject;
+import team.gif.robot.commands.subsystem.arm.ArmSetPosition;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
 
-public class FrontSwitchLeft extends GameDataCommandGroup {
+import java.io.File;
 
-    private Waypoint[] leftPoints = new Waypoint[] {
-            new Waypoint(0, 0, 0),
-            new Waypoint(1.411, 2.565, 0)
-    };
+public class FrontSwitchLeft extends CommandGroup {
 
-    private Waypoint[] rightPoints = new Waypoint[] {
-            new Waypoint(0, 0, 0),
-            new Waypoint( -0.135, 2.565, 0),
-            new Waypoint(1.151, 5.480, Pathfinder.d2r(-90.0)),
-            new Waypoint(4.720, 5.480, Pathfinder.d2r(-90.0)),
-            new Waypoint(5.380, 3.772, Pathfinder.d2r(90.0))
-    };
+    Trajectory leftPath = Pathfinder.readFromCSV(new File("/home/lvuser/lefttoleftswitch.csv"));
+    Trajectory arcRight = Pathfinder.readFromCSV(new File("/home/lvuser/arcright.csv"));
+    Trajectory rightPath = Pathfinder.readFromCSV(new File("/home/lvuser/lefttorightswitch.csv"));
 
-    private Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
-            Globals.Drivetrain.TIME_STEP, Globals.Drivetrain.MAX_VELOCITY, Globals.Drivetrain.MAX_ACCELERATION, Globals.Drivetrain.MAX_JERK);
-    Trajectory leftPath = Pathfinder.generate(leftPoints, config);
-    Trajectory rightPath = Pathfinder.generate(rightPoints, config);
-
-    private String gameData;
-
-    public FrontSwitchLeft() {
+    public FrontSwitchLeft(String gameData) {
         if (gameData.charAt(0) == 'L') {
+            addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
             addSequential(new DrivetrainFollowPath(leftPath));
+            addSequential(new ArmEject(0.75), 0.5);
         } else {
+            addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
             addSequential(new DrivetrainFollowPath(rightPath));
+            addSequential(new ArmEject(0.75), 0.5);
         }
-    }
-
-    public void setGameData(String gameData) {
-        this.gameData = gameData;
     }
 }

@@ -13,10 +13,6 @@ public class DrivetrainTeleOp extends Command {
         requires(drivetrain);
     }
 
-    protected void initialize() {
-
-    }
-
     protected void execute() {
         double inputSpeed = -OI.getInstance().driver.getY(GenericHID.Hand.kLeft);
         double inputRotation = OI.getInstance().driver.getX(GenericHID.Hand.kRight);
@@ -30,6 +26,7 @@ public class DrivetrainTeleOp extends Command {
     }
 
     protected void end() {
-
+        drivetrain.setLeft(0.0);
+        drivetrain.setRight(0.0);
     }
 }

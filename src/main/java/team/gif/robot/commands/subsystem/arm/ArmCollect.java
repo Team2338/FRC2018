@@ -14,12 +14,12 @@ public class ArmCollect extends Command {
 
     protected void execute() {
         if (arm.hasCube()) {
-            arm.setIntakeSpeed(0.5);
+            arm.setIntakePercent(0.5);
             if (arm.getDartEncoderPosition() < Globals.Arm.ARM_TRAVEL_POSITION - 300) {
                 arm.setDartPosition(Globals.Arm.ARM_TRAVEL_POSITION);
             }
         } else {
-            arm.setIntakeSpeed(1.0);
+            arm.setIntakePercent(1.0);
         }
     }
 
@@ -28,6 +28,6 @@ public class ArmCollect extends Command {
     }
 
     protected void end() {
-        arm.setIntakeSpeed(0.0);
+        arm.setIntakePercent(0.0);
     }
 }

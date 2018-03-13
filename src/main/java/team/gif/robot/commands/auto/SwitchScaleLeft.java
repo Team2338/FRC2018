@@ -3,39 +3,33 @@ package team.gif.robot.commands.auto;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.Waypoint;
-import team.gif.lib.GameDataCommandGroup;
 import team.gif.robot.Globals;
+import team.gif.robot.commands.subsystem.arm.ArmLaunchLong;
+import team.gif.robot.commands.subsystem.arm.ArmSetPosition;
+import team.gif.robot.commands.subsystem.drivetrain.DrivetrainConstantPercent;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
+import team.gif.robot.subsystems.Drivetrain;
 
-public class SwitchScaleLeft extends GameDataCommandGroup {
+import java.io.File;
 
-    private Waypoint[] leftPoints = new Waypoint[] {
-            new Waypoint(0, 0, 0),
-            new Waypoint(1.395, 2.565, 0)
-    };
+public class SwitchScaleLeft extends CommandGroup {
 
-    private Waypoint[] rightPoints = new Waypoint[] {
-            new Waypoint(0, 0, 0),
-            new Waypoint( -1.653, 2.565, 0)
-    };
+    private Trajectory leftPath = Pathfinder.readFromCSV(new File("/home/lvuser/lefttoleftscale.csv"));
+//    private Trajectory rightPath = Pathfinder.readFromCSV(new File("/home/lvuser/something.csv"));
 
-    private Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
-            Globals.Drivetrain.TIME_STEP, Globals.Drivetrain.MAX_VELOCITY, Globals.Drivetrain.MAX_ACCELERATION, Globals.Drivetrain.MAX_JERK);
-    Trajectory leftPath = Pathfinder.generate(leftPoints, config);
-    Trajectory rightPath = Pathfinder.generate(rightPoints, config);
-
-    private String gameData;
-
-    public SwitchScaleLeft() {
-        if (gameData.charAt(0) == 'L') {
-            addSequential(new DrivetrainFollowPath(leftPath));
-        } else {
-            addSequential(new DrivetrainFollowPath(rightPath));
-        }
+    protected void initialize() {
+        Drivetrain.getInstance().resetEncoders();
     }
 
-    public void setGameData(String gameData) {
-        this.gameData = gameData;
+    public SwitchScaleLeft(String gameData) {
+        if (gameData.charAt(0) == 'L') {
+            addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
+            addSequential(new DrivetrainFollowPath(leftPath));
+            addSequential(new DrivetrainConstantPercent(-0.3, 2));
+//            addSequential(new DriveUntilCollision(-0.3));
+            addSequential(new ArmLaunchLong());
+        } else {
+//            addSequential(new DrivetrainFollowPath(rightPath));
+        }
     }
 }

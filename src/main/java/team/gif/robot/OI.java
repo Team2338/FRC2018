@@ -3,7 +3,6 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.gif.lib.AxisButton;
 import team.gif.lib.DualButton;
 import team.gif.lib.POVButton;
@@ -56,30 +55,29 @@ public class OI {
 
     private OI() {
 
+//        dA.whenPressed(new DrivetrainFollowPath(Pathfinder.readFromCSV(
+//                new File("/home/lvuser/twometer.csv"))));
+//        dB.whenPressed(new GeneratePaths());
+//        dX.whileHeld(new DrivetrainConstant(0.1, 6));
+
         // Arm Positions
         dLT.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
         dLB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SECOND_POSITION));
         dRB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+        dY.whenPressed(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
 
         // Arm Functions
-        aLB.whileHeld(new ArmEject());
+        aLB.whileHeld(new ArmEject(1.0));
         aRB.whileHeld(new ArmCollect());
         aA.whileHeld(new ArmOpen());
-        aB.whenPressed(new ArmLaunch());
+        aB.whenPressed(new ArmLaunchShort());
+        aY.whenPressed(new ArmLaunchLong());
 
         // Ramp Stuff
         menuButons.whenPressed(new RampsDeploy());
         aLT.whileHeld(new RampsLift(RampsLift.RampSide.RIGHT)); // Hold Y to invert
         aRT.whileHeld(new RampsLift(RampsLift.RampSide.LEFT)); // Hold Y to invert
 
-        SmartDashboard.putData("Arm: Start", new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
-        SmartDashboard.putData("Arm: Switch", new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-        SmartDashboard.putData("Arm: Second", new ArmSetPosition(Globals.Arm.ARM_SECOND_POSITION));
-        SmartDashboard.putData("Arm: Travel", new ArmSetPosition(Globals.Arm.ARM_TRAVEL_POSITION));
-        SmartDashboard.putData("Arm: Collect", new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
-        SmartDashboard.putData("Ramps: Deploy", new RampsDeploy());
-
-        SmartDashboard.putData("Forward One Meter", new ForwardOneMeter("LRL"));
     }
 
     public void rumble(XboxController controller, boolean rumble) {

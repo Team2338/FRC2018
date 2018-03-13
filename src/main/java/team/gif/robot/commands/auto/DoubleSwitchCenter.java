@@ -4,30 +4,17 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
-import team.gif.lib.GameDataCommandGroup;
 import team.gif.robot.Globals;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
 
-public class DoubleSwitchCenter extends GameDataCommandGroup {
+import java.io.File;
 
-    private Waypoint[] leftPoints = new Waypoint[] {
-            new Waypoint(0, 0, 0),
-            new Waypoint(1.395, 2.565, 0)
-    };
+public class DoubleSwitchCenter extends CommandGroup {
 
-    private Waypoint[] rightPoints = new Waypoint[] {
-            new Waypoint(0, 0, 0),
-            new Waypoint( -1.653, 2.565, 0)
-    };
+    private Trajectory leftPath = Pathfinder.readFromCSV(new File("/home/lvuser/something.csv"));
+    private Trajectory rightPath = Pathfinder.readFromCSV(new File("/home/lvuser/something.csv"));
 
-    private Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
-            Globals.Drivetrain.TIME_STEP, Globals.Drivetrain.MAX_VELOCITY, Globals.Drivetrain.MAX_ACCELERATION, Globals.Drivetrain.MAX_JERK);
-    Trajectory leftPath = Pathfinder.generate(leftPoints, config);
-    Trajectory rightPath = Pathfinder.generate(rightPoints, config);
-
-    private String gameData;
-
-    public DoubleSwitchCenter() {
+    public DoubleSwitchCenter(String gameData) {
         if (gameData.charAt(0) == 'L') {
             addSequential(new DrivetrainFollowPath(leftPath));
         } else {
@@ -35,7 +22,4 @@ public class DoubleSwitchCenter extends GameDataCommandGroup {
         }
     }
 
-    public void setGameData(String gameData) {
-        this.gameData = gameData;
-    }
 }

@@ -4,38 +4,39 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
-import team.gif.lib.GameDataCommandGroup;
 import team.gif.robot.Globals;
+import team.gif.robot.commands.subsystem.arm.ArmEject;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
+import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPathReverse;
 
-public class SwitchScaleCenter extends GameDataCommandGroup {
+import java.io.File;
 
-    private Waypoint[] leftPoints = new Waypoint[] {
-            new Waypoint(0, 0, 0),
-            new Waypoint(1.395, 2.565, 0)
-    };
+public class SwitchScaleCenter extends CommandGroup {
 
-    private Waypoint[] rightPoints = new Waypoint[] {
-            new Waypoint(0, 0, 0),
-            new Waypoint( -1.653, 2.565, 0)
-    };
+    private Trajectory centertoleftswitch = Pathfinder.readFromCSV(new File("/home/lvuser/centertoleftswitch.csv"));
+    private Trajectory centertorightswitch = Pathfinder.readFromCSV(new File("/home/lvuser/centertorightswitch.csv"));
+    private Trajectory leftswitchtoleftscale = Pathfinder.readFromCSV(new File("/home/lvuser/leftswitchtoleftscale.csv"));
+    private Trajectory leftswitchtorightscale = Pathfinder.readFromCSV(new File("/home/lvuser/leftswitchtorightscale.csv"));
+    private Trajectory rightswitchtoleftscale = Pathfinder.readFromCSV(new File("/home/lvuser/rightswitchtoleftscale.csv"));
+    private Trajectory rightswitchtorightscale = Pathfinder.readFromCSV(new File("/home/lvuser/rightswitchtorightscale.csv"));
 
-    private Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH,
-            Globals.Drivetrain.TIME_STEP, Globals.Drivetrain.MAX_VELOCITY, Globals.Drivetrain.MAX_ACCELERATION, Globals.Drivetrain.MAX_JERK);
-    Trajectory leftPath = Pathfinder.generate(leftPoints, config);
-    Trajectory rightPath = Pathfinder.generate(rightPoints, config);
-
-    private String gameData;
-
-    public SwitchScaleCenter() {
+    public SwitchScaleCenter(String gameData) {
         if (gameData.charAt(0) == 'L') {
-            addSequential(new DrivetrainFollowPath(leftPath));
+            addSequential(new DrivetrainFollowPath(centertoleftswitch));
+            addSequential(new ArmEject(0.75));
+            if (gameData.charAt(1) == 'L') {
+                addSequential(new DrivetrainFollowPathReverse(leftswitchtoleftscale));
+            } else {
+                addSequential(new DrivetrainFollowPathReverse(leftswitchtorightscale));
+            }
         } else {
-            addSequential(new DrivetrainFollowPath(rightPath));
+            addSequential(new DrivetrainFollowPath(centertorightswitch));
+            addSequential(new ArmEject(0.75));
+            if (gameData.charAt(1) == 'L') {
+                addSequential(new DrivetrainFollowPathReverse(rightswitchtoleftscale));
+            } else {
+                addSequential(new DrivetrainFollowPathReverse(rightswitchtorightscale));
+            }
         }
-    }
-
-    public void setGameData(String gameData) {
-        this.gameData = gameData;
     }
 }

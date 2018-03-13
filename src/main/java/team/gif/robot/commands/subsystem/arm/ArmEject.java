@@ -6,13 +6,15 @@ import team.gif.robot.subsystems.Arm;
 public class ArmEject extends Command {
 
     private Arm arm = Arm.getInstance();
+    private double speed;
 
-    public ArmEject() {
+    public ArmEject(double speed) {
         requires(arm);
+        this.speed = -speed;
     }
 
     protected void execute() {
-        arm.setIntakeSpeed(-1.0);
+        arm.setIntakePercent(speed);
     }
 
     protected boolean isFinished() {
@@ -20,6 +22,6 @@ public class ArmEject extends Command {
     }
 
     protected void end() {
-        arm.setIntakeSpeed(0.0);
+        arm.setIntakePercent(0.0);
     }
 }

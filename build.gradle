@@ -2,7 +2,7 @@ plugins {
     id "java"
     id "eclipse"
     id "idea"
-    id "jaci.openrio.gradle.GradleRIO" version "2018.02.17"
+    id "jaci.openrio.gradle.GradleRIO" version "2018.03.06"
 }
 
 def TEAM = 2338
@@ -28,7 +28,6 @@ deploy {
 dependencies {
     compile wpilib()
     compile ctre()
-//    compile navx()
     compile pathfinder()
 }
 

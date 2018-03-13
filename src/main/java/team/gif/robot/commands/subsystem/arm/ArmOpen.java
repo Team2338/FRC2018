@@ -9,8 +9,6 @@ public class ArmOpen extends Command {
 
     private Arm arm = Arm.getInstance();
 
-    public ArmOpen() {}
-
     protected void execute() {
         if (arm.getDartEncoderPosition() < Globals.Arm.ARM_OPEN_SOFT_LIMIT) {
             arm.setOpen(true);

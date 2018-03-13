@@ -7,7 +7,9 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.lib.GIFDrive;
+import team.gif.lib.MotorLogger;
 import team.gif.lib.TalonSRXConfigurator;
+import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainTeleOp;
 
@@ -27,9 +29,11 @@ public class Drivetrain extends Subsystem {
     private TalonSRX leftFollower = TalonSRXConfigurator.createFollowerTalon(RobotMap.Drivetrain.LEFT_FOLLOWER_ID, RobotMap.Drivetrain.LEFT_MASTER_ID);
     private TalonSRX rightMaster = TalonSRXConfigurator.createDefaultTalon(RobotMap.Drivetrain.RIGHT_MASTER_ID);
     private TalonSRX rightFollower = TalonSRXConfigurator.createFollowerTalon(RobotMap.Drivetrain.RIGHT_FOLLOWER_ID, RobotMap.Drivetrain.RIGHT_MASTER_ID);
-//    private PigeonIMU pigeon = new PigeonIMU(leftFollower);
+    private PigeonIMU pigeon = new PigeonIMU(leftFollower);
 
     private GIFDrive drive = new GIFDrive(leftMaster, rightMaster);
+
+    private MotorLogger logger = Robot.logger;
 
     private Drivetrain() {
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
@@ -37,28 +41,55 @@ public class Drivetrain extends Subsystem {
         rightMaster.setInverted(true);
         rightFollower.setInverted(true);
         rightMaster.setSensorPhase(true);
+        leftMaster.setSensorPhase(true);
+
+        MotorLogger.addMotor(leftMaster);
+        MotorLogger.addMotor(rightMaster);
     }
 
     public void curvatureDrive(double speed, double rotation, boolean isQuickTurn) {
         drive.curvatureDrive(speed, rotation, isQuickTurn);
     }
 
-    public void setLeft(double speed) {
-        leftMaster.set(ControlMode.PercentOutput, speed);
+    public void setLeft(double percent) {
+        leftMaster.set(ControlMode.PercentOutput, percent);
     }
 
-    public void setRight(double speed) {
-        rightMaster.set(ControlMode.PercentOutput, speed);
+    public void setRight(double percent) {
+        rightMaster.set(ControlMode.PercentOutput, percent);
+    }
+
+    public void resetGyro() {
+        pigeon.setFusedHeading(0, 0);
+    }
+
+    public void resetEncoders() {
+        leftMaster.setSelectedSensorPosition(0, 0, 0);
+        rightMaster.setSelectedSensorPosition(0, 0, 0);
+    }
+
+    public void startLogger() {
+        logger.run();
+    }
+
+    public void stopLogger() {
+        logger.end();
     }
 
     public int getLeftEncPosition() {
-//        return leftMaster.getSelectedSensorPosition(0);
-        return Ramps.getInstance().leftFollower.getSelectedSensorPosition(0);
+        return leftMaster.getSelectedSensorPosition(0);
     }
 
     public int getRightEncPosition() {
-//        return rightMaster.getSelectedSensorPosition(0);
-        return Ramps.getInstance().rightMaster.getSelectedSensorPosition(0);
+        return rightMaster.getSelectedSensorPosition(0);
+    }
+
+    public double getLeftEncVelociy() {
+        return leftMaster.getSelectedSensorVelocity(0);
+    }
+
+    public double getRightEncVelocity() {
+        return rightMaster.getSelectedSensorVelocity(0);
     }
 
     public double getLeftCurrent() {
@@ -71,15 +102,13 @@ public class Drivetrain extends Subsystem {
 
     public PigeonIMU.GeneralStatus getPigeonGeneralStatus() {
         PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
-//        pigeon.getGeneralStatus(genStatus);
-        Ramps.getInstance().pigeon.getGeneralStatus(genStatus);
+        pigeon.getGeneralStatus(genStatus);
         return genStatus;
     }
 
     public PigeonIMU.FusionStatus getPigeonFusionStatus() {
         PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
-//        pigeon.getFusedHeading(fusionStatus);
-        Ramps.getInstance().pigeon.getFusedHeading(fusionStatus);
+        pigeon.getFusedHeading(fusionStatus);
         return fusionStatus;
     }
 

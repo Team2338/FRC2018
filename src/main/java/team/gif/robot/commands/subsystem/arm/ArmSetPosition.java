@@ -7,7 +7,6 @@ import team.gif.robot.subsystems.Arm;
 public class ArmSetPosition extends InstantCommand {
 
     private Arm arm = Arm.getInstance();
-
     private int position;
 
     public ArmSetPosition(int position) {
@@ -16,7 +15,9 @@ public class ArmSetPosition extends InstantCommand {
     }
 
     protected void execute() {
-        if (arm.hasCube() && position < Globals.Arm.ARM_TRAVEL_POSITION) { position = Globals.Arm.ARM_TRAVEL_POSITION; }
         arm.setDartPosition(position);
+        if (arm.hasCube() && this.position < Globals.Arm.ARM_TRAVEL_POSITION) {
+            arm.setDartPosition(Globals.Arm.ARM_TRAVEL_POSITION);
+        }
     }
 }
