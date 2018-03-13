@@ -20,8 +20,6 @@ public class TalonSRXConfigurator {
         public int FORWARD_SOFT_LIMIT = 0;
         public int REVERSE_SOFT_LIMIT = 0;
         public boolean INVERTED = false;
-        public double NOMINAL_CLOSED_LOOP_VOLTAGE = 12;
-        public boolean SAFETY_ENABLED = false;
 
         public int CONTROL_FRAME_PERIOD_MS = 5;
         public int MOTION_CONTROL_FRAME_PERIOD_MS = 100;
@@ -34,7 +32,6 @@ public class TalonSRXConfigurator {
         public VelocityMeasPeriod VELOCITY_MEASUREMENT_PERIOD = VelocityMeasPeriod.Period_100Ms;
         public int VELOCITY_MEASUREMENT_ROLLING_AVERAGE_WINDOW = 64;
 
-        public double VOLTAGE_COMPENSATION_RAMP_RATE = 0;
         public double VOLTAGE_RAMP_RATE = 0;
     }
 

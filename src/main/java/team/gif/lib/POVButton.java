@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.buttons.Button;
 
 public class POVButton extends Button {
 
-
     public enum Direction {
         NORTH(0),
         NORTHEAST(45),

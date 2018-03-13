@@ -27,14 +27,13 @@ public class Robot extends TimedRobot {
     private SendableChooser<StartPosition> startPositionChooser;
     private SendableChooser<Strategy> strategyChooser;
     private Command auto;
-    private String gameData = "";
+    private String gameData;
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
     private Arm arm = Arm.getInstance();
     private Ramps ramps = Ramps.getInstance();
     private OI oi = OI.getInstance();
 
-    @Override
     public void robotInit() {
         init();
         startPositionChooser = new SendableChooser<>();
@@ -54,13 +53,16 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Start Position", startPositionChooser);
     }
 
+    public void robotPeriodic() {
+        update();
+    }
+
     public void disabledInit() {
         init();
     }
 
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
-        update();
+
     }
 
     public void autonomousInit() {
@@ -74,11 +76,11 @@ public class Robot extends TimedRobot {
             auto = new DoNothing();
         } else if (strategy == Strategy.SWITCH) {
             if (startPosition == StartPosition.LEFT) {
-                auto = new FrontSwitchLeft(gameData);
+                auto = new SoloSwitchLeft(gameData);
             } else if (startPosition == StartPosition.CENTER) {
-                auto = new FrontSwitchCenter(gameData);
+                auto = new SoloSwitchCenter(gameData);
             } else if (startPosition == StartPosition.RIGHT){
-                auto = new FrontSwitchRight(gameData);
+                auto = new SoloSwitchRight(gameData);
             }
         } else if (strategy == Strategy.DOUBLE_SWITCH) {
             if (startPosition == StartPosition.LEFT) {
@@ -113,17 +115,15 @@ public class Robot extends TimedRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        update();
     }
 
     public void teleopInit() {
-        init();
         if (auto != null) auto.cancel();
+        init();
     }
 
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        update();
 
         if (getMatchTime() <= 30.0 && getMatchTime() > 29.5) {
             OI.getInstance().rumble(OI.getInstance().driver, true);
@@ -143,7 +143,6 @@ public class Robot extends TimedRobot {
 
     public void testPeriodic() {
         Scheduler.getInstance().run();
-        update();
     }
 
     public double getMatchTime() {
@@ -161,27 +160,18 @@ public class Robot extends TimedRobot {
     }
 
     public void update() {
-//        SmartDashboard.putNumber("Flywheel Velocity", arm.getArmSpeed());
-
         SmartDashboard.putNumber("Dart Encoder", arm.getDartEncoderPosition());
         SmartDashboard.putNumber("Dart Potentiometer", arm.getDartPotPosition());
-//        SmartDashboard.putNumber("Heading", drivetrain.getHeading());
-//
+
+        SmartDashboard.putNumber("Drive Heading", drivetrain.getHeading());
         SmartDashboard.putNumber("Left Position", drivetrain.getLeftEncPosition());
+        SmartDashboard.putNumber("Right Position", drivetrain.getRightEncPosition());
         SmartDashboard.putNumber("Left Velocity (mps)", drivetrain.getLeftEncVelociy() * 10 / 4096 * 0.484);
         SmartDashboard.putNumber("Right Velocity (mps)", drivetrain.getRightEncVelocity()  * 10 / 4096 * 0.484);
-        SmartDashboard.putNumber("Left Velocity (tps)", drivetrain.getLeftEncVelociy() * 10);
-        SmartDashboard.putNumber("Right Velocity (tps)", drivetrain.getRightEncVelocity() * 10);
-        SmartDashboard.putNumber("Right Position", drivetrain.getRightEncPosition());
-        SmartDashboard.putNumber("Left Current", drivetrain.getLeftCurrent());
-        SmartDashboard.putNumber("Right Current", drivetrain.getRightCurrent());
-        SmartDashboard.putBoolean("Left Limit", ramps.getLeftLimit());
-        SmartDashboard.putBoolean("Right Limit", ramps.getRightLimit());
-//        SmartDashboard.putNumber("Left Output", drivetrain.getLeftMotorOutput());
-//
-//        SmartDashboard.putBoolean("Arm Prox", arm.hasCube());
-//
-//        System.out.println("Left Limit Status: " + ramps.getLeftLimit());
-//        System.out.println("Right Limit Status: " + ramps.getRightLimit());
+
+        SmartDashboard.putBoolean("Left Ramp Limit", ramps.getLeftLimit());
+        SmartDashboard.putBoolean("Right Ramp Limit", ramps.getRightLimit());
+
+        SmartDashboard.putBoolean("Cube", arm.hasCube());
     }
 }

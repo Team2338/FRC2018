@@ -3,8 +3,6 @@ package team.gif.robot.commands.auto;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.Waypoint;
-import team.gif.robot.Globals;
 import team.gif.robot.commands.subsystem.arm.ArmEject;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPathReverse;

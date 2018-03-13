@@ -10,12 +10,12 @@ import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
 
 import java.io.File;
 
-public class FrontSwitchRight extends CommandGroup {
+public class SoloSwitchRight extends CommandGroup {
 
     Trajectory leftPath = Pathfinder.readFromCSV(new File("/home/lvuser/righttoleftswitch.csv"));
     Trajectory rightPath = Pathfinder.readFromCSV(new File("/home/lvuser/righttorightswitch.csv"));
 
-    public FrontSwitchRight(String gameData) {
+    public SoloSwitchRight(String gameData) {
         if (gameData.charAt(0) == 'L') {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
             addSequential(new DrivetrainFollowPath(leftPath));

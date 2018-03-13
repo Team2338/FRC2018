@@ -21,7 +21,7 @@ public class OI {
         return instance;
     }
 
-    public XboxController driver = new XboxController(RobotMap.OI.DRIVER_CONTROLLER_ID);
+    public XboxController driver = new XboxController(RobotMap.OI.DRIVE_CONTROLLER_ID);
     public XboxController aux = new XboxController(RobotMap.OI.AUX_CONTROLLER_ID);
 
     JoystickButton dA = new JoystickButton(driver, 1);
@@ -75,8 +75,8 @@ public class OI {
 
         // Ramp Stuff
         menuButons.whenPressed(new RampsDeploy());
-        aLT.whileHeld(new RampsLift(RampsLift.RampSide.RIGHT)); // Hold Y to invert
-        aRT.whileHeld(new RampsLift(RampsLift.RampSide.LEFT)); // Hold Y to invert
+        aLT.whileHeld(new RampsLift(RampsLift.RampSide.RIGHT)); // Hold X to invert
+        aRT.whileHeld(new RampsLift(RampsLift.RampSide.LEFT)); // Hold X to invert
 
     }
 

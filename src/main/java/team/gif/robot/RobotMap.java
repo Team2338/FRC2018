@@ -33,9 +33,9 @@ public abstract class RobotMap {
         public static final int CUBE_SENSOR_ID = 7;
     }
 
+    // Operator Interface Ports
     public static class OI {
-        // Operator Interface Ports
-        public static final int DRIVER_CONTROLLER_ID = 0;
+        public static final int DRIVE_CONTROLLER_ID = 0;
         public static final int AUX_CONTROLLER_ID = 1;
     }
 }
