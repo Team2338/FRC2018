@@ -61,39 +61,43 @@ public class GeneratePaths extends InstantCommand {
 
     private Waypoint[] LEFT_TO_LEFT_SCALE = new Waypoint[] {
             new Waypoint(0, 0, 0),
-            new Waypoint(4.26, 0.75, 0),
-            new Waypoint(6.98, 0.75, 0),
-            new Waypoint(7.73, -0, Pathfinder.d2r(-90))
+            new Waypoint(4.26, 0.5, 0),
+            new Waypoint(6.73, 0.5, 0),
+            new Waypoint(7.73, -0.5, Pathfinder.d2r(-90))
     };
 
     private Waypoint[] LEFT_TO_RIGHT_SCALE = new Waypoint[] {
-
+            new Waypoint(0, 0, 0)
     };
 
     private Waypoint[] RIGHT_TO_LEFT_SCALE = new Waypoint[] {
+            new Waypoint(0, 0, 0)
 
     };
 
     private Waypoint[] RIGHT_TO_RIGHT_SCALE = new Waypoint[] {
-
+            new Waypoint(0, 0, 0),
+            new Waypoint(4.26, -0.5, 0),
+            new Waypoint(6.73, -0.5, 0),
+            new Waypoint(7.73, 0.5, Pathfinder.d2r(90))
     };
 
 // SWITCH TO SCALE PATHS
 
     private Waypoint[] LEFT_BACK_SWITCH_TO_LEFT_SCALE = new Waypoint[] {
-
+            new Waypoint(0, 0, 0)
     };
 
     private Waypoint[] LEFT_BACK_SWITCH_TO_RIGHT_SCALE = new Waypoint[] {
-
+            new Waypoint(0, 0, 0)
     };
 
     private Waypoint[] RIGHT_BACK_SWITCH_TO_LEFT_SCALE = new Waypoint[] {
-
+            new Waypoint(0, 0, 0)
     };
 
     private Waypoint[] RIGHT_BACK_SWITCH_TO_RIGHT_SCALE = new Waypoint[] {
-
+            new Waypoint(0, 0, 0)
     };
 
 // MULTIPURPOSE PATHS
@@ -117,35 +121,35 @@ public class GeneratePaths extends InstantCommand {
         System.out.println("Beginning path generation :D");
         System.out.println("Beginning: start to switch");
 
-        Pathfinder.writeToCSV(new File(path + "lefttoleftswitch.csv"), Pathfinder.generate(LEFT_TO_LEFT_SWITCH, config));
-        Pathfinder.writeToCSV(new File(path + "lefttorightswitch.csv"), Pathfinder.generate(LEFT_TO_RIGHT_SWITCH, config));
-        Pathfinder.writeToCSV(new File(path + "centertoleftswitch.csv"), Pathfinder.generate(CENTER_TO_LEFT_SWITCH, config));
-        Pathfinder.writeToCSV(new File(path + "centertorightswitch.csv"), Pathfinder.generate(CENTER_TO_RIGHT_SWITCH, config));
-        Pathfinder.writeToCSV(new File(path + "righttoleftswitch.csv"), Pathfinder.generate(RIGHT_TO_LEFT_SWITCH, config));
-        Pathfinder.writeToCSV(new File(path + "righttorightswitch.csv"), Pathfinder.generate(RIGHT_TO_RIGHT_SWITCH, config));
+//        Pathfinder.writeToCSV(new File(path + "lefttoleftswitch.csv"), Pathfinder.generate(LEFT_TO_LEFT_SWITCH, config));
+//        Pathfinder.writeToCSV(new File(path + "lefttorightswitch.csv"), Pathfinder.generate(LEFT_TO_RIGHT_SWITCH, config));
+//        Pathfinder.writeToCSV(new File(path + "centertoleftswitch.csv"), Pathfinder.generate(CENTER_TO_LEFT_SWITCH, config));
+//        Pathfinder.writeToCSV(new File(path + "centertorightswitch.csv"), Pathfinder.generate(CENTER_TO_RIGHT_SWITCH, config));
+//        Pathfinder.writeToCSV(new File(path + "righttoleftswitch.csv"), Pathfinder.generate(RIGHT_TO_LEFT_SWITCH, config));
+//        Pathfinder.writeToCSV(new File(path + "righttorightswitch.csv"), Pathfinder.generate(RIGHT_TO_RIGHT_SWITCH, config));
 
         System.out.println("Finished: start to switch");
         System.out.println("Beginning: start to scale");
 
-        Pathfinder.writeToCSV(new File(path + "lefttoleftscale.csv"), Pathfinder.generate(LEFT_TO_LEFT_SCALE, config));
-        Pathfinder.writeToCSV(new File(path + "lefttorightscale.csv"), Pathfinder.generate(LEFT_TO_RIGHT_SCALE, config));
-        Pathfinder.writeToCSV(new File(path + "righttoleftscale.csv"), Pathfinder.generate(RIGHT_TO_LEFT_SCALE, config));
+//        Pathfinder.writeToCSV(new File(path + "lefttoleftscale.csv"), Pathfinder.generate(LEFT_TO_LEFT_SCALE, config));
+//        Pathfinder.writeToCSV(new File(path + "lefttorightscale.csv"), Pathfinder.generate(LEFT_TO_RIGHT_SCALE, config));
+//        Pathfinder.writeToCSV(new File(path + "righttoleftscale.csv"), Pathfinder.generate(RIGHT_TO_LEFT_SCALE, config));
         Pathfinder.writeToCSV(new File(path + "righttorightscale.csv"), Pathfinder.generate(RIGHT_TO_RIGHT_SCALE, config));
 
         System.out.println("Finished: start to scale");
         System.out.println("Beginning: switch to scale");
 
-        Pathfinder.writeToCSV(new File(path + "leftswitchtoleftscale.csv"), Pathfinder.generate(LEFT_BACK_SWITCH_TO_LEFT_SCALE, config));
-        Pathfinder.writeToCSV(new File(path + "leftswitchtorightscale.csv"), Pathfinder.generate(LEFT_BACK_SWITCH_TO_RIGHT_SCALE, config));
-        Pathfinder.writeToCSV(new File(path + "rightswitchtoleftscale.csv"), Pathfinder.generate(RIGHT_BACK_SWITCH_TO_LEFT_SCALE, config));
-        Pathfinder.writeToCSV(new File(path + "rightswitchtorightscale.csv"), Pathfinder.generate(RIGHT_BACK_SWITCH_TO_RIGHT_SCALE, config));
+//        Pathfinder.writeToCSV(new File(path + "leftswitchtoleftscale.csv"), Pathfinder.generate(LEFT_BACK_SWITCH_TO_LEFT_SCALE, config));
+//        Pathfinder.writeToCSV(new File(path + "leftswitchtorightscale.csv"), Pathfinder.generate(LEFT_BACK_SWITCH_TO_RIGHT_SCALE, config));
+//        Pathfinder.writeToCSV(new File(path + "rightswitchtoleftscale.csv"), Pathfinder.generate(RIGHT_BACK_SWITCH_TO_LEFT_SCALE, config));
+//        Pathfinder.writeToCSV(new File(path + "rightswitchtorightscale.csv"), Pathfinder.generate(RIGHT_BACK_SWITCH_TO_RIGHT_SCALE, config));
 
         System.out.println("Finished: switch to scale");
         System.out.println("Beginning: multipurpose");
 
-        Pathfinder.writeToCSV(new File(path + "onemeter.csv"), Pathfinder.generate(ONE_METER, config));
-        Pathfinder.writeToCSV(new File(path + "twometer.csv"), Pathfinder.generate(TWO_METER, config));
-        Pathfinder.writeToCSV(new File(path + "threemeter.csv"), Pathfinder.generate(THREE_METER, config));
+//        Pathfinder.writeToCSV(new File(path + "onemeter.csv"), Pathfinder.generate(ONE_METER, config));
+//        Pathfinder.writeToCSV(new File(path + "twometer.csv"), Pathfinder.generate(TWO_METER, config));
+//        Pathfinder.writeToCSV(new File(path + "threemeter.csv"), Pathfinder.generate(THREE_METER, config));
 
         System.out.println("Finished path generation in: " + timeSinceInitialized() + "s");
     }

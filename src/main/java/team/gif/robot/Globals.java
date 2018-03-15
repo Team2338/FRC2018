@@ -14,7 +14,7 @@ public class Globals {
         public static final double kVRight = 1.0/4.5;
         public static final double kALeft = 1.4/12.0; // 2.5/12
         public static final double kARight = 1.5/12.0;
-        public static final double gyroSensitivity = 1.2;
+        public static final double gyroSensitivity = 0.8;
 
         // Drivetrain Physical Constants
         public static final double WHEELBASE_WIDTH_IN = 23.25;

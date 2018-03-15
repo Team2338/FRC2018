@@ -5,6 +5,7 @@ import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import team.gif.robot.Globals;
 import team.gif.robot.commands.subsystem.arm.ArmLaunchLong;
+import team.gif.robot.commands.subsystem.arm.ArmLaunchShort;
 import team.gif.robot.commands.subsystem.arm.ArmSetPosition;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainConstantPercent;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
@@ -25,9 +26,9 @@ public class SwitchScaleLeft extends CommandGroup {
         if (gameData.charAt(0) == 'L') {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
             addSequential(new DrivetrainFollowPath(leftPath));
-            addSequential(new DrivetrainConstantPercent(-0.3, 2));
+            addSequential(new DrivetrainConstantPercent(-0.2, 3.0));
 //            addSequential(new DriveUntilCollision(-0.3));
-            addSequential(new ArmLaunchLong());
+            addSequential(new ArmLaunchShort());
         } else {
 //            addSequential(new DrivetrainFollowPath(rightPath));
         }

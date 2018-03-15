@@ -27,9 +27,9 @@ public class DrivetrainFollowPathReverse extends Command {
         left = new EncoderFollower(modifier.getRightTrajectory());
         right = new EncoderFollower(modifier.getLeftTrajectory());
 
-        left.configureEncoder(-drivetrain.getLeftEncPosition(), Globals.Drivetrain.TICKS_PER_REVOLUTION,
+        left.configureEncoder(0, Globals.Drivetrain.TICKS_PER_REVOLUTION,
                 Globals.Drivetrain.WHEEL_DIAMETER_M);
-        right.configureEncoder(-drivetrain.getRightEncPosition(), Globals.Drivetrain.TICKS_PER_REVOLUTION,
+        right.configureEncoder(0, Globals.Drivetrain.TICKS_PER_REVOLUTION,
                 Globals.Drivetrain.WHEEL_DIAMETER_M);
 
         left.configurePIDVA(Globals.Drivetrain.DRIVE_P, Globals.Drivetrain.DRIVE_I,

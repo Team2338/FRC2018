@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
     }
 
     private enum Strategy {
-        DO_NOTHING, SWITCH, DOUBLE_SWITCH, SWITCH_SCALE, SCALE_SWITCH
+        DO_NOTHING, SWITCH, DOUBLE_SWITCH, SWITCH_SCALE, SCALE_SWITCH, MOBILITY
     }
 
     public static MotorLogger logger = new MotorLogger();
@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
         strategyChooser.addObject("Double Switch", Strategy.DOUBLE_SWITCH);
         strategyChooser.addObject("Switch to Scale", Strategy.SWITCH_SCALE);
         strategyChooser.addObject("Scale to Switch", Strategy.SCALE_SWITCH);
+        strategyChooser.addObject("Mobility", Strategy.MOBILITY);
 
         SmartDashboard.putData("Strategy", strategyChooser);
         SmartDashboard.putData("Start Position", startPositionChooser);
@@ -106,6 +107,8 @@ public class Robot extends TimedRobot {
             } else if (startPosition == StartPosition.RIGHT){
                 auto = new ScaleSwitchRight(gameData);
             }
+        } else if (strategy == Strategy.MOBILITY) {
+            auto = new Mobility(gameData);
         }
 
         if (gameData == null) { auto = new DoNothing(); }

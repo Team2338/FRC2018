@@ -13,7 +13,6 @@ import java.io.File;
 public class SoloSwitchLeft extends CommandGroup {
 
     Trajectory leftPath = Pathfinder.readFromCSV(new File("/home/lvuser/lefttoleftswitch.csv"));
-    Trajectory arcRight = Pathfinder.readFromCSV(new File("/home/lvuser/arcright.csv"));
     Trajectory rightPath = Pathfinder.readFromCSV(new File("/home/lvuser/lefttorightswitch.csv"));
 
     public SoloSwitchLeft(String gameData) {
