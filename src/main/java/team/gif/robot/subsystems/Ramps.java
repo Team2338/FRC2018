@@ -61,11 +61,11 @@ public class Ramps extends Subsystem {
     }
 
     public boolean getLeftLimit() {
-        return !leftLimit.get();
+        return leftLimit.get();
     }
 
     public boolean getRightLimit() {
-        return !rightLimit.get();
+        return rightLimit.get();
     }
 
     protected void initDefaultCommand() {

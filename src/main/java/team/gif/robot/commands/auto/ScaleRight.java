@@ -12,18 +12,17 @@ import team.gif.robot.subsystems.Drivetrain;
 
 import java.io.File;
 
-public class SwitchScaleRight extends CommandGroup {
+public class ScaleRight extends CommandGroup {
 
     private Trajectory righttorightscale = Pathfinder.readFromCSV(new File("/home/lvuser/righttorightscale.csv"));
-//    private Trajectory rightPath = Pathfinder.readFromCSV(new File("/home/lvuser/something.csv"));
 
     protected void initialize() {
         Drivetrain.getInstance().resetEncoders();
     }
 
-    public SwitchScaleRight(String gameData) {
-        if (gameData.charAt(0) == 'L') {
-
+    public ScaleRight(String gameData) {
+        if (gameData.charAt(1) == 'L') {
+            addParallel(new SwitchRight(gameData));
         } else {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
             addSequential(new DrivetrainFollowPath(righttorightscale));

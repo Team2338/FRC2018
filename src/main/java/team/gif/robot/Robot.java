@@ -19,15 +19,15 @@ public class Robot extends TimedRobot {
     }
 
     private enum Strategy {
-        DO_NOTHING, SWITCH, DOUBLE_SWITCH, SWITCH_SCALE, SCALE_SWITCH, MOBILITY
+        DO_NOTHING, SWITCH, SCALE, MOBILITY
     }
 
-    public static MotorLogger logger = new MotorLogger();
+//    public static MotorLogger logger = new MotorLogger();
 
     private SendableChooser<StartPosition> startPositionChooser;
     private SendableChooser<Strategy> strategyChooser;
     private Command auto;
-    private String gameData;
+    private String gameData = "";
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
     private Arm arm = Arm.getInstance();
@@ -45,9 +45,7 @@ public class Robot extends TimedRobot {
 
         strategyChooser.addDefault("Do Nothing", Strategy.DO_NOTHING);
         strategyChooser.addObject("Switch", Strategy.SWITCH);
-        strategyChooser.addObject("Double Switch", Strategy.DOUBLE_SWITCH);
-        strategyChooser.addObject("Switch to Scale", Strategy.SWITCH_SCALE);
-        strategyChooser.addObject("Scale to Switch", Strategy.SCALE_SWITCH);
+        strategyChooser.addObject("Scale", Strategy.SCALE);
         strategyChooser.addObject("Mobility", Strategy.MOBILITY);
 
         SmartDashboard.putData("Strategy", strategyChooser);
@@ -68,7 +66,12 @@ public class Robot extends TimedRobot {
 
     public void autonomousInit() {
         init();
-        gameData = getGameData();
+
+        while (gameData.equals("")) {
+            if (getGameData() != null) {
+                gameData = getGameData();
+            }
+        }
 
         Strategy strategy = strategyChooser.getSelected();
         StartPosition startPosition =  startPositionChooser.getSelected();
@@ -77,47 +80,41 @@ public class Robot extends TimedRobot {
             auto = new DoNothing();
         } else if (strategy == Strategy.SWITCH) {
             if (startPosition == StartPosition.LEFT) {
-                auto = new SoloSwitchLeft(gameData);
+                auto = new SwitchLeft(gameData);
             } else if (startPosition == StartPosition.CENTER) {
-                auto = new SoloSwitchCenter(gameData);
+                auto = new SwitchCenter(gameData);
             } else if (startPosition == StartPosition.RIGHT){
-                auto = new SoloSwitchRight(gameData);
+                auto = new SwitchRight(gameData);
             }
-        } else if (strategy == Strategy.DOUBLE_SWITCH) {
+        } else if (strategy == Strategy.SCALE) {
             if (startPosition == StartPosition.LEFT) {
-                auto = new DoubleSwitchLeft(gameData);
+                auto = new ScaleLeft(gameData);
             } else if (startPosition == StartPosition.CENTER) {
-                auto = new DoubleSwitchCenter(gameData);
+                auto = new SwitchCenter(gameData);
             } else if (startPosition == StartPosition.RIGHT){
-                auto = new DoubleSwitchRight(gameData);
-            }
-        } else if (strategy == Strategy.SWITCH_SCALE) {
-            if (startPosition == StartPosition.LEFT) {
-                auto = new SwitchScaleLeft(gameData);
-            } else if (startPosition == StartPosition.CENTER) {
-                auto = new SwitchScaleCenter(gameData);
-            } else if (startPosition == StartPosition.RIGHT){
-                auto = new SwitchScaleRight(gameData);
-            }
-        }  else if (strategy == Strategy.SCALE_SWITCH) {
-            if (startPosition == StartPosition.LEFT) {
-                auto = new ScaleSwitchLeft(gameData);
-            } else if (startPosition == StartPosition.CENTER) {
-                auto = new ScaleSwitchCenter(gameData);
-            } else if (startPosition == StartPosition.RIGHT){
-                auto = new ScaleSwitchRight(gameData);
+                auto = new ScaleRight(gameData);
             }
         } else if (strategy == Strategy.MOBILITY) {
-            auto = new Mobility(gameData);
+            if (startPosition == StartPosition.LEFT) {
+                auto = new Mobility(gameData);
+            } else if (startPosition == StartPosition.CENTER) {
+                auto = new MobilityCenter(gameData);
+            } else if (startPosition == StartPosition.RIGHT){
+                auto = new Mobility(gameData);
+            }
         }
 
-        if (gameData == null) { auto = new DoNothing(); }
+        if (gameData.equals("")) { auto = new DoNothing(); }
 
         if (auto != null) auto.start();
     }
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        if (drivetrain.getLeftEncVelociy()*10/4096*Globals.Drivetrain.WHEEL_DIAMETER_M*Math.PI > 2.5 ||
+                drivetrain.getRightEncVelocity()*10/4096*Globals.Drivetrain.WHEEL_DIAMETER_M*Math.PI > 2.5) {
+            auto.cancel();
+        }
     }
 
     public void teleopInit() {
@@ -169,11 +166,13 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Drive Heading", drivetrain.getHeading());
         SmartDashboard.putNumber("Left Position", drivetrain.getLeftEncPosition());
         SmartDashboard.putNumber("Right Position", drivetrain.getRightEncPosition());
-        SmartDashboard.putNumber("Left Velocity (mps)", drivetrain.getLeftEncVelociy() * 10 / 4096 * 0.484);
-        SmartDashboard.putNumber("Right Velocity (mps)", drivetrain.getRightEncVelocity()  * 10 / 4096 * 0.484);
+        SmartDashboard.putNumber("Left Velocity (mps)", drivetrain.getLeftEncVelociy() * 10 / 4096 * Globals.Drivetrain.WHEEL_DIAMETER_M * Math.PI);
+        SmartDashboard.putNumber("Right Velocity (mps)", drivetrain.getRightEncVelocity()  * 10 / 4096 * Globals.Drivetrain.WHEEL_DIAMETER_M * Math.PI);
 
         SmartDashboard.putBoolean("Left Ramp Limit", ramps.getLeftLimit());
         SmartDashboard.putBoolean("Right Ramp Limit", ramps.getRightLimit());
+
+        SmartDashboard.putNumber("Distance (m)", (drivetrain.getLeftEncPosition()+drivetrain.getRightEncPosition())/2/4096*Globals.Drivetrain.WHEEL_DIAMETER_M * Math.PI);
 
         SmartDashboard.putBoolean("Cube", arm.hasCube());
     }

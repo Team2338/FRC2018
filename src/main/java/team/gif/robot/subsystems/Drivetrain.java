@@ -33,7 +33,7 @@ public class Drivetrain extends Subsystem {
 
     private GIFDrive drive = new GIFDrive(leftMaster, rightMaster);
 
-    private MotorLogger logger = Robot.logger;
+//    private MotorLogger logger = Robot.logger;
 
     private Drivetrain() {
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
@@ -68,13 +68,13 @@ public class Drivetrain extends Subsystem {
         rightMaster.setSelectedSensorPosition(0, 0, 0);
     }
 
-    public void startLogger() {
-        logger.run();
-    }
-
-    public void stopLogger() {
-        logger.end();
-    }
+//    public void startLogger() {
+//        logger.run();
+//    }
+//
+//    public void stopLogger() {
+//        logger.end();
+//    }
 
     public int getLeftEncPosition() {
         return leftMaster.getSelectedSensorPosition(0);

@@ -50,6 +50,7 @@ public class DrivetrainFollowPath extends Command {
 
         double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
         double turn = Globals.Drivetrain.gyroSensitivity * (-1.0/80.0) * angleDifference;
+//        turn = 0.0;
 
         drivetrain.setLeft(leftOutput + turn);
         drivetrain.setRight(rightOutput - turn);

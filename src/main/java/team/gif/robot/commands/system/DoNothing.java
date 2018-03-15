@@ -1,26 +1,7 @@
 package team.gif.robot.commands.system;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 
-public class DoNothing extends Command {
+public class DoNothing extends InstantCommand {
 
-    public DoNothing () {
-
-    }
-
-    protected void initialize() {
-
-    }
-
-    protected void execute() {
-
-    }
-
-    protected boolean isFinished() {
-        return true;
-    }
-
-    protected void end() {
-
-    }
 }

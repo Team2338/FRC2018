@@ -24,19 +24,18 @@ public class RampsLift extends Command {
     }
 
     protected void execute() {
-        double speed = 1.0;
         if (ramps.areDeployed()) {
             if (side.equals(RampSide.LEFT)) {
                 if (OI.getInstance().aux.getXButton()) {
                     ramps.setLeft(-1.0);
                 } else {
-                    ramps.setLeft(ramps.getLeftLimit() ? 0 : speed);
+                    ramps.setLeft(ramps.getLeftLimit() ? 0 : 1.0);
                 }
             } else {
                 if (OI.getInstance().aux.getXButton()) {
                     ramps.setRight(-1.0);
                 } else {
-                    ramps.setRight(ramps.getRightLimit() ? 0 : speed);
+                    ramps.setRight(ramps.getRightLimit() ? 0 : 1.0);
                 }
             }
         }
