@@ -3,6 +3,7 @@ package team.gif.robot.commands.subsystem.drivetrain;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
+import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Drivetrain;
 
@@ -18,8 +19,16 @@ public class DrivetrainConstantPercent extends Command {
     }
 
     protected void initialize() {
-        drivetrain.setLeft(percent);
-        drivetrain.setRight(percent);
+        drivetrain.resetGyro();
+    }
+
+    protected void execute() {
+        double gyroHeading = drivetrain.getHeading();
+        double angleDifference = Pathfinder.boundHalfDegrees(0 - gyroHeading);
+        double turn = 0.8 * (-1.0/80.0) * angleDifference;
+
+        drivetrain.setLeft(percent + turn);
+        drivetrain.setRight(percent - turn);
     }
 
     protected boolean isFinished() {

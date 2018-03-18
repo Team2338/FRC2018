@@ -15,6 +15,7 @@ import java.io.File;
 public class ScaleRight extends CommandGroup {
 
     private Trajectory righttorightscale = Pathfinder.readFromCSV(new File("/home/lvuser/righttorightscale.csv"));
+    private Trajectory righttoleftscale = Pathfinder.readFromCSV(new File("/home/lvuser/righttoleftscale.csv"));
 
     protected void initialize() {
         Drivetrain.getInstance().resetEncoders();
@@ -22,7 +23,8 @@ public class ScaleRight extends CommandGroup {
 
     public ScaleRight(String gameData) {
         if (gameData.charAt(1) == 'L') {
-            addParallel(new SwitchRight(gameData));
+            addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
+            addSequential(new DrivetrainFollowPath(righttoleftscale));
         } else {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
             addSequential(new DrivetrainFollowPath(righttorightscale));

@@ -3,6 +3,7 @@ package team.gif.robot.commands.auto;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
+import javafx.scene.shape.Path;
 import team.gif.robot.Globals;
 import team.gif.robot.commands.subsystem.arm.ArmLaunchShort;
 import team.gif.robot.commands.subsystem.arm.ArmSetPosition;
@@ -15,6 +16,7 @@ import java.io.File;
 public class ScaleLeft extends CommandGroup {
 
     private Trajectory lefttoleftscale = Pathfinder.readFromCSV(new File("/home/lvuser/lefttoleftscale.csv"));
+    private Trajectory lefttorightscale = Pathfinder.readFromCSV(new File("/home/lvuser/lefttorightscale.csv"));
 
     protected void initialize() {
         Drivetrain.getInstance().resetEncoders();
@@ -27,7 +29,8 @@ public class ScaleLeft extends CommandGroup {
             addSequential(new DrivetrainConstantPercent(-0.2, 3.0));
             addSequential(new ArmLaunchShort());
         } else {
-            addParallel(new SwitchLeft(gameData));
+            addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
+            addSequential(new DrivetrainFollowPath(lefttorightscale));
         }
     }
 }

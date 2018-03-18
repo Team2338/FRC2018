@@ -9,6 +9,7 @@ import team.gif.lib.AxisButton;
 import team.gif.lib.DualButton;
 import team.gif.lib.POVButton;
 import team.gif.robot.commands.subsystem.arm.*;
+import team.gif.robot.commands.subsystem.drivetrain.DrivetrainConstantPercent;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
 import team.gif.robot.commands.subsystem.ramps.RampsDeploy;
 import team.gif.robot.commands.subsystem.ramps.RampsLift;
@@ -62,10 +63,10 @@ public class OI {
     private OI() {
 
 //        dA.whenPressed(new DrivetrainFollowPath(Pathfinder.readFromCSV(new File("/home/lvuser/twometer.csv"))));
-//        dA.whenPressed(new DrivetrainFollowPath(Pathfinder.readFromCSV(new File("/home/lvuser/fivemeter.csv"))));
-//        dA.whenPressed(new DrivetrainFollowPath(Pathfinder.readFromCSV(new File("/home/lvuser/fivemeterslow.csv"))));
+        dA.whenPressed(new DrivetrainFollowPath(Pathfinder.readFromCSV(new File("/home/lvuser/fivemeter.csv"))));
+        dB.whenPressed(new DrivetrainFollowPath(Pathfinder.readFromCSV(new File("/home/lvuser/fivemeterslow.csv"))));
 //        dB.whenPressed(new GeneratePaths());
-//        dX.whileHeld(new DrivetrainConstant(0.1, 6));
+        dX.whileHeld(new DrivetrainConstantPercent(0.2, 6));
 
         SmartDashboard.putData(new GeneratePaths());
 

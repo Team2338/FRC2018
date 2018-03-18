@@ -18,10 +18,10 @@ public class MobilityCenter extends CommandGroup{
     public MobilityCenter(String gameData) {
         if (gameData.charAt(0) == 'L') {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-            addSequential(new DrivetrainFollowPath(leftPath));
+            addSequential(new DrivetrainFollowPath(rightPath));
         } else {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-            addSequential(new DrivetrainFollowPath(rightPath));
+            addSequential(new DrivetrainFollowPath(leftPath));
         }
     }
 }

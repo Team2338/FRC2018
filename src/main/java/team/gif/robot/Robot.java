@@ -67,11 +67,11 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         init();
 
-        while (gameData.equals("")) {
-            if (getGameData() != null) {
+//        while (gameData.equals("")) {
+//            if (getGameData() != null) {
                 gameData = getGameData();
-            }
-        }
+//            }
+//        }
 
         Strategy strategy = strategyChooser.getSelected();
         StartPosition startPosition =  startPositionChooser.getSelected();
@@ -111,8 +111,8 @@ public class Robot extends TimedRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        if (drivetrain.getLeftEncVelociy()*10/4096*Globals.Drivetrain.WHEEL_DIAMETER_M*Math.PI > 2.5 ||
-                drivetrain.getRightEncVelocity()*10/4096*Globals.Drivetrain.WHEEL_DIAMETER_M*Math.PI > 2.5) {
+        if ((drivetrain.getLeftEncVelociy()*10/4096*Globals.Drivetrain.WHEEL_DIAMETER_M*Math.PI +
+                drivetrain.getRightEncVelocity()*10/4096*Globals.Drivetrain.WHEEL_DIAMETER_M*Math.PI)/2 > 2.5) {
             auto.cancel();
         }
     }
@@ -172,8 +172,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("Left Ramp Limit", ramps.getLeftLimit());
         SmartDashboard.putBoolean("Right Ramp Limit", ramps.getRightLimit());
 
-        SmartDashboard.putNumber("Distance (m)", (drivetrain.getLeftEncPosition()+drivetrain.getRightEncPosition())/2/4096*Globals.Drivetrain.WHEEL_DIAMETER_M * Math.PI);
+        SmartDashboard.putNumber("Distance (in)", (drivetrain.getLeftEncPosition()+drivetrain.getRightEncPosition())/2/4096*Globals.Drivetrain.WHEEL_DIAMETER_IN * Math.PI);
 
         SmartDashboard.putBoolean("Cube", arm.hasCube());
+//        System.out.println(gameData);
     }
 }
