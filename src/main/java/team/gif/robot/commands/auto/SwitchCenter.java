@@ -6,7 +6,7 @@ import jaci.pathfinder.Trajectory;
 import team.gif.robot.Globals;
 import team.gif.robot.commands.subsystem.arm.ArmEject;
 import team.gif.robot.commands.subsystem.arm.ArmSetPosition;
-import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
+import team.gif.robot.commands.subsystem.drivetrain.FollowPathForward;
 
 import java.io.File;
 
@@ -18,11 +18,11 @@ public class SwitchCenter extends CommandGroup{
     public SwitchCenter(String gameData) {
         if (gameData.charAt(0) == 'L') {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-            addSequential(new DrivetrainFollowPath(centertoleftswitch));
+            addSequential(new FollowPathForward(centertoleftswitch));
             addSequential(new ArmEject(0.75), 0.5);
         } else {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-            addSequential(new DrivetrainFollowPath(centertorightswitch));
+            addSequential(new FollowPathForward(centertorightswitch));
             addSequential(new ArmEject(0.75), 0.5);
         }
     }

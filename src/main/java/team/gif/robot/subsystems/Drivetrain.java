@@ -76,6 +76,19 @@ public class Drivetrain extends Subsystem {
 //        logger.end();
 //    }
 
+
+    public TalonSRX getLeftMaster() {
+        return leftMaster;
+    }
+
+    public TalonSRX getRightMaster() {
+        return rightMaster;
+    }
+
+    public PigeonIMU getPigeon() {
+        return pigeon;
+    }
+
     public int getLeftEncPosition() {
         return leftMaster.getSelectedSensorPosition(0);
     }

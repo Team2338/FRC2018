@@ -6,7 +6,7 @@ import jaci.pathfinder.Trajectory;
 import team.gif.robot.Globals;
 import team.gif.robot.commands.subsystem.arm.ArmEject;
 import team.gif.robot.commands.subsystem.arm.ArmSetPosition;
-import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
+import team.gif.robot.commands.subsystem.drivetrain.FollowPathForward;
 
 import java.io.File;
 
@@ -18,11 +18,11 @@ public class SwitchRight extends CommandGroup {
     public SwitchRight(String gameData) {
         if (gameData.charAt(0) == 'L') {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-            addSequential(new DrivetrainFollowPath(righttoleftswitch));
+            addSequential(new FollowPathForward(righttoleftswitch));
             addSequential(new ArmEject(0.75), 0.5);
         } else {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-            addSequential(new DrivetrainFollowPath(righttorightswitch));
+            addSequential(new FollowPathForward(righttorightswitch));
             addSequential(new ArmEject(0.75), 0.5);
         }
     }

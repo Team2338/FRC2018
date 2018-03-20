@@ -4,9 +4,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import team.gif.robot.Globals;
-import team.gif.robot.commands.subsystem.arm.ArmEject;
 import team.gif.robot.commands.subsystem.arm.ArmSetPosition;
-import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
+import team.gif.robot.commands.subsystem.drivetrain.FollowPathForward;
 
 import java.io.File;
 
@@ -18,10 +17,10 @@ public class MobilityCenter extends CommandGroup{
     public MobilityCenter(String gameData) {
         if (gameData.charAt(0) == 'L') {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-            addSequential(new DrivetrainFollowPath(rightPath));
+            addSequential(new FollowPathForward(rightPath));
         } else {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-            addSequential(new DrivetrainFollowPath(leftPath));
+            addSequential(new FollowPathForward(leftPath));
         }
     }
 }

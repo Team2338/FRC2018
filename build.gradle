@@ -23,6 +23,10 @@ deploy {
     }
 }
 
+wpi {
+    ctreVersion = '5.3.1.0'
+}
+
 // Defining my dependencies. In this case, WPILib (+ friends), CTRE Toolsuite (Talon SRX)
 // and NavX.
 dependencies {

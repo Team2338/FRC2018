@@ -8,14 +8,15 @@ import jaci.pathfinder.modifiers.TankModifier;
 import team.gif.robot.Globals;
 import team.gif.robot.subsystems.Drivetrain;
 
-public class DrivetrainFollowPathReverse extends Command {
+public class FollowPathForward extends Command {
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
     private TankModifier modifier;
     private EncoderFollower left;
     private EncoderFollower right;
+    private double angleError;
 
-    public DrivetrainFollowPathReverse(Trajectory trajectory) {
+    public FollowPathForward(Trajectory trajectory) {
         requires(drivetrain);
         modifier = new TankModifier(trajectory).modify(Globals.Drivetrain.WHEELBASE_WIDTH_M);
     }
@@ -24,8 +25,8 @@ public class DrivetrainFollowPathReverse extends Command {
         drivetrain.resetEncoders();
         drivetrain.resetGyro();
 
-        left = new EncoderFollower(modifier.getRightTrajectory());
-        right = new EncoderFollower(modifier.getLeftTrajectory());
+        left = new EncoderFollower(modifier.getLeftTrajectory());
+        right = new EncoderFollower(modifier.getRightTrajectory());
 
         left.configureEncoder(0, Globals.Drivetrain.TICKS_PER_REVOLUTION,
                 Globals.Drivetrain.WHEEL_DIAMETER_M);
@@ -33,30 +34,32 @@ public class DrivetrainFollowPathReverse extends Command {
                 Globals.Drivetrain.WHEEL_DIAMETER_M);
 
         left.configurePIDVA(Globals.Drivetrain.DRIVE_P, Globals.Drivetrain.DRIVE_I,
-                Globals.Drivetrain.DRIVE_D, Globals.Drivetrain.kVLeft, Globals.Drivetrain.kALeft);
+                Globals.Drivetrain.DRIVE_D, Globals.Drivetrain.kVLeftForward, Globals.Drivetrain.kALeftForward);
         right.configurePIDVA(Globals.Drivetrain.DRIVE_P, Globals.Drivetrain.DRIVE_I,
-                Globals.Drivetrain.DRIVE_D, Globals.Drivetrain.kVRight, Globals.Drivetrain.kARight);
+                Globals.Drivetrain.DRIVE_D, Globals.Drivetrain.kVRightForward, Globals.Drivetrain.kARightForward);
     }
 
     protected void execute() {
-        double leftOutput = left.calculate(-drivetrain.getLeftEncPosition());
-        double rightOutput = right.calculate(-drivetrain.getRightEncPosition());
+        double leftOutput = left.calculate(drivetrain.getLeftEncPosition());
+        double rightOutput = right.calculate(drivetrain.getRightEncPosition());
 
-        leftOutput += leftOutput >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptLeft, leftOutput) : 0.0;
-        rightOutput += rightOutput >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptRight, rightOutput) : 0.0;
+        leftOutput += leftOutput >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptLeftForward, leftOutput) : 0.0;
+        rightOutput += rightOutput >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptRightForward, rightOutput) : 0.0;
 
         double gyroHeading = drivetrain.getHeading();
         double desiredHeading = Pathfinder.r2d(left.getHeading());
 
         double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
+        angleError = angleDifference;
         double turn = Globals.Drivetrain.gyroSensitivity * (-1.0/80.0) * angleDifference;
+//        turn = 0.0;
 
-        drivetrain.setLeft(-leftOutput - turn);
-        drivetrain.setRight(-rightOutput + turn);
+        drivetrain.setLeft(leftOutput + turn);
+        drivetrain.setRight(rightOutput - turn);
     }
 
     protected boolean isFinished() {
-        return left.isFinished() && right.isFinished();
+        return left.isFinished() && right.isFinished() && angleError < 5.0;
     }
 
     protected void end() {

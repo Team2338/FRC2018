@@ -7,7 +7,7 @@ import team.gif.robot.Globals;
 import team.gif.robot.commands.subsystem.arm.ArmLaunchShort;
 import team.gif.robot.commands.subsystem.arm.ArmSetPosition;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainConstantPercent;
-import team.gif.robot.commands.subsystem.drivetrain.DrivetrainFollowPath;
+import team.gif.robot.commands.subsystem.drivetrain.FollowPathForward;
 import team.gif.robot.subsystems.Drivetrain;
 
 import java.io.File;
@@ -24,10 +24,10 @@ public class ScaleRight extends CommandGroup {
     public ScaleRight(String gameData) {
         if (gameData.charAt(1) == 'L') {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
-            addSequential(new DrivetrainFollowPath(righttoleftscale));
+            addSequential(new FollowPathForward(righttoleftscale));
         } else {
             addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
-            addSequential(new DrivetrainFollowPath(righttorightscale));
+            addSequential(new FollowPathForward(righttorightscale));
             addSequential(new DrivetrainConstantPercent(-0.2, 3.0));
             addSequential(new ArmLaunchShort());
         }

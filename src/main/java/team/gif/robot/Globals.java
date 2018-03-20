@@ -8,13 +8,7 @@ public class Globals {
         public static final double DEFAULT_QUICK_STOP_ALPHA = 0.1;
         public static final double MAX_OUTPUT = 1.0;
         public static final double DEFAULT_DEADBAND = 0.02;
-        public static final double kInterceptLeft = 0.1; // P: 0.1
-        public static final double kInterceptRight = 0.1; // P: 0.1
-        public static final double kVLeft = 1.0/4.7; // P: 1.0/4.8
-        public static final double kVRight = 1.0/4.7; // P: 1.0/4.5
-        public static final double kALeft = 1.4/12.0; // P: 1.4/12.0
-        public static final double kARight = 1.4/12.0; // P: 1.5/12.0
-        public static final double gyroSensitivity = 1.2; // P: 0.8
+
 
         // Drivetrain Physical Constants
         public static final double WHEELBASE_WIDTH_IN = 23.25;
@@ -23,14 +17,32 @@ public class Globals {
         public static final double WHEEL_DIAMETER_M = WHEEL_DIAMETER_IN * 0.0254;
         public static final int TICKS_PER_REVOLUTION = 4096;
 
-        // Drivetrain Motion Profiling
-        public static final double DRIVE_P = 1.0; // P: 1.0
-        public static final double DRIVE_I = 0.0;
-        public static final double DRIVE_D = 0.0;
+        // Path Generation
         public static final double TIME_STEP = 0.02; // s
         public static final double MAX_VELOCITY = 1.5; // m/s
         public static final double MAX_ACCELERATION = 1.0; // m/s/s
         public static final double MAX_JERK = 60.0; // m/s/s/s
+
+        // Path Following
+        public static final double DRIVE_P = 1.0; // P: 1.0
+        public static final double DRIVE_I = 0.0;
+        public static final double DRIVE_D = 0.0;
+        public static final double TURN_P = 0.0;
+        public static final double TURN_I = 0.0;
+        public static final double TURN_D = 0.0;
+        public static final double kInterceptLeftForward = 0.1; // P: 0.1
+        public static final double kInterceptRightForward = 0.1; // P: 0.1
+        public static final double kInterceptLeftReverse = 0.1;
+        public static final double kInterceptRightReverse = 0.1;
+        public static final double kVLeftForward = 1.0/4.7; // P: 1.0/4.8
+        public static final double kVRightForward = 1.0/4.7; // P: 1.0/4.5
+        public static final double kVLeftReverse = 1.0/4.7;
+        public static final double kVRightReverse = 1.0/4.7;
+        public static final double kALeftForward = 1.4/12.0; // P: 1.4/12.0
+        public static final double kARightForward = 1.4/12.0; // P: 1.5/12.0
+        public static final double kALeftReverse = 1.4/12.0;
+        public static final double kARightReverse = 1.4/12.0;
+        public static final double gyroSensitivity = 1.2; // P: 0.8
     }
 
     public static class Ramps {
