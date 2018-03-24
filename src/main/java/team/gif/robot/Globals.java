@@ -12,9 +12,7 @@ public class Globals {
 
         // Drivetrain Physical Constants
         public static final double WHEELBASE_WIDTH_IN = 23.25;
-        public static final double WHEELBASE_WIDTH_M = WHEELBASE_WIDTH_IN * 0.0254;
         public static final double WHEEL_DIAMETER_IN = 6.08; // P: 6.08
-        public static final double WHEEL_DIAMETER_M = WHEEL_DIAMETER_IN * 0.0254;
         public static final int TICKS_PER_REVOLUTION = 4096;
 
         // Path Generation
@@ -34,12 +32,12 @@ public class Globals {
         public static final double kInterceptRightForward = 0.1; // P: 0.1
         public static final double kInterceptLeftReverse = 0.1;
         public static final double kInterceptRightReverse = 0.1;
-        public static final double kVLeftForward = 1.0/4.7; // P: 1.0/4.8
-        public static final double kVRightForward = 1.0/4.7; // P: 1.0/4.5
-        public static final double kVLeftReverse = 1.0/4.7;
-        public static final double kVRightReverse = 1.0/4.7;
-        public static final double kALeftForward = 1.4/12.0; // P: 1.4/12.0
-        public static final double kARightForward = 1.4/12.0; // P: 1.5/12.0
+        public static final double kVLeftForward = 1.0/30.0/WHEEL_DIAMETER_IN; // C: 1.0/4.7 P: 1.0/4.8
+        public static final double kVRightForward = 1.0/30.0/WHEEL_DIAMETER_IN; // C: 1.0/4.7 P: 1.0/4.5
+        public static final double kVLeftReverse = 1.0/30.0/WHEEL_DIAMETER_IN;
+        public static final double kVRightReverse = 1.0/30.0/WHEEL_DIAMETER_IN;
+        public static final double kALeftForward = 1.4/12.0; // C: 1.4/12.0 P: 1.4/12.0
+        public static final double kARightForward = 1.4/12.0; // C: 1.4/12.0 P: 1.5/12.0
         public static final double kALeftReverse = 1.4/12.0;
         public static final double kARightReverse = 1.4/12.0;
         public static final double gyroSensitivity = 1.2; // P: 0.8

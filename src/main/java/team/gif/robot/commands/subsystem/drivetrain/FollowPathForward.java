@@ -18,7 +18,7 @@ public class FollowPathForward extends Command {
 
     public FollowPathForward(Trajectory trajectory) {
         requires(drivetrain);
-        modifier = new TankModifier(trajectory).modify(Globals.Drivetrain.WHEELBASE_WIDTH_M);
+        modifier = new TankModifier(trajectory).modify(Globals.Drivetrain.WHEELBASE_WIDTH_IN);
     }
 
     protected void initialize() {
@@ -29,9 +29,9 @@ public class FollowPathForward extends Command {
         right = new EncoderFollower(modifier.getRightTrajectory());
 
         left.configureEncoder(0, Globals.Drivetrain.TICKS_PER_REVOLUTION,
-                Globals.Drivetrain.WHEEL_DIAMETER_M);
+                Globals.Drivetrain.WHEEL_DIAMETER_IN);
         right.configureEncoder(0, Globals.Drivetrain.TICKS_PER_REVOLUTION,
-                Globals.Drivetrain.WHEEL_DIAMETER_M);
+                Globals.Drivetrain.WHEEL_DIAMETER_IN);
 
         left.configurePIDVA(Globals.Drivetrain.DRIVE_P, Globals.Drivetrain.DRIVE_I,
                 Globals.Drivetrain.DRIVE_D, Globals.Drivetrain.kVLeftForward, Globals.Drivetrain.kALeftForward);
