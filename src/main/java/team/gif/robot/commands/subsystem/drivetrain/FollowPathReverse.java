@@ -17,7 +17,7 @@ public class FollowPathReverse extends Command {
 
     public FollowPathReverse(Trajectory trajectory) {
         requires(drivetrain);
-        modifier = new TankModifier(trajectory).modify(Globals.Drivetrain.WHEELBASE_WIDTH_M);
+        modifier = new TankModifier(trajectory).modify(Globals.Drivetrain.WHEELBASE_WIDTH_IN);
     }
 
     protected void initialize() {
@@ -28,9 +28,9 @@ public class FollowPathReverse extends Command {
         right = new EncoderFollower(modifier.getLeftTrajectory());
 
         left.configureEncoder(0, Globals.Drivetrain.TICKS_PER_REVOLUTION,
-                Globals.Drivetrain.WHEEL_DIAMETER_M);
+                Globals.Drivetrain.WHEEL_DIAMETER_IN);
         right.configureEncoder(0, Globals.Drivetrain.TICKS_PER_REVOLUTION,
-                Globals.Drivetrain.WHEEL_DIAMETER_M);
+                Globals.Drivetrain.WHEEL_DIAMETER_IN);
 
         left.configurePIDVA(Globals.Drivetrain.DRIVE_P, Globals.Drivetrain.DRIVE_I,
                 Globals.Drivetrain.DRIVE_D, Globals.Drivetrain.kVLeftReverse, Globals.Drivetrain.kALeftReverse);
@@ -51,8 +51,8 @@ public class FollowPathReverse extends Command {
         double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
         double turn = Globals.Drivetrain.gyroSensitivity * (-1.0/80.0) * angleDifference;
 
-        drivetrain.setLeft(-leftOutput - turn);
-        drivetrain.setRight(-rightOutput + turn);
+        drivetrain.setLeft(-(leftOutput + turn));
+        drivetrain.setRight(-(rightOutput - turn));
     }
 
     protected boolean isFinished() {
