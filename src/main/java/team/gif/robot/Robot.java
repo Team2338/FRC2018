@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import team.gif.lib.Limelight;
 import team.gif.lib.MotorLogger;
 import team.gif.robot.commands.system.DoNothing;
 import team.gif.robot.commands.auto.*;
@@ -111,10 +112,10 @@ public class Robot extends TimedRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        if ((drivetrain.getLeftEncVelociy()*10/4096*Globals.Drivetrain.WHEEL_DIAMETER_M*Math.PI +
-                drivetrain.getRightEncVelocity()*10/4096*Globals.Drivetrain.WHEEL_DIAMETER_M*Math.PI)/2 > 2.5) {
-            auto.cancel();
-        }
+//        if ((drivetrain.getLeftEncVelociy()*10/4096*Globals.Drivetrain.WHEEL_DIAMETER_M*Math.PI +
+//                drivetrain.getRightEncVelocity()*10/4096*Globals.Drivetrain.WHEEL_DIAMETER_M*Math.PI)/2 > 2.5) {
+//            auto.cancel();
+//        }
     }
 
     public void teleopInit() {
@@ -166,8 +167,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Drive Heading", drivetrain.getHeading());
         SmartDashboard.putNumber("Left Position", drivetrain.getLeftEncPosition());
         SmartDashboard.putNumber("Right Position", drivetrain.getRightEncPosition());
-        SmartDashboard.putNumber("Left Velocity (mps)", drivetrain.getLeftEncVelociy() * 10 / 4096 * Globals.Drivetrain.WHEEL_DIAMETER_M * Math.PI);
-        SmartDashboard.putNumber("Right Velocity (mps)", drivetrain.getRightEncVelocity()  * 10 / 4096 * Globals.Drivetrain.WHEEL_DIAMETER_M * Math.PI);
+        SmartDashboard.putNumber("Left Velocity (rps)", drivetrain.getLeftEncVelociy() * 10 / 4096);
+        SmartDashboard.putNumber("Right Velocity (rps)", drivetrain.getRightEncVelocity()  * 10 / 4096);
 
         SmartDashboard.putBoolean("Left Ramp Limit", ramps.getLeftLimit());
         SmartDashboard.putBoolean("Right Ramp Limit", ramps.getRightLimit());
@@ -175,6 +176,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Distance (in)", (drivetrain.getLeftEncPosition()+drivetrain.getRightEncPosition())/2/4096*Globals.Drivetrain.WHEEL_DIAMETER_IN * Math.PI);
 
         SmartDashboard.putBoolean("Cube", arm.hasCube());
-//        System.out.println(gameData);
+
+        SmartDashboard.putBoolean("Cube Vision", Limelight.getInstance().hasValidTarget());
     }
 }
