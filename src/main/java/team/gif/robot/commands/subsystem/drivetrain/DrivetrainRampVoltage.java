@@ -1,35 +1,31 @@
 package team.gif.robot.commands.subsystem.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
-import team.gif.robot.Globals;
-import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Drivetrain;
 
-public class DrivetrainConstantPercent extends Command {
+public class DrivetrainRampVoltage extends Command {
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
     private double percent;
 
-    public DrivetrainConstantPercent(double percent, double seconds) {
+    public DrivetrainRampVoltage(double seconds) {
         super(seconds);
         requires(drivetrain);
-        this.percent = percent;
     }
 
     protected void initialize() {
-        drivetrain.resetGyro();
+        percent = 0.1;
     }
 
     protected void execute() {
         double gyroHeading = drivetrain.getHeading();
         double angleDifference = Pathfinder.boundHalfDegrees(0 - gyroHeading);
-        double turn = 3 * (-1.0/80.0) * angleDifference;
-        turn = 0;
+        double turn = 0.8 * (-1.0/80.0) * angleDifference;
 
         drivetrain.setLeft(percent + turn);
         drivetrain.setRight(percent - turn);
+        percent += 0.1/100;
     }
 
     protected boolean isFinished() {

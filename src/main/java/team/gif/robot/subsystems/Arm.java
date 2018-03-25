@@ -43,6 +43,7 @@ public class Arm extends Subsystem {
         dart.config_kP(0, Globals.Arm.DART_P, 0);
         dart.config_kI(0, Globals.Arm.DART_I, 0);
         dart.config_kD(0, Globals.Arm.DART_D, 0);
+        dart.config_IntegralZone(0, 300, 0);
 
         dart.configForwardSoftLimitEnable(true, 0);
         dart.configReverseSoftLimitEnable(true, 0);
@@ -82,8 +83,9 @@ public class Arm extends Subsystem {
     }
 
     public void tareDartPosition() {
-        dart.setSelectedSensorPosition(GIFMath.map(dartPot.getValue(), Globals.Arm.ARM_POT_ZERO_POSITION,
-                Globals.Arm.ARM_POT_ZERO_POSITION + 2500, 0 , 450000), 0, 0);
+//        dart.setSelectedSensorPosition(GIFMath.map(dartPot.getValue(), Globals.Arm.ARM_POT_ZERO_POSITION,
+//                Globals.Arm.ARM_POT_ZERO_POSITION + 2500, 0 , 450000), 0, 0);
+        dart.setSelectedSensorPosition((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 144, 0, 0);
     }
 
     public int getDartPotPosition() {
@@ -95,7 +97,7 @@ public class Arm extends Subsystem {
     }
 
     public boolean hasCube() {
-        return cubeSensor.get();
+        return !cubeSensor.get();
     }
 
     protected void initDefaultCommand() {

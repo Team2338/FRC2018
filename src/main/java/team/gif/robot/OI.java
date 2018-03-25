@@ -8,9 +8,9 @@ import jaci.pathfinder.Pathfinder;
 import team.gif.lib.AxisButton;
 import team.gif.lib.DualButton;
 import team.gif.lib.POVButton;
+import team.gif.robot.commands.auto.ScaleLeft;
 import team.gif.robot.commands.subsystem.arm.*;
-import team.gif.robot.commands.subsystem.drivetrain.DrivetrainConstantPercent;
-import team.gif.robot.commands.subsystem.drivetrain.FollowPathForward;
+import team.gif.robot.commands.subsystem.drivetrain.*;
 import team.gif.robot.commands.subsystem.ramps.RampsDeploy;
 import team.gif.robot.commands.subsystem.ramps.RampsLift;
 import team.gif.robot.commands.system.GeneratePaths;
@@ -63,12 +63,18 @@ public class OI {
     private OI() {
 
 //        dA.whenPressed(new FollowPathForward(Pathfinder.readFromCSV(new File("/home/lvuser/twometer.csv"))));
-        dA.whenPressed(new FollowPathForward(Pathfinder.readFromCSV(new File("/home/lvuser/fivemeter.csv"))));
-        dB.whenPressed(new FollowPathForward(Pathfinder.readFromCSV(new File("/home/lvuser/fivemeterslow.csv"))));
-//        dB.whenPressed(new GeneratePaths());
-        dX.whileHeld(new DrivetrainConstantPercent(0.2, 6));
+//        dA.whenPressed(new FollowPathForward(Pathfinder.readFromCSV(new File("/home/lvuser/fivemeter.csv"))));
+//        dB.whenPressed(new FollowPathForward(Pathfinder.readFromCSV(new File("/home/lvuser/lefttorightswitch.csv"))));
+//        dB.whenPressed(new FollowPathReverse(Pathfinder.readFromCSV(new File("/home/lvuser/lefttoleftscale.csv"))));
+        dB.whenPressed(new ScaleLeft("LLL"));
+        dX.whenPressed(new GeneratePaths());
+//        dX.whileHeld(new DrivetrainConstantPercent(-0.2, 6));
+//        dA.whileHeld(new DrivetrainConstantPercent(-0.3, 6));
+//        dB.whileHeld(new DrivetrainConstantPercent(-0.4, 6));
 
         SmartDashboard.putData(new GeneratePaths());
+        SmartDashboard.putData(new CharacterizeDrivetrain());
+        SmartDashboard.putData(new DrivetrainRampVoltage(8));
 
         // Arm Positions
         dLT.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));

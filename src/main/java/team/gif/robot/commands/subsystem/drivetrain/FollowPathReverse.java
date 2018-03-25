@@ -14,6 +14,7 @@ public class FollowPathReverse extends Command {
     private TankModifier modifier;
     private EncoderFollower left;
     private EncoderFollower right;
+    private double angleError;
 
     public FollowPathReverse(Trajectory trajectory) {
         requires(drivetrain);
@@ -42,21 +43,22 @@ public class FollowPathReverse extends Command {
         double leftOutput = left.calculate(-drivetrain.getLeftEncPosition());
         double rightOutput = right.calculate(-drivetrain.getRightEncPosition());
 
-        leftOutput += leftOutput >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptLeftReverse, leftOutput) : 0.0;
-        rightOutput += rightOutput >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptRightReverse, rightOutput) : 0.0;
+        leftOutput += Math.abs(leftOutput) >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptLeftReverse, leftOutput) : 0.0;
+        rightOutput += Math.abs(rightOutput) >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptRightReverse, rightOutput) : 0.0;
 
         double gyroHeading = drivetrain.getHeading();
         double desiredHeading = Pathfinder.r2d(left.getHeading());
 
         double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
+        angleError = angleDifference;
         double turn = Globals.Drivetrain.gyroSensitivity * (-1.0/80.0) * angleDifference;
 
-        drivetrain.setLeft(-(leftOutput + turn));
-        drivetrain.setRight(-(rightOutput - turn));
+        drivetrain.setLeft(-(leftOutput - turn));
+        drivetrain.setRight(-(rightOutput + turn));
     }
 
     protected boolean isFinished() {
-        return left.isFinished() && right.isFinished();
+        return left.isFinished() && right.isFinished() && angleError < 5.0;
     }
 
     protected void end() {

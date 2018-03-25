@@ -29,7 +29,7 @@ public abstract class RobotMap {
         public static final int ACTUATOR_SOLENOID_ID = 0;
         public static final int LEFT_PUNCH_ID = 1;
         public static final int RIGHT_PUNCH_ID = 2;
-        public static final int DART_POT_ID = 0;
+        public static final int DART_POT_ID = 1;
         public static final int CUBE_SENSOR_ID = 7;
     }
 

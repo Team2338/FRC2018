@@ -43,8 +43,8 @@ public class FollowPathForward extends Command {
         double leftOutput = left.calculate(drivetrain.getLeftEncPosition());
         double rightOutput = right.calculate(drivetrain.getRightEncPosition());
 
-        leftOutput += leftOutput >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptLeftForward, leftOutput) : 0.0;
-        rightOutput += rightOutput >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptRightForward, rightOutput) : 0.0;
+        leftOutput += Math.abs(leftOutput) >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptLeftForward, leftOutput) : 0.0;
+        rightOutput += Math.abs(rightOutput) >= 0.01 ? Math.copySign(Globals.Drivetrain.kInterceptRightForward, rightOutput) : 0.0;
 
         double gyroHeading = drivetrain.getHeading();
         double desiredHeading = Pathfinder.r2d(left.getHeading());
