@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import team.gif.robot.Globals;
 import team.gif.robot.subsystems.Arm;
 
-public class ArmCollect extends Command {
+public class ArmDumbCollect extends Command {
 
     private Arm arm = Arm.getInstance();
 
-    public ArmCollect() {
+    public ArmDumbCollect() {
         requires(arm);
     }
 
@@ -24,7 +24,7 @@ public class ArmCollect extends Command {
     }
 
     protected boolean isFinished() {
-        return arm.hasCube();
+        return false;
     }
 
     protected void end() {

@@ -25,8 +25,8 @@ public class DrivetrainConstantPercent extends Command {
     protected void execute() {
         double gyroHeading = drivetrain.getHeading();
         double angleDifference = Pathfinder.boundHalfDegrees(0 - gyroHeading);
-        double turn = 3 * (-1.0/80.0) * angleDifference;
-        turn = 0;
+        double turn = 1.0 * (-1.0/80.0) * angleDifference;
+//        turn = 0;
 
         drivetrain.setLeft(percent + turn);
         drivetrain.setRight(percent - turn);

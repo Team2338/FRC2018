@@ -31,7 +31,7 @@ public class Arm extends Subsystem {
     private Solenoid actuator = new Solenoid(RobotMap.Arm.ACTUATOR_SOLENOID_ID);
     private Solenoid leftPunch = new Solenoid(RobotMap.Arm.LEFT_PUNCH_ID);
     private Solenoid rightPunch = new Solenoid(RobotMap.Arm.RIGHT_PUNCH_ID);
-    private Solenoid punchReturn = new Solenoid(3);
+    private Solenoid punchReturn = new Solenoid(RobotMap.Arm.RETURN_ID);
 
     private AnalogInput dartPot = new AnalogInput(RobotMap.Arm.DART_POT_ID);
     private DigitalInput cubeSensor = new DigitalInput(RobotMap.Arm.CUBE_SENSOR_ID);
@@ -85,7 +85,7 @@ public class Arm extends Subsystem {
     public void tareDartPosition() {
 //        dart.setSelectedSensorPosition(GIFMath.map(dartPot.getValue(), Globals.Arm.ARM_POT_ZERO_POSITION,
 //                Globals.Arm.ARM_POT_ZERO_POSITION + 2500, 0 , 450000), 0, 0);
-        dart.setSelectedSensorPosition((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 144, 0, 0);
+        dart.setSelectedSensorPosition((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 137, 0, 0);
     }
 
     public int getDartPotPosition() {

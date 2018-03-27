@@ -1,10 +1,12 @@
 package team.gif.robot.commands.subsystem.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDCommand;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
+import team.gif.lib.PIDCalculator;
 import team.gif.robot.Globals;
 import team.gif.robot.subsystems.Drivetrain;
 
@@ -14,11 +16,13 @@ public class FollowPathForward extends Command {
     private TankModifier modifier;
     private EncoderFollower left;
     private EncoderFollower right;
+    private PIDCalculator turnPID;
     private double angleError;
 
     public FollowPathForward(Trajectory trajectory) {
         requires(drivetrain);
         modifier = new TankModifier(trajectory).modify(Globals.Drivetrain.WHEELBASE_WIDTH_IN);
+        turnPID = new PIDCalculator(Globals.Drivetrain.TURN_P, Globals.Drivetrain.TURN_I, Globals.Drivetrain.TURN_D, 0.5);
     }
 
     protected void initialize() {
@@ -52,14 +56,16 @@ public class FollowPathForward extends Command {
         double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
         angleError = angleDifference;
         double turn = Globals.Drivetrain.gyroSensitivity * (-1.0/80.0) * angleDifference;
-//        turn = 0.0;
+        turn = (-1.0/80.0) * angleDifference;
+        turn = turnPID.getOutput(turn);
 
         drivetrain.setLeft(leftOutput + turn);
         drivetrain.setRight(rightOutput - turn);
+        System.out.println("Angle Error: " + angleError);
     }
 
     protected boolean isFinished() {
-        return left.isFinished() && right.isFinished() && angleError < 5.0;
+        return left.isFinished() && right.isFinished() && Math.abs(angleError) < 10.0;
     }
 
     protected void end() {
