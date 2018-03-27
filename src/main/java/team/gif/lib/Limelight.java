@@ -3,6 +3,7 @@ package team.gif.lib;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import math;
 
 public class Limelight {
 
@@ -22,7 +23,12 @@ public class Limelight {
     NetworkTableEntry ta = table.getEntry("ta");
     NetworkTableEntry ts = table.getEntry("ts");
     NetworkTableEntry tl = table.getEntry("tl");
-
+/* tv Whether the limelight has any valid targets (0 or 1)
+tx Horizontal Offset From Crosshair To Target (-27 degrees to 27 degrees)
+ty Vertical Offset From Crosshair To Target (-20.5 degrees to 20.5 degrees)
+ta Target Area (0% of image to 100% of image)
+ts Skew or rotation (-90 degrees to 0 degrees)
+tl The pipeline’s latency contribution (ms) Add at least 11ms for image capture latency. */
     public enum LEDMode {
         ON(0),
         OFF(1),
@@ -111,6 +117,16 @@ public class Limelight {
 
     public void setSnapshotMode(SnapshotMode mode) {
         table.getEntry("snapshot").setNumber(mode.mode);
+    }
+
+    //testing methods
+    public double getdistance(){
+        double limelightvisionbotheight = 14.5;
+        double powerCubeHeight = 11.0;
+        double limelightVertBotAngle =0.0;
+        double yOffsetAngle = ty.hashcode();
+        double distance = (limelightvisionbotheight - powerCubeHeight)/(Math.tan(limelightVertBotAngle + yOffsetAngle));
+        return(distance);
     }
 
 }
