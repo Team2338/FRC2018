@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//a import team.gif.lib.Limelight;
 import team.gif.lib.Limelight;
 import team.gif.lib.MotorLogger;
 import team.gif.robot.commands.system.DoNothing;
@@ -23,10 +24,16 @@ public class Robot extends TimedRobot {
         DO_NOTHING, SWITCH, SCALE, MOBILITY
     }
 
+    public enum AutoSecondary {
+        DO_NOTHING, SWITCH, SAFE, DOUBLESWITCH, SCALE
+    }
+
+
 //    public static MotorLogger logger = new MotorLogger();
 
     private SendableChooser<StartPosition> startPositionChooser;
     private SendableChooser<Strategy> strategyChooser;
+    private SendableChooser<AutoSecondary> autoSecondaryChooser;
     private Command auto;
     private String gameData = "";
 
@@ -34,11 +41,13 @@ public class Robot extends TimedRobot {
     private Arm arm = Arm.getInstance();
     private Ramps ramps = Ramps.getInstance();
     private OI oi = OI.getInstance();
+    private Limelight limelight = Limelight.getInstance();
 
     public void robotInit() {
         init();
         startPositionChooser = new SendableChooser<>();
         strategyChooser = new SendableChooser<>();
+        autoSecondaryChooser = new SendableChooser<>();
 
         startPositionChooser.addDefault("Left", StartPosition.LEFT);
         startPositionChooser.addObject("Center", StartPosition.CENTER);
@@ -49,8 +58,17 @@ public class Robot extends TimedRobot {
         strategyChooser.addObject("Scale", Strategy.SCALE);
         strategyChooser.addObject("Mobility", Strategy.MOBILITY);
 
+        autoSecondaryChooser.addDefault("Nothing", AutoSecondary.DO_NOTHING);
+        autoSecondaryChooser.addObject("Scale->Switch", AutoSecondary.SWITCH);
+        autoSecondaryChooser.addObject("Scale->Safe", AutoSecondary.SAFE);
+        autoSecondaryChooser.addObject("Switch->Double Cube", AutoSecondary.DOUBLESWITCH);
+        autoSecondaryChooser.addObject("Scale->Scale", AutoSecondary.SCALE);
+
+        SmartDashboard.putData("Switch Safe Double", autoSecondaryChooser);
         SmartDashboard.putData("Strategy", strategyChooser);
         SmartDashboard.putData("Start Position", startPositionChooser);
+
+
     }
 
     public void robotPeriodic() {
@@ -62,7 +80,7 @@ public class Robot extends TimedRobot {
     }
 
     public void disabledPeriodic() {
-
+        limelight.setLEDMode(Limelight.LEDMode.OFF);
     }
 
     public void autonomousInit() {
@@ -76,6 +94,7 @@ public class Robot extends TimedRobot {
 
         Strategy strategy = strategyChooser.getSelected();
         StartPosition startPosition =  startPositionChooser.getSelected();
+        AutoSecondary autoSecondaryMode = autoSecondaryChooser.getSelected();
 
         if (strategy == Strategy.DO_NOTHING) {
             auto = new DoNothing();
@@ -83,17 +102,17 @@ public class Robot extends TimedRobot {
             if (startPosition == StartPosition.LEFT) {
                 auto = new SwitchLeft(gameData);
             } else if (startPosition == StartPosition.CENTER) {
-                auto = new SwitchCenter(gameData);
+                auto = new SwitchCenter(gameData, autoSecondaryMode);
             } else if (startPosition == StartPosition.RIGHT){
                 auto = new SwitchRight(gameData);
             }
         } else if (strategy == Strategy.SCALE) {
             if (startPosition == StartPosition.LEFT) {
-                auto = new ScaleLeft(gameData);
+                auto = new ScaleSwitchLeft(gameData, autoSecondaryMode);
             } else if (startPosition == StartPosition.CENTER) {
-                auto = new SwitchCenter(gameData);
+                auto = new SwitchCenter(gameData, autoSecondaryMode);
             } else if (startPosition == StartPosition.RIGHT){
-                auto = new ScaleRight(gameData);
+                auto = new ScaleSwitchRight(gameData, autoSecondaryMode);
             }
         } else if (strategy == Strategy.MOBILITY) {
             if (startPosition == StartPosition.LEFT) {
@@ -121,6 +140,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         if (auto != null) auto.cancel();
         init();
+        limelight.setCAMMode(Limelight.CAMMode.VISION);
     }
 
     public void teleopPeriodic() {
@@ -183,6 +203,6 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putBoolean("Cube", arm.hasCube());
 
-        SmartDashboard.putBoolean("Cube Vision", Limelight.getInstance().hasValidTarget());
+  //a      SmartDashboard.putBoolean("Cube Vision", Limelight.getInstance().hasValidTarget());
     }
 }

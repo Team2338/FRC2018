@@ -9,10 +9,13 @@ import java.io.File;
 
 public class Mobility extends CommandGroup {
 
-    private Trajectory threemeter = Pathfinder.readFromCSV(new File("/home/lvuser/threemeter.csv"));
+    private Trajectory threemeter = Pathfinder.readFromCSV(new File("/home/lvuser/tenfeet.csv"));
 
     public Mobility(String gameData) {
+
         addSequential(new FollowPathForward(threemeter));
+
+        // TODO: Maybe turn around and also pickup cube
     }
 
 }

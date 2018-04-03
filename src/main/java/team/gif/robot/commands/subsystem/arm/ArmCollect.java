@@ -24,7 +24,7 @@ public class ArmCollect extends Command {
     }
 
     protected boolean isFinished() {
-        return arm.hasCube();
+        return false;
     }
 
     protected void end() {

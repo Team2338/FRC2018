@@ -24,17 +24,15 @@ public class GeneratePaths extends InstantCommand {
 
     private Waypoint[] LEFT_TO_LEFT_SWITCH = new Waypoint[] {
             new Waypoint(0, 0, 0),
-            new Waypoint(108.812, 0, 0),
-            new Waypoint(148.5, -39.688, Pathfinder.d2r(-90))
+            new Waypoint(124.5, 0, 0),
+            new Waypoint(148.5, -24, Pathfinder.d2r(-90))
+
     };
 
-    private Waypoint[] LEFT_TO_RIGHT_SWITCH = new Waypoint[] {
-            new Waypoint(0, 0,0),
-            new Waypoint(185.499, 0, 0),
-            new Waypoint(225.187, -39.688, Pathfinder.d2r(-90)),
-            new Waypoint(225.187, -100, Pathfinder.d2r(-90)),
-            new Waypoint(209.0, -116.187, Pathfinder.d2r(-120))
-//            new Waypoint(196.0, -158.588, Pathfinder.d2r(-180))
+    private Waypoint[] RIGHT_TO_RIGHT_SWITCH = new Waypoint[] {
+            new Waypoint(0, 0, 0),
+            new Waypoint(124.5, 0, 0),
+            new Waypoint(148.5, 24, Pathfinder.d2r(90))
     };
 
     private Waypoint[] CENTER_TO_LEFT_SWITCH = new Waypoint[] {
@@ -42,24 +40,20 @@ public class GeneratePaths extends InstantCommand {
             new Waypoint( 101.0, 58.758, 0.0)
     };
 
+
     private Waypoint[] CENTER_TO_RIGHT_SWITCH = new Waypoint[] {
             new Waypoint(0, 0, 0.0),
-            new Waypoint(101.0, -49.266, 0.0)
+            new Waypoint(99.0, -49.266, 0.0)
     };
 
-    private Waypoint[] RIGHT_TO_LEFT_SWITCH = new Waypoint[] {
-            new Waypoint(0, 0,0),
-            new Waypoint(185.499, 0, 0),
-            new Waypoint(225.187, 39.688, Pathfinder.d2r(90)),
-            new Waypoint(225.187, 142.401, Pathfinder.d2r(90)),
-            new Waypoint(209.0, 158.588, Pathfinder.d2r(180)),
-            new Waypoint(196.0, 158.588, Pathfinder.d2r(180))
+    private Waypoint[] LEFT_SIDE_SWITCH_WALL_TO_CENTER = new Waypoint[] {
+            new Waypoint(0, 0, 0.0),
+            new Waypoint( 24.0, -24.0, Pathfinder.d2r(-45))
     };
 
-    private Waypoint[] RIGHT_TO_RIGHT_SWITCH = new Waypoint[] {
-        new Waypoint(0, 0, 0),
-        new Waypoint(108.812, 0, 0),
-        new Waypoint(148.5, 39.688, Pathfinder.d2r(90))
+    private Waypoint[] RIGHT_SIDE_SWITCH_WALL_TO_CENTER = new Waypoint[] {
+            new Waypoint(0, 0, 0.0),
+            new Waypoint( 24.0, 24.0, Pathfinder.d2r(45))
     };
 
 // SCALE PATHS
@@ -77,92 +71,69 @@ public class GeneratePaths extends InstantCommand {
             new Waypoint(213.75, -39.375, Pathfinder.d2r(-90)),
             new Waypoint(213.75, -244, Pathfinder.d2r(-90)),
             new Waypoint(213.75 + 18, -244 - 18, 0),
-            new Waypoint(213.75 + 18 + 22, -244 - 18 + 7, 45),
+            new Waypoint(213.75 + 18 + 22, -244 - 18 + 7, Pathfinder.d2r(45)),
 //            new Waypoint(255 - 14, -242 - 12, Pathfinder.d2r(45))
     };
 
     private Waypoint[] RIGHT_TO_RIGHT_SCALE = new Waypoint[] {
             new Waypoint(0, 0, 0),
-            new Waypoint(261.592, 0, 0),
-            new Waypoint(287.655, -26.063, Pathfinder.d2r(-90))
+            new Waypoint(120, -14, 0),
+            new Waypoint(249, -14, 0),
+            new Waypoint(249 + 8.22, -(14 - (11.625 - 8.22)), Pathfinder.d2r(45))
     };
 
     private Waypoint[] RIGHT_TO_LEFT_SCALE = new Waypoint[] {
             new Waypoint(0, 0, 0),
-            new Waypoint(185.529, 0, 0),
-            new Waypoint(225.217, 39.688, Pathfinder.d2r(90)),
-            new Waypoint(225.217, 193.188, Pathfinder.d2r(90)),
-            new Waypoint(287.655, 258.938, Pathfinder.d2r(90))
+            new Waypoint(174.375, 0, 0),
+            new Waypoint(213.75, 39.375, Pathfinder.d2r(90)),
+            new Waypoint(213.75, 244, Pathfinder.d2r(90)),
+            new Waypoint(213.75 + 18, 244 + 18, 0),
+            new Waypoint(213.75 + 18 + 22, 244 + 18 - 7, Pathfinder.d2r(-45)),
     };
 
 // SWITCH + SCALE PATHS
 
-//    private Waypoint[] LEFT_TO_LEFT_BACK_SWITCH = new Waypoint[] {
-//            new Waypoint(0, 0,0),
-//            new Waypoint(185.499, 0, 0),
-//            new Waypoint(225.187, -39.688, Pathfinder.d2r(-90)),
-//            new Waypoint(225.187, -58.101, Pathfinder.d2r(-90)),
-//            new Waypoint(209.0, -74.288, Pathfinder.d2r(-180)),
-//            new Waypoint(196.0, -74.288, Pathfinder.d2r(-180))
-//    };
-//
-//    private Waypoint[] LEFT_TO_RIGHT_BACK_SWITCH = new Waypoint[] {
-//            new Waypoint(0, 0,0),
-//            new Waypoint(185.499, 0, 0),
-//            new Waypoint(225.187, -39.688, Pathfinder.d2r(-90)),
-//            new Waypoint(225.187, -142.401, Pathfinder.d2r(-90)),
-//            new Waypoint(209.0, -158.588, Pathfinder.d2r(-180)),
-//            new Waypoint(196.0, -158.588, Pathfinder.d2r(-180))
-//    };
-//
-//    private Waypoint[] RIGHT_TO_LEFT_BACK_SWITCH = new Waypoint[] {
-//            new Waypoint(0, 0,0),
-//            new Waypoint(185.499, 0, 0),
-//            new Waypoint(225.187, 39.688, Pathfinder.d2r(90)),
-//            new Waypoint(225.187, 142.401, Pathfinder.d2r(90)),
-//            new Waypoint(209.0, 158.588, Pathfinder.d2r(180)),
-//            new Waypoint(196.0, 158.588, Pathfinder.d2r(180))
-//    };
-//
-//    private Waypoint[] RIGHT_TO_RIGHT_BACK_SWITCH = new Waypoint[] {
-//            new Waypoint(0, 0,0),
-//            new Waypoint(185.499, 0, 0),
-//            new Waypoint(225.187, 39.688, Pathfinder.d2r(90)),
-//            new Waypoint(225.187, 58.101, Pathfinder.d2r(90)),
-//            new Waypoint(209.0, 74.288, Pathfinder.d2r(180)),
-//            new Waypoint(196.0, 74.288, Pathfinder.d2r(180))
-//    };
-
-//    private Waypoint[] LEFT_SCALE_TO_LEFT_SWITCH = new Waypoint[] {
-//            new Waypoint(0, 0, 0),
-//            new Waypoint(26.063, -26.063, Pathfinder.d2r(-90)),
-//            new Waypoint(72.25, -78.655, Pathfinder.d2r(-90))
-//    };
-
-    private Waypoint[] LEFT_SCALE_TO_LEFT_SWITCH = new Waypoint[] {
+    private Waypoint[] LEFT_SCALE_TO_LEFT_SWITCH_FROM_LEFT = new Waypoint[] {
             new Waypoint(0, 0, 0),
             new Waypoint(12, -12, Pathfinder.d2r(-90)),
-            new Waypoint(0, -54, Pathfinder.d2r(-110))
+            new Waypoint(12, -48, Pathfinder.d2r(-110))
     };
 
-    private Waypoint[] LEFT_SCALE_TO_RIGHT_SWITCH = new Waypoint[] {
+    private Waypoint[] LEFT_SCALE_TO_LEFT_SWITCH_FROM_RIGHT = new Waypoint[] {
             new Waypoint(0, 0, 0),
-            new Waypoint(65.751, -62.438, 0),
-            new Waypoint(196.553, -62.438, 0),
-            new Waypoint(212.75, -78.655, Pathfinder.d2r(-90))
+            new Waypoint(12, -12, Pathfinder.d2r(-90)),
+            new Waypoint(12, -48, Pathfinder.d2r(-110))
     };
 
-    private Waypoint[] RIGHT_SCALE_TO_LEFT_SWITCH = new Waypoint[] {
-            new Waypoint(0, 0, 0),
-            new Waypoint(65.751, 62.438, 0),
-            new Waypoint(196.553, 62.438, 0),
-            new Waypoint(212.75, 78.655, Pathfinder.d2r(90))
-    };
-
-    private Waypoint[] RIGHT_SCALE_TO_RIGHT_SWITCH = new Waypoint[] {
+    private Waypoint[] RIGHT_SCALE_TO_RIGHT_SWITCH_FROM_LEFT = new Waypoint[] {
             new Waypoint(0, 0, 0),
             new Waypoint(12, 12, Pathfinder.d2r(90)),
             new Waypoint(12, 48, Pathfinder.d2r(110))
+    };
+
+    private Waypoint[] RIGHT_SCALE_TO_RIGHT_SWITCH_FROM_RIGHT = new Waypoint[] {
+            new Waypoint(0, 0, 0),
+            new Waypoint(12, 12, Pathfinder.d2r(90)),
+            new Waypoint(12, 48, Pathfinder.d2r(110))
+    };
+
+    private Waypoint[] LEFT_SCALE_TO_SAFE_AREA = new Waypoint[] {
+            new Waypoint(0, 0, 0),
+            new Waypoint(12, -12, Pathfinder.d2r(-90)),
+            new Waypoint(0, -24, Pathfinder.d2r(-135)), // gets it facing starting wall
+            new Waypoint(-60, -24-60, Pathfinder.d2r(-135)) // moves it forward toward wall to switch side
+            // this always end up with an angle error of ~12. When disabled and enabled, it turns 180 and then it's fine.
+            // Need to look into this.
+    };
+
+    private Waypoint[] RIGHT_SCALE_TO_SAFE_AREA = new Waypoint[] {
+            // needs testing
+            new Waypoint(0, 0, 0),
+            new Waypoint(12, 12, Pathfinder.d2r(90)),
+            new Waypoint(0, 24, Pathfinder.d2r(135)), // gets it facing starting wall
+            new Waypoint(-60, 24+60, Pathfinder.d2r(135)) // moves it forward toward wall to switch side
+            // See LEFT_SCALE_TO_SAFE_AREA comment
+            // May end up with an angle error of ~12
     };
 
 // MULTIPURPOSE PATHS
@@ -196,28 +167,30 @@ public class GeneratePaths extends InstantCommand {
         System.out.println("Beginning path generation");
         System.out.println("Beginning: start to switch");
 
-//        Pathfinder.writeToCSV(new File(path + "lefttoleftswitch.csv"), Pathfinder.generate(LEFT_TO_LEFT_SWITCH, config));
-//        Pathfinder.writeToCSV(new File(path + "lefttorightswitch.csv"), Pathfinder.generate(LEFT_TO_RIGHT_SWITCH, config));
+        Pathfinder.writeToCSV(new File(path + "lefttoleftswitch.csv"), Pathfinder.generate(LEFT_TO_LEFT_SWITCH, config));
 //        Pathfinder.writeToCSV(new File(path + "centertoleftswitch.csv"), Pathfinder.generate(CENTER_TO_LEFT_SWITCH, config));
 //        Pathfinder.writeToCSV(new File(path + "centertorightswitch.csv"), Pathfinder.generate(CENTER_TO_RIGHT_SWITCH, config));
-//        Pathfinder.writeToCSV(new File(path + "righttoleftswitch.csv"), Pathfinder.generate(RIGHT_TO_LEFT_SWITCH, config));
 //        Pathfinder.writeToCSV(new File(path + "righttorightswitch.csv"), Pathfinder.generate(RIGHT_TO_RIGHT_SWITCH, config));
+//        Pathfinder.writeToCSV(new File(path + "leftsideswitchwalltocenter.csv"), Pathfinder.generate(LEFT_SIDE_SWITCH_WALL_TO_CENTER, config));
+//        Pathfinder.writeToCSV(new File(path + "rightsideswitchwalltocenter.csv"), Pathfinder.generate(RIGHT_SIDE_SWITCH_WALL_TO_CENTER, config));
 
         System.out.println("Finished: start to switch at: " + timeSinceInitialized() + "s");
         System.out.println("Beginning: start to scale");
 
 //        Pathfinder.writeToCSV(new File(path + "lefttoleftscale.csv"), Pathfinder.generate(LEFT_TO_LEFT_SCALE, config));
-        Pathfinder.writeToCSV(new File(path + "lefttorightscale.csv"), Pathfinder.generate(LEFT_TO_RIGHT_SCALE, config));
+//        Pathfinder.writeToCSV(new File(path + "lefttorightscale.csv"), Pathfinder.generate(LEFT_TO_RIGHT_SCALE, config));
 //        Pathfinder.writeToCSV(new File(path + "righttoleftscale.csv"), Pathfinder.generate(RIGHT_TO_LEFT_SCALE, config));
 //        Pathfinder.writeToCSV(new File(path + "righttorightscale.csv"), Pathfinder.generate(RIGHT_TO_RIGHT_SCALE, config));
 
         System.out.println("Finished: start to scale at: " + timeSinceInitialized() + "s");
         System.out.println("Beginning: scale to switch");
 
-//        Pathfinder.writeToCSV(new File(path + "leftscaletoleftswitch.csv"), Pathfinder.generate(LEFT_SCALE_TO_LEFT_SWITCH, config));
-//        Pathfinder.writeToCSV(new File(path + "leftscaletorightswitch.csv"), Pathfinder.generate(LEFT_SCALE_TO_RIGHT_SWITCH, config));
-//        Pathfinder.writeToCSV(new File(path + "rightscaletoleftswitch.csv"), Pathfinder.generate(RIGHT_SCALE_TO_LEFT_SWITCH, config));
-        Pathfinder.writeToCSV(new File(path + "rightscaletorightswitch.csv"), Pathfinder.generate(RIGHT_SCALE_TO_RIGHT_SWITCH, config));
+        Pathfinder.writeToCSV(new File(path + "leftscaletoleftswitchfromleft.csv"), Pathfinder.generate(LEFT_SCALE_TO_LEFT_SWITCH_FROM_LEFT, config));
+        Pathfinder.writeToCSV(new File(path + "leftscaletoleftswitchfromright.csv"), Pathfinder.generate(LEFT_SCALE_TO_LEFT_SWITCH_FROM_RIGHT, config));
+        Pathfinder.writeToCSV(new File(path + "rightscaletorightswitchfromleft.csv"), Pathfinder.generate(RIGHT_SCALE_TO_RIGHT_SWITCH_FROM_LEFT, config));
+        Pathfinder.writeToCSV(new File(path + "rightscaletorightswitchfromright.csv"), Pathfinder.generate(RIGHT_SCALE_TO_RIGHT_SWITCH_FROM_RIGHT, config));
+//        Pathfinder.writeToCSV(new File(path + "LeftScaleToSafeArea.csv"), Pathfinder.generate(LEFT_SCALE_TO_SAFE_AREA, config));
+//        Pathfinder.writeToCSV(new File(path + "RightScaleToSafeArea.csv"), Pathfinder.generate(RIGHT_SCALE_TO_SAFE_AREA, config));
 
 
         System.out.println("Finished: scale to switch at: " + timeSinceInitialized() + "s");

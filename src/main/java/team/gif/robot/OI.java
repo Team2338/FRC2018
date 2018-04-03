@@ -8,8 +8,7 @@ import jaci.pathfinder.Pathfinder;
 import team.gif.lib.AxisButton;
 import team.gif.lib.DualButton;
 import team.gif.lib.POVButton;
-import team.gif.robot.commands.auto.ScaleLeft;
-import team.gif.robot.commands.auto.SwitchScaleLeft;
+import team.gif.robot.commands.auto.*;
 import team.gif.robot.commands.subsystem.arm.*;
 import team.gif.robot.commands.subsystem.drivetrain.*;
 import team.gif.robot.commands.subsystem.ramps.RampsDeploy;
@@ -67,8 +66,45 @@ public class OI {
 //        dA.whenPressed(new FollowPathForward(Pathfinder.readFromCSV(new File("/home/lvuser/fivemeter.csv"))));
 //        dB.whenPressed(new FollowPathForward(Pathfinder.readFromCSV(new File("/home/lvuser/lefttorightscale.csv"))));
 //        dA.whenPressed(new FollowPathForward(Pathfinder.readFromCSV(new File("/home/lvuser/leftscaletoleftswitch.csv"))));
-        dB.whenPressed(new SwitchScaleLeft("LLL"));
-        dX.whenPressed(new GeneratePaths());
+//-        dB.whenPressed(new SwitchCenter("LLL"));
+//-        dB.whenPressed(new SwitchScaleLeft("LLL"));
+
+        //List of of paths
+//1        dB.whenPressed(new ScaleSwitchLeft("LLL", Robot.AutoSecondary.SWITCH )); // 1
+//2.1        dB.whenPressed(new ScaleSwitchLeft("RRR", Robot.AutoSecondary.SWITCH )); // 2.1
+//2.2        dB.whenPressed(new ScaleSwitchLeft("LRR", Robot.AutoSecondary.SWITCH )); // 2.2
+//3.1        dB.whenPressed(new ScaleSwitchLeft("LLL", Robot.AutoSecondary.SAFE   )); // 3.1
+//3.2        dB.whenPressed(new ScaleSwitchLeft("RLR", Robot.AutoSecondary.SAFE   )); // 3.2
+//4        dB.whenPressed(new ScaleSwitchLeft("RLR", Robot.AutoSecondary.SWITCH )); // 4
+
+//5       dB.whenPressed(new ScaleSwitchRight("RRR", Robot.AutoSecondary.SWITCH )); // 5
+//6.1        dB.whenPressed(new ScaleSwitchRight("LLL", Robot.AutoSecondary.SWITCH )); // 6.1
+//6.2        dB.whenPressed(new ScaleSwitchRight("RLL", Robot.AutoSecondary.SWITCH )); // 6.2
+//7.1        dB.whenPressed(new ScaleSwitchRight("RRR", Robot.AutoSecondary.SAFE   )); // 7.1
+//7.2        dB.whenPressed(new ScaleSwitchRight("LRL", Robot.AutoSecondary.SAFE   )); // 7.2
+//8        dB.whenPressed(new ScaleSwitchRight("LRL", Robot.AutoSecondary.SWITCH )); // 8
+
+// 9.1        dB.whenPressed(new SwitchCenter("LLL")); //9.1
+// 9.2        dB.whenPressed(new SwitchCenter("LRL")); //9.2
+//10.1        dB.whenPressed(new SwitchCenter("RRR")); //10.1
+//10.2        dB.whenPressed(new SwitchCenter("RLR")); //10.2
+
+//11.1        dB.whenPressed(new SwitchLeft("LLL")); //11.1
+//11.2        dB.whenPressed(new SwitchLeft("LRL")); //11.2
+//12.1        dB.whenPressed(new SwitchLeft("RRR")); //12.1
+//12.2        dB.whenPressed(new SwitchLeft("RLR")); //12.2
+
+//13.1        dB.whenPressed(new SwitchRight("RRR")); //13.1
+//13.2        dB.whenPressed(new SwitchRight("RLR")); //13.2
+//14.1        dB.whenPressed(new SwitchRight("LLL")); //14.1
+//14.2        dB.whenPressed(new SwitchRight("LRL")); //14.2
+
+//        dB.whenPressed(new SwitchCenter("LLL", Robot.AutoSecondary.DOUBLESWITCH)); //15
+//        dB.whenPressed(new SwitchCenter("RRR", Robot.AutoSecondary.DOUBLESWITCH)); //16
+
+//        dA.whenPressed(new RotateDegrees(90));
+
+//        dX.whenPressed(new GeneratePaths());
 //        dX.whileHeld(new DrivetrainConstantPercent(-0.2, 6));
 //        dA.whileHeld(new DrivetrainConstantPercent(-0.3, 6));
 //        dB.whileHeld(new DrivetrainConstantPercent(-0.4, 6));
