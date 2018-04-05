@@ -32,19 +32,19 @@ public class Globals {
         public static final double ROTATE_I = 0.0;
         public static final double ROTATE_D = 0.0;
         public static final double ROTATE_IZONE = 8;
-        public static final double kInterceptLeftForward = 0.077646; // P: 0.1 0.080217
-        public static final double kInterceptRightForward = 0.078561; // P: 0.1 0.091732
-        public static final double kInterceptLeftReverse = 0.06409;
-        public static final double kInterceptRightReverse = 0.061209;
-        public static final double kVLeftForward = 1.0/(9.95*WHEEL_DIAMETER_IN*Math.PI); // C: 1.0/4.7 P: 1.0/4.8
-        public static final double kVRightForward = 1.0/(9.15*WHEEL_DIAMETER_IN*Math.PI); // C: 1.0/4.7 P: 1.0/4.5
-        public static final double kVLeftReverse = 1.0/(9.7*WHEEL_DIAMETER_IN*Math.PI);
-        public static final double kVRightReverse = 1.0/(9.0*WHEEL_DIAMETER_IN*Math.PI);
-        public static final double kALeftForward = 1/(50*WHEEL_DIAMETER_IN*Math.PI); // C: 1.4/12.0 P: 1.4/12.0 0.045
-        public static final double kARightForward = 1/(40*WHEEL_DIAMETER_IN*Math.PI); // C: 1.4/12.0 P: 1.5/12.0 0.045
-        public static final double kALeftReverse = 1/(30*WHEEL_DIAMETER_IN*Math.PI);
-        public static final double kARightReverse = 1/(30*WHEEL_DIAMETER_IN*Math.PI);
-        public static final double gyroSensitivity = 2; // P: 0.8
+        public static final double kInterceptLeftForward = 0.077646; // P: 0.077646
+        public static final double kInterceptRightForward = 0.077646; // P: 0.078561
+        public static final double kInterceptLeftReverse = 0.06409; // P: 0.06409
+        public static final double kInterceptRightReverse = 0.061209; // P: 0.061209
+        public static final double kVLeftForward = 1.0/(9.95*WHEEL_DIAMETER_IN*Math.PI); // C: 1.0/4.7 P: 9.95
+        public static final double kVRightForward = 1.0/(9.95*WHEEL_DIAMETER_IN*Math.PI); // C: 1.0/4.7 P: 9.15
+        public static final double kVLeftReverse = 1.0/(9.7*WHEEL_DIAMETER_IN*Math.PI); // P: 9.7
+        public static final double kVRightReverse = 1.0/(9.0*WHEEL_DIAMETER_IN*Math.PI); // P: 9.0
+        public static final double kALeftForward = 1/(50*WHEEL_DIAMETER_IN*Math.PI); // C: 1.4/12.0 P: 50
+        public static final double kARightForward = 1/(50*WHEEL_DIAMETER_IN*Math.PI); // C: 1.4/12.0 P: 40
+        public static final double kALeftReverse = 1/(30*WHEEL_DIAMETER_IN*Math.PI); // P: 30
+        public static final double kARightReverse = 1/(30*WHEEL_DIAMETER_IN*Math.PI); // P: 30
+        public static final double gyroSensitivity = 1.2; // P: 2
     }
 
     public static class Ramps {
@@ -58,14 +58,14 @@ public class Globals {
         public static final double DART_P = 0.2;
         public static final double DART_I = 0.000;
         public static final double DART_D = 0.0;
-        public static final int ARM_UPPER_SOFT_LIMIT = 430000;
-        public static final int ARM_OPEN_SOFT_LIMIT = 302000;
-        public static final int ARM_LOWER_SOFT_LIMIT = -45000;
-        public static final int ARM_START_POSITION = 429000;
+        public static final int ARM_UPPER_SOFT_LIMIT = 432500;
+        public static final int ARM_OPEN_SOFT_LIMIT = 238000;
+        public static final int ARM_LOWER_SOFT_LIMIT = -25700; // -45000
+        public static final int ARM_START_POSITION = 432500;
         public static final int ARM_SWITCH_POSITION = 220000;
-        public static final int ARM_SECOND_POSITION = 120000;
+        public static final int ARM_SECOND_POSITION = 110000;
         public static final int ARM_TRAVEL_POSITION = 0;
-        public static final int ARM_COLLECT_POSITION = -45000;
-        public static final int ARM_POT_ZERO_POSITION = 635; // C = 390; P = 657;
+        public static final int ARM_COLLECT_POSITION = -25700; // -45000
+        public static final int ARM_POT_ZERO_POSITION = 402; // C = 390; P = 657;
     }
 }

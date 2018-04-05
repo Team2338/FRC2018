@@ -35,7 +35,6 @@ public class RotateDegrees extends Command {
         double gyroHeading = drivetrain.getHeading();
         double angleError = Pathfinder.boundHalfDegrees(angTarget - gyroHeading);
         System.out.println("Rotate angle error: " + angleError);
-        SmartDashboard.putNumber("Heading Error", angleError);
         double turn = turnPID.getOutput(angleError);
 
         if (Math.abs(angleError) < 5) {

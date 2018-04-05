@@ -104,7 +104,7 @@ public class OI {
 
 //        dA.whenPressed(new RotateDegrees(90));
 
-//        dX.whenPressed(new GeneratePaths());
+        dX.whenPressed(new GeneratePaths());
 //        dX.whileHeld(new DrivetrainConstantPercent(-0.2, 6));
 //        dA.whileHeld(new DrivetrainConstantPercent(-0.3, 6));
 //        dB.whileHeld(new DrivetrainConstantPercent(-0.4, 6));

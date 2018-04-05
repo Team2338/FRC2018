@@ -66,7 +66,7 @@ public class ScaleSwitchLeft extends CommandGroup {
                 addSequential(new FollowPathForward(LeftScaleToLeftSwitch));
                 addSequential(new WaitCommand(0.25));
                 addSequential(new CollectUntilCollect());
-                addSequential(new ArmDumbCollect(), 0.25);
+                addSequential(new ArmDumbCollect(), 0.75);
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
                 addSequential(new DrivetrainConstantPercent(-0.3, 1.5));
                 addSequential(new RotateDegrees(100));

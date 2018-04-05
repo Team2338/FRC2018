@@ -157,10 +157,16 @@ public class Robot extends TimedRobot {
             OI.getInstance().rumble(OI.getInstance().aux, false);
         }
 
-        SmartDashboard.putNumber("Left Velocity (rps)", drivetrain.getLeftEncVelociy() * 10 / 4096);
-        SmartDashboard.putNumber("Right Velocity (rps)", drivetrain.getRightEncVelocity()  * 10 / 4096);
-        SmartDashboard.putNumber("Left Output", drivetrain.getLeftMaster().getMotorOutputPercent());
-        SmartDashboard.putNumber("Right Output", drivetrain.getLeftMaster().getMotorOutputPercent());
+        if (OI.getInstance().aX.get()) {
+            limelight.setLEDMode(Limelight.LEDMode.ON);
+        } else {
+            limelight.setLEDMode(Limelight.LEDMode.OFF);
+        }
+
+//        SmartDashboard.putNumber("Left Velocity (rps)", drivetrain.getLeftEncVelociy()*10/4096);
+//        SmartDashboard.putNumber("Right Velocity (rps)", drivetrain.getRightEncVelocity()*10/4096);
+//        SmartDashboard.putNumber("Left Output", drivetrain.getLeftMaster().getMotorOutputPercent());
+//        SmartDashboard.putNumber("Right Output", drivetrain.getLeftMaster().getMotorOutputPercent());
     }
 
     public void testInit() {
@@ -190,19 +196,19 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Dart Potentiometer", arm.getDartPotPosition());
 
         SmartDashboard.putNumber("Drive Heading", drivetrain.getHeading());
-        SmartDashboard.putNumber("Left Position", drivetrain.getLeftEncPosition());
-        SmartDashboard.putNumber("Right Position", drivetrain.getRightEncPosition());
+//        SmartDashboard.putNumber("Left Position", drivetrain.getLeftEncPosition());
+//        SmartDashboard.putNumber("Right Position", drivetrain.getRightEncPosition());
 
         SmartDashboard.putBoolean("Left Ramp Limit", ramps.getLeftLimit());
         SmartDashboard.putBoolean("Right Ramp Limit", ramps.getRightLimit());
 
-        SmartDashboard.putNumber("Left Velocity (ips)", drivetrain.getLeftEncVelociy()/4096*10*Globals.Drivetrain.WHEEL_DIAMETER_IN*Math.PI);
-        SmartDashboard.putNumber("Right Velocity (ips)", drivetrain.getRightEncVelocity()/4096*10*Globals.Drivetrain.WHEEL_DIAMETER_IN*Math.PI);
+        SmartDashboard.putNumber("Left Velocity (rps)", drivetrain.getLeftEncVelociy()/4096*10);
+        SmartDashboard.putNumber("Right Velocity (rps)", drivetrain.getRightEncVelocity()/4096*10);
 
-        SmartDashboard.putNumber("Distance (in)", (drivetrain.getLeftEncPosition()+drivetrain.getRightEncPosition())/2/4096*Globals.Drivetrain.WHEEL_DIAMETER_IN * Math.PI);
+//        SmartDashboard.putNumber("Distance (in)", (drivetrain.getLeftEncPosition()+drivetrain.getRightEncPosition())/2/4096*Globals.Drivetrain.WHEEL_DIAMETER_IN * Math.PI);
 
         SmartDashboard.putBoolean("Cube", arm.hasCube());
 
-  //a      SmartDashboard.putBoolean("Cube Vision", Limelight.getInstance().hasValidTarget());
+//        SmartDashboard.putBoolean("Cube Vision", Limelight.getInstance().hasValidTarget());
     }
 }
