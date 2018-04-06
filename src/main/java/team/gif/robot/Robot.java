@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //a import team.gif.lib.Limelight;
 import team.gif.lib.Limelight;
-import team.gif.lib.MotorLogger;
 import team.gif.robot.commands.system.DoNothing;
 import team.gif.robot.commands.auto.*;
 import team.gif.robot.subsystems.Arm;
@@ -21,11 +20,11 @@ public class Robot extends TimedRobot {
     }
 
     private enum Strategy {
-        DO_NOTHING, SWITCH, SCALE, MOBILITY
+        NOTHING, SWITCH, SCALE, MOBILITY, NO_CROSS
     }
 
     public enum AutoSecondary {
-        DO_NOTHING, SWITCH, SAFE, DOUBLESWITCH, SCALE
+        NOTHING, SWITCH, SAFE, DOUBLESWITCH, SCALE
     }
 
 
@@ -53,12 +52,13 @@ public class Robot extends TimedRobot {
         startPositionChooser.addObject("Center", StartPosition.CENTER);
         startPositionChooser.addObject("Right", StartPosition.RIGHT);
 
-        strategyChooser.addDefault("Do Nothing", Strategy.DO_NOTHING);
+        strategyChooser.addDefault("Nothing", Strategy.NOTHING);
         strategyChooser.addObject("Switch", Strategy.SWITCH);
         strategyChooser.addObject("Scale", Strategy.SCALE);
         strategyChooser.addObject("Mobility", Strategy.MOBILITY);
+        strategyChooser.addObject("No Cross", Strategy.NO_CROSS);
 
-        autoSecondaryChooser.addDefault("Nothing", AutoSecondary.DO_NOTHING);
+        autoSecondaryChooser.addDefault("Nothing", AutoSecondary.NOTHING);
         autoSecondaryChooser.addObject("Scale->Switch", AutoSecondary.SWITCH);
         autoSecondaryChooser.addObject("Scale->Safe", AutoSecondary.SAFE);
         autoSecondaryChooser.addObject("Switch->Double Cube", AutoSecondary.DOUBLESWITCH);
@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
         StartPosition startPosition =  startPositionChooser.getSelected();
         AutoSecondary autoSecondaryMode = autoSecondaryChooser.getSelected();
 
-        if (strategy == Strategy.DO_NOTHING) {
+        if (strategy == Strategy.NOTHING) {
             auto = new DoNothing();
         } else if (strategy == Strategy.SWITCH) {
             if (startPosition == StartPosition.LEFT) {
@@ -121,6 +121,14 @@ public class Robot extends TimedRobot {
                 auto = new MobilityCenter(gameData);
             } else if (startPosition == StartPosition.RIGHT){
                 auto = new Mobility(gameData);
+            }
+        } else if (strategy == Strategy.NO_CROSS) {
+            if (startPosition == StartPosition.LEFT) {
+                auto = new NoCrossLeft(gameData, autoSecondaryMode);
+            } else if (startPosition == StartPosition.CENTER) {
+                auto = new SwitchCenter(gameData, autoSecondaryMode);
+            } else if (startPosition == StartPosition.RIGHT){
+                auto = new NoCrossRight(gameData, autoSecondaryMode);
             }
         }
 
