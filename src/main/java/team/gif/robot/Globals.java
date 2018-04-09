@@ -28,9 +28,9 @@ public class Globals {
         public static final double TURN_P = 0.85;
         public static final double TURN_I = 0.002;
         public static final double TURN_D = 0.0;
-        public static final double ROTATE_P = 0.015;
+        public static final double ROTATE_P = 0.019; // 0.015
         public static final double ROTATE_I = 0.0;
-        public static final double ROTATE_D = 0.0;
+        public static final double ROTATE_D = ROTATE_P/100;
         public static final double ROTATE_IZONE = 8;
         public static final double kInterceptLeftForward = 0.077646; // P: 0.077646
         public static final double kInterceptRightForward = 0.077646; // P: 0.078561

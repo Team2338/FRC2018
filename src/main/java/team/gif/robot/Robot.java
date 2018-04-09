@@ -166,7 +166,7 @@ public class Robot extends TimedRobot {
         }
 
         if (OI.getInstance().aX.get()) {
-            limelight.setLEDMode(Limelight.LEDMode.ON);
+            limelight.setLEDMode(Limelight.LEDMode.BLINK);
         } else {
             limelight.setLEDMode(Limelight.LEDMode.OFF);
         }
