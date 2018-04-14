@@ -42,6 +42,10 @@ public class Drivetrain extends Subsystem {
         rightFollower.setInverted(true);
         rightMaster.setSensorPhase(true);
         leftMaster.setSensorPhase(true);
+//        leftMaster.configOpenloopRamp(0.25, 0);
+//        leftFollower.configOpenloopRamp(0.25, 0);
+//        rightMaster.configOpenloopRamp(0.25, 0);
+//        rightFollower.configOpenloopRamp(0.25, 0);
 
         MotorLogger.addMotor(leftMaster);
         MotorLogger.addMotor(rightMaster);

@@ -39,7 +39,7 @@ public class CollectUntilCollect extends Command {
 
         double gyroHeading = drivetrain.getHeading();
         double angleDifference = Pathfinder.boundHalfDegrees(0 - gyroHeading);
-        double turn = 1.0 * (-1.0/80.0) * angleDifference;
+        double turn = 1.5 * (-1.0/80.0) * angleDifference;
 
         drivetrain.setLeft(0.2 + turn);
         drivetrain.setRight(0.2 - turn);

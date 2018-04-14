@@ -4,18 +4,14 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jaci.pathfinder.Pathfinder;
 import team.gif.lib.AxisButton;
 import team.gif.lib.DualButton;
 import team.gif.lib.POVButton;
-import team.gif.robot.commands.auto.*;
 import team.gif.robot.commands.subsystem.arm.*;
 import team.gif.robot.commands.subsystem.drivetrain.*;
 import team.gif.robot.commands.subsystem.ramps.RampsDeploy;
 import team.gif.robot.commands.subsystem.ramps.RampsLift;
 import team.gif.robot.commands.system.GeneratePaths;
-
-import java.io.File;
 
 public class OI {
 
@@ -104,10 +100,10 @@ public class OI {
 
 //        dA.whenPressed(new RotateDegrees(90));
 
-        dX.whenPressed(new GeneratePaths());
-//        dX.whileHeld(new DrivetrainConstantPercent(-0.2, 6));
-//        dA.whileHeld(new DrivetrainConstantPercent(-0.3, 6));
-//        dB.whileHeld(new DrivetrainConstantPercent(-0.4, 6));
+//        dX.whenPressed(new GeneratePaths());
+        dX.whileHeld(new DrivetrainConstantPercent(0.2, 12));
+        dA.whileHeld(new DrivetrainConstantPercent(0.3, 12));
+        dB.whileHeld(new DrivetrainConstantPercent(0.4, 12));
 
         SmartDashboard.putData(new GeneratePaths());
         SmartDashboard.putData(new CharacterizeDrivetrain());

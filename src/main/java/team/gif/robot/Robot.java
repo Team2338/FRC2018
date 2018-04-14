@@ -68,7 +68,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Strategy", strategyChooser);
         SmartDashboard.putData("Start Position", startPositionChooser);
 
-
+        SmartDashboard.putNumber("Angle Error", 0);
+        SmartDashboard.putNumber("Rotate P", 0);
     }
 
     public void robotPeriodic() {
@@ -169,6 +170,10 @@ public class Robot extends TimedRobot {
             limelight.setLEDMode(Limelight.LEDMode.BLINK);
         } else {
             limelight.setLEDMode(Limelight.LEDMode.OFF);
+        }
+
+        if (OI.getInstance().dpadDown.get()) {
+            arm.setPunchReturn(true);
         }
 
 //        SmartDashboard.putNumber("Left Velocity (rps)", drivetrain.getLeftEncVelociy()*10/4096);

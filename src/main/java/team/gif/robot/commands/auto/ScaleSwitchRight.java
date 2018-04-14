@@ -64,14 +64,17 @@ public class ScaleSwitchRight extends CommandGroup {
                 // else {} // Switch is on Left, do nothing
             } else if (autoSecondaryMode == Robot.AutoSecondary.SCALE) {
                 addSequential(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
-                addSequential(new FollowPathForward(RightScaleToRightSwitch));
+//                addSequential(new FollowPathForward(RightScaleToRightSwitch));
+                addSequential(new RotateDegrees(85));
                 addSequential(new WaitCommand(0.25));
+                addSequential(new DrivetrainConstantPercent(0.4, 0.9));
+//                addSequential(new DrivetrainConstantPercent(0.3, 1.5));
                 addSequential(new CollectUntilCollect());
                 addSequential(new ArmDumbCollect(), 0.75);
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
                 addSequential(new DrivetrainConstantPercent(-0.3, 1.5));
-                addSequential(new RotateDegrees(-100));
-                addSequential(new DrivetrainConstantPercent(-0.2, 0.5));
+                addSequential(new RotateDegrees(-85));
+//                addSequential(new DrivetrainConstantPercent(-0.2, 0.5));
                 addSequential(new WaitCommand(0.25));
                 addSequential(new ArmLaunchShort());
             } else if ( autoSecondaryMode == Robot.AutoSecondary.SAFE ) { // go to safe area

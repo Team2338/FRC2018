@@ -97,7 +97,7 @@ public class Arm extends Subsystem {
     }
 
     public boolean hasCube() {
-        return cubeSensor.get(); // Inverted on practice
+        return !cubeSensor.get(); // Inverted on practice
     }
 
     protected void initDefaultCommand() {

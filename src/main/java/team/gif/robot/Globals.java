@@ -28,16 +28,15 @@ public class Globals {
         public static final double TURN_P = 0.85;
         public static final double TURN_I = 0.002;
         public static final double TURN_D = 0.0;
-        public static final double ROTATE_P = 0.019; // 0.015
-        public static final double ROTATE_I = 0.0;
-        public static final double ROTATE_D = ROTATE_P/100;
-        public static final double ROTATE_IZONE = 8;
-        public static final double kInterceptLeftForward = 0.077646; // P: 0.077646
-        public static final double kInterceptRightForward = 0.077646; // P: 0.078561
+        public static final double ROTATE_P = 0.03;
+        public static final double ROTATE_I = 0.3;
+        public static final double ROTATE_D = 0.18;
+        public static final double kInterceptLeftForward = 0.091811; // P: 0.077646
+        public static final double kInterceptRightForward = 0.091811; // P: 0.078561
         public static final double kInterceptLeftReverse = 0.06409; // P: 0.06409
         public static final double kInterceptRightReverse = 0.061209; // P: 0.061209
-        public static final double kVLeftForward = 1.0/(9.95*WHEEL_DIAMETER_IN*Math.PI); // C: 1.0/4.7 P: 9.95
-        public static final double kVRightForward = 1.0/(9.95*WHEEL_DIAMETER_IN*Math.PI); // C: 1.0/4.7 P: 9.15
+        public static final double kVLeftForward = 1.0/(9.75*WHEEL_DIAMETER_IN*Math.PI); // C: 1.0/4.7 P: 9.95
+        public static final double kVRightForward = 1.0/(9.75*WHEEL_DIAMETER_IN*Math.PI); // C: 1.0/4.7 P: 9.15
         public static final double kVLeftReverse = 1.0/(9.7*WHEEL_DIAMETER_IN*Math.PI); // P: 9.7
         public static final double kVRightReverse = 1.0/(9.0*WHEEL_DIAMETER_IN*Math.PI); // P: 9.0
         public static final double kALeftForward = 1/(50*WHEEL_DIAMETER_IN*Math.PI); // C: 1.4/12.0 P: 50
@@ -66,6 +65,6 @@ public class Globals {
         public static final int ARM_SECOND_POSITION = 110000;
         public static final int ARM_TRAVEL_POSITION = 0;
         public static final int ARM_COLLECT_POSITION = -25700; // -45000
-        public static final int ARM_POT_ZERO_POSITION = 402; // C = 390; P = 657;
+        public static final int ARM_POT_ZERO_POSITION = 494; // C = 402; P = 494;
     }
 }

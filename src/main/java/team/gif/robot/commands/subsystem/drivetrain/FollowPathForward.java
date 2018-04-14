@@ -6,6 +6,7 @@ import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
+import team.gif.lib.MiniPID;
 import team.gif.lib.PIDCalculator;
 import team.gif.robot.Globals;
 import team.gif.robot.subsystems.Drivetrain;
@@ -16,13 +17,18 @@ public class FollowPathForward extends Command {
     private TankModifier modifier;
     private EncoderFollower left;
     private EncoderFollower right;
-    private PIDCalculator turnPID;
+//    private PIDCalculator turnPID;
+    private MiniPID turnPID;
     private double angleError;
 
     public FollowPathForward(Trajectory trajectory) {
         requires(drivetrain);
         modifier = new TankModifier(trajectory).modify(Globals.Drivetrain.WHEELBASE_WIDTH_IN);
-        turnPID = new PIDCalculator(Globals.Drivetrain.TURN_P, Globals.Drivetrain.TURN_I, Globals.Drivetrain.TURN_D, 0.5);
+//        turnPID = new PIDCalculator(Globals.Drivetrain.TURN_P, Globals.Drivetrain.TURN_I, Globals.Drivetrain.TURN_D, 0.5);
+        turnPID = new MiniPID(0.012, 0.0, 0.0);
+        turnPID.setMaxIOutput(0.1);
+        turnPID.setOutputLimits(1.0);
+        turnPID.setDirection(false);
     }
 
     protected void initialize() {
@@ -58,6 +64,9 @@ public class FollowPathForward extends Command {
         double turn = Globals.Drivetrain.gyroSensitivity * (-1.0/80.0) * angleDifference;
         turn = (-1.0/80.0) * angleDifference;
         turn = turnPID.getOutput(turn);
+        turn = -turnPID.getOutput(gyroHeading, Pathfinder.boundHalfDegrees(desiredHeading));
+
+        System.out.println("Current Heading: " + gyroHeading + ", Desired Heading: " + Pathfinder.boundHalfDegrees(desiredHeading));
 
         drivetrain.setLeft(leftOutput + turn);
         drivetrain.setRight(rightOutput - turn);
