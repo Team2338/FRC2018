@@ -2,6 +2,7 @@ package team.gif.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import team.gif.robot.Globals;
@@ -38,6 +39,7 @@ public class ScaleSwitchRight extends CommandGroup {
         //
 
         if (gameData.charAt(1) == 'R') {  // Right Scale
+
             // Since Scale is on Right and we're stating on Right, take the shot on the Scale regardless of mode
             // Move to Scale, turn, and shoot
             addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
@@ -46,7 +48,7 @@ public class ScaleSwitchRight extends CommandGroup {
             addSequential(new WaitCommand(0.5));
 
             // Go to either the switch or the safe area
-            if( autoSecondaryMode == Robot.AutoSecondary.SWITCH||
+            if( autoSecondaryMode == Robot.AutoSecondary.SWITCH ||
                 autoSecondaryMode == Robot.AutoSecondary.DOUBLESWITCH) { // Scale/Switch mode - head toward the switch to pick up cube
                 //  collect the corner cube of the switch
                 addSequential(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
@@ -85,14 +87,22 @@ public class ScaleSwitchRight extends CommandGroup {
                 autoSecondaryMode == Robot.AutoSecondary.DOUBLESWITCH ||
                 autoSecondaryMode == Robot.AutoSecondary.SCALE) { // Scale/Switch mode - go to left scale, shoot, and pickup corner cube regardless of which switch is ours
 
+                double delayStart = SmartDashboard.getNumber("Cross Scale Delay (sec)",0);
+                if( delayStart > 0){
+                    System.out.println("\n\nDelay start of " + delayStart + " seconds.\n\n");
+                }
+                addSequential(new WaitCommand( delayStart ));
+
                 // Move to Scale, turn, shoot, pickup corner cube
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
                 addSequential(new FollowPathForward(RightToLeftScale));
                 addParallel(new ArmLaunchShort());
-                addSequential(new WaitCommand(0.5));
+                addSequential(new WaitCommand(0.4));
                 addSequential(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
-                addSequential(new FollowPathForward(LeftScaleToLeftSwitch));
+//                addSequential(new FollowPathForward(LeftScaleToLeftSwitch));
+                addSequential(new RotateDegrees(-100));
                 addSequential(new WaitCommand(0.25));
+                addSequential(new DrivetrainConstantPercent(0.4, 0.9));
                 addSequential(new CollectUntilCollect());
                 addSequential(new ArmDumbCollect(), 0.25);
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));

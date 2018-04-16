@@ -101,9 +101,9 @@ public class OI {
 //        dA.whenPressed(new RotateDegrees(90));
 
 //        dX.whenPressed(new GeneratePaths());
-        dX.whileHeld(new DrivetrainConstantPercent(0.2, 12));
-        dA.whileHeld(new DrivetrainConstantPercent(0.3, 12));
-        dB.whileHeld(new DrivetrainConstantPercent(0.4, 12));
+//        dX.whileHeld(new DrivetrainConstantPercent(0.2, 12));
+//        dA.whileHeld(new DrivetrainConstantPercent(0.3, 12));
+//        dB.whileHeld(new DrivetrainConstantPercent(0.4, 12));
 
         SmartDashboard.putData(new GeneratePaths());
         SmartDashboard.putData(new CharacterizeDrivetrain());
@@ -113,6 +113,7 @@ public class OI {
         dLT.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
         dLB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SECOND_POSITION));
         dRB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+        dB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_HIT_CUBE_POSITION));
         dY.whenPressed(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
 
         // Arm Functions
