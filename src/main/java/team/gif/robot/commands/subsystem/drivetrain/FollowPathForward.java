@@ -20,6 +20,7 @@ public class FollowPathForward extends Command {
 //    private PIDCalculator turnPID;
     private MiniPID turnPID;
     private double angleError;
+    private double initAngle;
 
     public FollowPathForward(Trajectory trajectory) {
         requires(drivetrain);
@@ -33,7 +34,7 @@ public class FollowPathForward extends Command {
 
     protected void initialize() {
         drivetrain.resetEncoders();
-        drivetrain.resetGyro();
+        initAngle = drivetrain.getHeading();
 
         left = new EncoderFollower(modifier.getLeftTrajectory());
         right = new EncoderFollower(modifier.getRightTrajectory());
@@ -64,7 +65,7 @@ public class FollowPathForward extends Command {
         double turn = Globals.Drivetrain.gyroSensitivity * (-1.0/80.0) * angleDifference;
         turn = (-1.0/80.0) * angleDifference;
         turn = turnPID.getOutput(turn);
-        turn = -turnPID.getOutput(gyroHeading, Pathfinder.boundHalfDegrees(desiredHeading));
+        turn = -turnPID.getOutput(gyroHeading - initAngle, Pathfinder.boundHalfDegrees(desiredHeading));
 
         System.out.println("Current Heading: " + gyroHeading + ", Desired Heading: " + Pathfinder.boundHalfDegrees(desiredHeading));
 
