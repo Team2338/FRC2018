@@ -12,7 +12,7 @@ import team.gif.robot.commands.subsystem.arm.ArmSetPosition;
 import team.gif.robot.commands.subsystem.arm.CollectUntilCollect;
 import team.gif.robot.commands.subsystem.drivetrain.DrivetrainConstantPercent;
 import team.gif.robot.commands.subsystem.drivetrain.FollowPathForward;
-import team.gif.robot.commands.subsystem.drivetrain.RotateDegrees;
+import team.gif.robot.commands.subsystem.drivetrain.RotateByAngle;
 
 import java.io.File;
 
@@ -44,7 +44,7 @@ public class SwitchCenter extends CommandGroup{
             // place second cube if selected
             if (autoSecondaryMode == Robot.AutoSecondary.DOUBLESWITCH) {
                 //                addSequential(new FollowPathForward(SecondaryRightSwitch));
-                addSequential(new RotateDegrees(40));
+                addSequential(new RotateByAngle(40));
                 addSequential(new DrivetrainConstantPercent(0.5, 1.2));
                 addSequential(new ArmEject(0.5), 0.5);
                 addSequential(new WaitCommand(0.25));
@@ -70,7 +70,7 @@ public class SwitchCenter extends CommandGroup{
             // place second cube if selected
             if (autoSecondaryMode == Robot.AutoSecondary.DOUBLESWITCH) {
                 //                addSequential(new FollowPathForward(SecondaryRightSwitch));
-                addSequential(new RotateDegrees(-40));
+                addSequential(new RotateByAngle(-40));
                 addSequential(new DrivetrainConstantPercent(0.5, 1.2));
                 addSequential(new ArmEject(0.5), 0.5);
                 addSequential(new WaitCommand(0.25));

@@ -98,7 +98,7 @@ public class OI {
 //        dB.whenPressed(new SwitchCenter("LLL", Robot.AutoSecondary.DOUBLESWITCH)); //15
 //        dB.whenPressed(new SwitchCenter("RRR", Robot.AutoSecondary.DOUBLESWITCH)); //16
 
-//        dA.whenPressed(new RotateDegrees(90));
+//        dA.whenPressed(new RotateByAngle(90));
 
 //        dX.whenPressed(new GeneratePaths());
 //        dX.whileHeld(new DrivetrainConstantPercent(0.2, 12));

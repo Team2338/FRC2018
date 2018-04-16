@@ -4,25 +4,26 @@ import edu.wpi.first.wpilibj.command.Command;
 import jaci.pathfinder.Pathfinder;
 import team.gif.robot.subsystems.Drivetrain;
 
-public class DrivetrainConstantPercent extends Command {
+public class DriveAtAngle extends Command {
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
     private double percent;
-    private double initHeading;
+    private double angle;
 
-    public DrivetrainConstantPercent(double percent, double seconds) {
+    public DriveAtAngle(double percent, double angle, double seconds) {
         super(seconds);
         requires(drivetrain);
         this.percent = percent;
+        this.angle = angle;
     }
 
     protected void initialize() {
-        initHeading = drivetrain.getHeading();
+
     }
 
     protected void execute() {
         double gyroHeading = drivetrain.getHeading();
-        double angleDifference = Pathfinder.boundHalfDegrees(initHeading - gyroHeading);
+        double angleDifference = Pathfinder.boundHalfDegrees(angle - gyroHeading);
         double turn = 1.0 * (-1.0/80.0) * angleDifference;
 //        turn = 0;
 

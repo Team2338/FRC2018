@@ -2,11 +2,10 @@ package team.gif.robot.commands.subsystem.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jaci.pathfinder.Pathfinder;
 import team.gif.lib.MiniPID;
 import team.gif.robot.subsystems.Drivetrain;
 
-public class RotateDegrees extends Command {
+public class RotateToAngle extends Command {
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
     private MiniPID turnPID;
@@ -15,7 +14,7 @@ public class RotateDegrees extends Command {
     private int tolerableCount;
     private boolean isFinished;
 
-    public RotateDegrees(double angDeg) {
+    public RotateToAngle(double angDeg) {
         requires(drivetrain);
         this.angDeg = angDeg;
     }
@@ -27,7 +26,7 @@ public class RotateDegrees extends Command {
         turnPID.setMaxIOutput(0.1);
 //        turnPID.setSetpointRange(30);
 //        turnPID.setOutputRampRate(0.02);
-        angTarget = drivetrain.getHeading() + angDeg;
+        angTarget = angDeg;
     }
 
     protected void execute() {
