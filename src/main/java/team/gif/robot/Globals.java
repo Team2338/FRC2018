@@ -66,6 +66,6 @@ public class Globals {
         public static final int ARM_HIT_CUBE_POSITION = 35000;
         public static final int ARM_TRAVEL_POSITION = 0;
         public static final int ARM_COLLECT_POSITION = -25700; // -45000
-        public static final int ARM_POT_ZERO_POSITION = 494; // C = 402; P = 494;
+        public static final int ARM_POT_ZERO_POSITION = 501; // C = 402; P = 501;
     }
 }

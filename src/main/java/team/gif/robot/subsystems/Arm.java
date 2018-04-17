@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.lib.GIFMath;
@@ -34,6 +35,7 @@ public class Arm extends Subsystem {
     private Solenoid punchReturn = new Solenoid(RobotMap.Arm.RETURN_ID);
 
     private AnalogInput dartPot = new AnalogInput(RobotMap.Arm.DART_POT_ID);
+    private AnalogInput pressureSensor = new AnalogInput(RobotMap.Arm.PRESSURE_SENSOR_ID);
     private DigitalInput cubeSensor = new DigitalInput(RobotMap.Arm.CUBE_SENSOR_ID);
 
     private Arm() {
@@ -85,7 +87,7 @@ public class Arm extends Subsystem {
     public void tareDartPosition() {
 //        dart.setSelectedSensorPosition(GIFMath.map(dartPot.getValue(), Globals.Arm.ARM_POT_ZERO_POSITION,
 //                Globals.Arm.ARM_POT_ZERO_POSITION + 2500, 0 , 450000), 0, 0);
-        dart.setSelectedSensorPosition((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 141, 0, 0);
+        dart.setSelectedSensorPosition((int) Math.round((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 141.5), 0, 0);
     }
 
     public int getDartPotPosition() {
@@ -94,6 +96,14 @@ public class Arm extends Subsystem {
 
     public int getDartEncoderPosition() {
         return dart.getSelectedSensorPosition(0);
+    }
+
+    public int getRawPressure() {
+        return pressureSensor.getValue();
+    }
+
+    public double getEstimatedPressure() {
+        return 250 * (pressureSensor.getVoltage()/ RobotController.getVoltage5V()) - 25;
     }
 
     public boolean hasCube() {

@@ -12,7 +12,10 @@ public class RotateToCube extends Command {
     private Limelight limelight = Limelight.getInstance();
     private MiniPID turnPID;
     private double scanSpeed;
+    private double angleToCube;
+    private double initAngle;
     private boolean isFinished;
+    private boolean hasSeenCube;
     private int toleranceCounter;
 
     public RotateToCube(double scanSpeed) {
@@ -24,23 +27,28 @@ public class RotateToCube extends Command {
         turnPID = new MiniPID(0.03, 0.3, 0.18);
         turnPID.setOutputLimits(0.8);
         turnPID.setMaxIOutput(0.1);
+        initAngle = drivetrain.getHeading();
     }
 
     protected void execute() {
-        if (limelight.hasValidTarget()) {
-            double turn = turnPID.getOutput(limelight.getXAngle(), 0);
+        if (!hasSeenCube) {
+            if (limelight.hasValidTarget()) {
+                hasSeenCube = true;
+                angleToCube = limelight.getXAngle();
+            } else {
+                drivetrain.setLeft(-scanSpeed);
+                drivetrain.setRight(scanSpeed);
+            }
+        } else {
+            double turn = turnPID.getOutput(drivetrain.getHeading() - initAngle, angleToCube);
             drivetrain.setLeft(turn);
             drivetrain.setRight(-turn);
 
-            if (Math.abs(limelight.getXAngle()) < 5) {
+            if (Math.abs(angleToCube - (drivetrain.getHeading() - initAngle)) < 5) {
                 toleranceCounter++;
             } else {
                 toleranceCounter = 0;
             }
-
-        } else {
-            drivetrain.setLeft(-scanSpeed);
-            drivetrain.setRight(scanSpeed);
         }
 
         if (toleranceCounter > 10) {

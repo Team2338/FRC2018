@@ -10,22 +10,24 @@ public class DriveAtAngle extends Command {
     private double percent;
     private double angle;
 
-    public DriveAtAngle(double percent, double angle, double seconds) {
+    public DriveAtAngle(double percent, double targetAngle, double seconds) {
         super(seconds);
         requires(drivetrain);
         this.percent = percent;
-        this.angle = angle;
+        angle = targetAngle;
     }
 
     protected void initialize() {
-
+        System.out.println("Init Heading: " + angle);
     }
 
     protected void execute() {
         double gyroHeading = drivetrain.getHeading();
         double angleDifference = Pathfinder.boundHalfDegrees(angle - gyroHeading);
-        double turn = 1.0 * (-1.0/80.0) * angleDifference;
-//        turn = 0;
+        System.out.println("Angle Difference" + angleDifference);
+        double turn;
+
+        turn = 1.0 * (-1.0 / 80.0) * angleDifference;
 
         drivetrain.setLeft(percent + turn);
         drivetrain.setRight(percent - turn);

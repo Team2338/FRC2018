@@ -220,6 +220,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Left Velocity (rps)", drivetrain.getLeftEncVelociy()/4096*10);
         SmartDashboard.putNumber("Right Velocity (rps)", drivetrain.getRightEncVelocity()/4096*10);
 
+        SmartDashboard.putNumber("Pressure Reading", arm.getRawPressure());
+        SmartDashboard.putNumber("Estimated Pressure", arm.getEstimatedPressure());
 //        SmartDashboard.putNumber("Distance (in)", (drivetrain.getLeftEncPosition()+drivetrain.getRightEncPosition())/2/4096*Globals.Drivetrain.WHEEL_DIAMETER_IN * Math.PI);
 
         SmartDashboard.putBoolean("Cube", arm.hasCube());

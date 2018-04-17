@@ -10,7 +10,7 @@ public class ArmSetPosition extends InstantCommand {
     private int position;
 
     public ArmSetPosition(int position) {
-        requires(arm);
+//        requires(arm);
         this.position = position;
     }
 

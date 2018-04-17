@@ -7,10 +7,16 @@ import team.gif.robot.subsystems.Arm;
 public class ArmLaunchShort extends Command {
 
     private Arm arm = Arm.getInstance();
+    private double pressure;
 
     public ArmLaunchShort() {
         super(1);
         requires(arm);
+    }
+
+    protected void initialize() {
+        pressure = arm.getEstimatedPressure();
+        System.out.println("Init Pressure: " + pressure);
     }
 
     protected void execute() {
@@ -35,5 +41,7 @@ public class ArmLaunchShort extends Command {
         arm.setIntakePercent(0);
         arm.setPunch(false);
         arm.setPunchReturn(false);
+        System.out.println("End Pressure: " + arm.getEstimatedPressure());
+        System.out.println("This action consumed " + (pressure - arm.getEstimatedPressure()) + " psi");
     }
 }

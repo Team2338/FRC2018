@@ -17,14 +17,16 @@ public class CollectUntilCollect extends Command {
 
     private Arm arm = Arm.getInstance();
     private Drivetrain drivetrain = Drivetrain.getInstance();
+    private double initAngle;
 
     public CollectUntilCollect() {
         requires(arm);
     }
 
     protected void initialize() {
-        drivetrain.resetGyro();
+//        drivetrain.resetGyro();
         arm.setOpen(true);
+        initAngle = drivetrain.getHeading();
     }
 
     protected void execute() {
@@ -38,7 +40,7 @@ public class CollectUntilCollect extends Command {
         }
 
         double gyroHeading = drivetrain.getHeading();
-        double angleDifference = Pathfinder.boundHalfDegrees(0 - gyroHeading);
+        double angleDifference = Pathfinder.boundHalfDegrees(initAngle - gyroHeading);
         double turn = 1.5 * (-1.0/80.0) * angleDifference;
 
         drivetrain.setLeft(0.2 + turn);

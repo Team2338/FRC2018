@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.gif.lib.AxisButton;
 import team.gif.lib.DualButton;
 import team.gif.lib.POVButton;
+import team.gif.robot.commands.auto.TripleScaleRight;
 import team.gif.robot.commands.subsystem.arm.*;
 import team.gif.robot.commands.subsystem.drivetrain.*;
 import team.gif.robot.commands.subsystem.ramps.RampsDeploy;
@@ -102,7 +103,7 @@ public class OI {
 
 //        dX.whenPressed(new GeneratePaths());
 //        dX.whileHeld(new DrivetrainConstantPercent(0.2, 12));
-//        dA.whileHeld(new DrivetrainConstantPercent(0.3, 12));
+        dA.whenPressed(new TripleScaleRight("RRR"));
 //        dB.whileHeld(new DrivetrainConstantPercent(0.4, 12));
 
         SmartDashboard.putData(new GeneratePaths());
