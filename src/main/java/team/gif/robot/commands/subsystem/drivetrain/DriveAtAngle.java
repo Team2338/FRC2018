@@ -2,6 +2,7 @@ package team.gif.robot.commands.subsystem.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import jaci.pathfinder.Pathfinder;
+import team.gif.robot.Globals;
 import team.gif.robot.subsystems.Drivetrain;
 
 public class DriveAtAngle extends Command {
@@ -9,12 +10,16 @@ public class DriveAtAngle extends Command {
     private Drivetrain drivetrain = Drivetrain.getInstance();
     private double percent;
     private double angle;
+    private boolean useExternalTime;
+    private double driveTime;
 
-    public DriveAtAngle(double percent, double targetAngle, double seconds) {
+    public DriveAtAngle(double percent, double targetAngle, double seconds, boolean useExtTime) {
         super(seconds);
         requires(drivetrain);
         this.percent = percent;
         angle = targetAngle;
+        useExternalTime = useExtTime;
+        driveTime = seconds;
     }
 
     protected void initialize() {
@@ -34,7 +39,17 @@ public class DriveAtAngle extends Command {
     }
 
     protected boolean isFinished() {
-        return isTimedOut();
+        double totalTime = driveTime + (Math.abs(Globals.Drivetrain.collectUntilCollectSpeed/percent)*Globals.driveExtTime);
+
+        System.out.println("driveTime: " + driveTime + " Add Time:" + (Math.abs(Globals.Drivetrain.collectUntilCollectSpeed/percent)*Globals.driveExtTime));
+        System.out.println("TotalTime: " + totalTime);
+        System.out.println("RunTime: " + timeSinceInitialized() );
+        if(useExternalTime) {
+            return (timeSinceInitialized() > totalTime) ;
+        }
+        else {
+            return isTimedOut();
+        }
     }
 
     protected void end() {

@@ -21,6 +21,7 @@ public class CollectUntilCollect extends Command {
 
     public CollectUntilCollect() {
         requires(arm);
+        Globals.driveExtTime = 0;
     }
 
     protected void initialize() {
@@ -43,8 +44,8 @@ public class CollectUntilCollect extends Command {
         double angleDifference = Pathfinder.boundHalfDegrees(initAngle - gyroHeading);
         double turn = 1.5 * (-1.0/80.0) * angleDifference;
 
-        drivetrain.setLeft(0.2 + turn);
-        drivetrain.setRight(0.2 - turn);
+        drivetrain.setLeft(Globals.Drivetrain.collectUntilCollectSpeed + turn);
+        drivetrain.setRight(Globals.Drivetrain.collectUntilCollectSpeed - turn);
     }
 
     protected boolean isFinished() {
@@ -56,5 +57,7 @@ public class CollectUntilCollect extends Command {
         drivetrain.setLeft(0.0);
         drivetrain.setRight(0.0);
         arm.setOpen(false);
+        Globals.driveExtTime = timeSinceInitialized();
+        System.out.println("Drive Time: " + Globals.driveExtTime);
     }
 }

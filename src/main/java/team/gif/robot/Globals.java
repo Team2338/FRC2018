@@ -44,6 +44,8 @@ public class Globals {
         public static final double kALeftReverse = 1/(30*WHEEL_DIAMETER_IN*Math.PI); // P: 30
         public static final double kARightReverse = 1/(30*WHEEL_DIAMETER_IN*Math.PI); // P: 30
         public static final double gyroSensitivity = 1.2; // P: 2
+
+        public static final double collectUntilCollectSpeed = 0.2;
     }
 
     public static class Ramps {
@@ -68,4 +70,6 @@ public class Globals {
         public static final int ARM_COLLECT_POSITION = -25700; // -45000
         public static final int ARM_POT_ZERO_POSITION = 501; // C = 402; P = 501;
     }
+
+    public static double driveExtTime = 0;
 }
