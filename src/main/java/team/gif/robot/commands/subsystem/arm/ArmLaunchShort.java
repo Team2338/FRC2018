@@ -21,7 +21,7 @@ public class ArmLaunchShort extends Command {
 
     protected void execute() {
         if (arm.getDartEncoderPosition() > Globals.Arm.ARM_OPEN_SOFT_LIMIT) {
-            if (timeSinceInitialized() > 0.14) {
+            if (timeSinceInitialized() > 0.127) {
                 arm.setPunchReturn(true);
                 arm.setPunch(false);
                 arm.setIntakePercent(0.0);

@@ -26,7 +26,7 @@ public class CollectUntilCollect extends Command {
 
     protected void initialize() {
 //        drivetrain.resetGyro();
-        arm.setOpen(true);
+//        arm.setOpen(true);
         initAngle = drivetrain.getHeading();
     }
 
@@ -58,6 +58,6 @@ public class CollectUntilCollect extends Command {
         drivetrain.setRight(0.0);
         arm.setOpen(false);
         Globals.driveExtTime = timeSinceInitialized();
-        System.out.println("Drive Time: " + Globals.driveExtTime);
+//        System.out.println("Drive Time: " + Globals.driveExtTime);
     }
 }

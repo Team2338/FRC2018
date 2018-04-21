@@ -101,21 +101,27 @@ public class OI {
 
 //        dA.whenPressed(new RotateByAngle(90));
 
-//        dX.whenPressed(new GeneratePaths());
+        dX.whenPressed(new GeneratePaths());
 //        dX.whileHeld(new DrivetrainConstantPercent(0.2, 12));
-        dA.whenPressed(new TripleScaleRight("RRR"));
+        dY.whenPressed(new TripleScaleRight("LLL"));
 //        dB.whileHeld(new DrivetrainConstantPercent(0.4, 12));
 
-        SmartDashboard.putData(new GeneratePaths());
-        SmartDashboard.putData(new CharacterizeDrivetrain());
-        SmartDashboard.putData(new DrivetrainRampVoltage(8));
+//        SmartDashboard.putData(new GeneratePaths());
+//        SmartDashboard.putData(new CharacterizeDrivetrain());
+//        SmartDashboard.putData(new DrivetrainRampVoltage(8));
 
         // Arm Positions
-        dLT.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-        dLB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SECOND_POSITION));
+//        dLT.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+//        dLB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SECOND_POSITION));
+//        dRB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+//        dB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_HIT_CUBE_POSITION));
+//        dY.whenPressed(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
+
+        dLT.whenPressed(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
+        dLB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
         dRB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
-        dB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_HIT_CUBE_POSITION));
-        dY.whenPressed(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
+        dA.whenPressed(new ArmSetPosition(Globals.Arm.ARM_HIT_CUBE_POSITION));
+        dB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SECOND_POSITION));
 
         // Arm Functions
         aLB.whileHeld(new ArmEject(1.0));

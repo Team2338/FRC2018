@@ -3,10 +3,7 @@ package team.gif.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team.gif.lib.GIFMath;
 import team.gif.lib.TalonSRXConfigurator;
@@ -38,6 +35,8 @@ public class Arm extends Subsystem {
     private AnalogInput pressureSensor = new AnalogInput(RobotMap.Arm.PRESSURE_SENSOR_ID);
     private DigitalInput cubeSensor = new DigitalInput(RobotMap.Arm.CUBE_SENSOR_ID);
 
+    private Compressor compressor = new Compressor();
+
     private Arm() {
         dart.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
         dart.setSensorPhase(true);
@@ -58,8 +57,24 @@ public class Arm extends Subsystem {
         dart.configPeakCurrentDuration(250, 0);
     }
 
+    public void setCompressor(boolean on) {
+        if (on) {
+            compressor.start();
+        } else {
+            compressor.stop();
+        }
+    }
+
     public void setIntakePercent(double percent) {
         leftMaster.set(ControlMode.PercentOutput, -percent);
+        rightMaster.set(ControlMode.PercentOutput, percent);
+    }
+
+    public void setLeftPercent(double percent) {
+        leftMaster.set(ControlMode.PercentOutput, -percent);
+    }
+
+    public void setRightPercent(double percent) {
         rightMaster.set(ControlMode.PercentOutput, percent);
     }
 
@@ -87,11 +102,11 @@ public class Arm extends Subsystem {
     public void tareDartPosition() {
 //        dart.setSelectedSensorPosition(GIFMath.map(dartPot.getValue(), Globals.Arm.ARM_POT_ZERO_POSITION,
 //                Globals.Arm.ARM_POT_ZERO_POSITION + 2500, 0 , 450000), 0, 0);
-        dart.setSelectedSensorPosition((int) Math.round((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 141.5), 0, 0);
+        dart.setSelectedSensorPosition((int) Math.round((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 142.1), 0, 0);
     }
 
     public int getDartPotPosition() {
-        return dartPot.getValue();
+        return dartPot.getAverageValue();
     }
 
     public int getDartEncoderPosition() {
@@ -99,11 +114,11 @@ public class Arm extends Subsystem {
     }
 
     public int getRawPressure() {
-        return pressureSensor.getValue();
+        return pressureSensor.getAverageValue();
     }
 
     public double getEstimatedPressure() {
-        return 250 * (pressureSensor.getVoltage()/ RobotController.getVoltage5V()) - 25;
+        return 250 * (pressureSensor.getAverageVoltage()/ RobotController.getVoltage5V()) - 25;
     }
 
     public boolean hasCube() {

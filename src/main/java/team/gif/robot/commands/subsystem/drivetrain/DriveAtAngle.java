@@ -29,7 +29,7 @@ public class DriveAtAngle extends Command {
     protected void execute() {
         double gyroHeading = drivetrain.getHeading();
         double angleDifference = Pathfinder.boundHalfDegrees(angle - gyroHeading);
-        System.out.println("Angle Difference" + angleDifference);
+//        System.out.println("Angle Difference" + angleDifference);
         double turn;
 
         turn = 1.0 * (-1.0 / 80.0) * angleDifference;
@@ -41,9 +41,9 @@ public class DriveAtAngle extends Command {
     protected boolean isFinished() {
         double totalTime = driveTime + (Math.abs(Globals.Drivetrain.collectUntilCollectSpeed/percent)*Globals.driveExtTime);
 
-        System.out.println("driveTime: " + driveTime + " Add Time:" + (Math.abs(Globals.Drivetrain.collectUntilCollectSpeed/percent)*Globals.driveExtTime));
-        System.out.println("TotalTime: " + totalTime);
-        System.out.println("RunTime: " + timeSinceInitialized() );
+//        System.out.println("driveTime: " + driveTime + " Add Time:" + (Math.abs(Globals.Drivetrain.collectUntilCollectSpeed/percent)*Globals.driveExtTime));
+//        System.out.println("TotalTime: " + totalTime);
+//        System.out.println("RunTime: " + timeSinceInitialized() );
         if(useExternalTime) {
             return (timeSinceInitialized() > totalTime) ;
         }

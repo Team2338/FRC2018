@@ -21,7 +21,6 @@ public class RotateByAngle extends Command {
     }
 
     protected void initialize() {
-        double p = SmartDashboard.getNumber("Rotate P", 0);
         turnPID = new MiniPID(0.03, 0.3, 0.18);
         turnPID.setOutputLimits(0.8);
         turnPID.setMaxIOutput(0.1);

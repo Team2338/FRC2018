@@ -17,9 +17,9 @@ public class Globals {
 
         // Path Generation
         public static final double TIME_STEP = 0.02; // s
-        public static final double MAX_VELOCITY = 72; // m/s
-        public static final double MAX_ACCELERATION = 72; // m/s/s
-        public static final double MAX_JERK = 1000; // m/s/s/s
+        public static final double MAX_VELOCITY = 72; // in/s
+        public static final double MAX_ACCELERATION = 72; // in/s/s
+        public static final double MAX_JERK = 1000; // in/s/s/s
 
         // Path Following
         public static final double DRIVE_P = 0.01; // P: 1.0
@@ -68,7 +68,7 @@ public class Globals {
         public static final int ARM_HIT_CUBE_POSITION = 35000;
         public static final int ARM_TRAVEL_POSITION = 0;
         public static final int ARM_COLLECT_POSITION = -25700; // -45000
-        public static final int ARM_POT_ZERO_POSITION = 501; // C = 402; P = 501;
+        public static final int ARM_POT_ZERO_POSITION = 498; // C = 402; P = 498;
     }
 
     public static double driveExtTime = 0;

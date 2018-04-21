@@ -20,7 +20,6 @@ public class RotateToAngle extends Command {
     }
 
     protected void initialize() {
-        double p = SmartDashboard.getNumber("Rotate P", 0);
         turnPID = new MiniPID(0.03, 0.3, 0.18);
         turnPID.setOutputLimits(0.8);
         turnPID.setMaxIOutput(0.1);
@@ -48,7 +47,7 @@ public class RotateToAngle extends Command {
 //
 //        System.out.println(stuckCount);
 
-        isFinished = tolerableCount > 15;
+        isFinished = tolerableCount > 8;
 
         drivetrain.setLeft(-turn);
         drivetrain.setRight(turn);

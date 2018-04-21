@@ -69,8 +69,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Strategy", strategyChooser);
         SmartDashboard.putData("Start Position", startPositionChooser);
 
-        SmartDashboard.putNumber("Angle Error", 0);
-        SmartDashboard.putNumber("Rotate P", 0);
+//        SmartDashboard.putNumber("Angle Error", 0);
+//        SmartDashboard.putNumber("Rotate P", 0);
         SmartDashboard.putNumber("Cross Scale Delay (sec)", 0);
     }
 
@@ -80,10 +80,14 @@ public class Robot extends TimedRobot {
 
     public void disabledInit() {
         init();
+        SmartDashboard.putData("Switch Safe Double", autoSecondaryChooser);
+        SmartDashboard.putData("Strategy", strategyChooser);
+        SmartDashboard.putData("Start Position", startPositionChooser);
     }
 
     public void disabledPeriodic() {
         limelight.setLEDMode(Limelight.LEDMode.OFF);
+        limelight.setCAMMode(Limelight.CAMMode.DRIVER);
     }
 
     public void autonomousInit() {
@@ -151,7 +155,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         if (auto != null) auto.cancel();
         init();
-        limelight.setCAMMode(Limelight.CAMMode.VISION);
+//        limelight.setCAMMode(Limelight.CAMMode.VISION);
     }
 
     public void teleopPeriodic() {
@@ -220,7 +224,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Left Velocity (rps)", drivetrain.getLeftEncVelociy()/4096*10);
         SmartDashboard.putNumber("Right Velocity (rps)", drivetrain.getRightEncVelocity()/4096*10);
 
-        SmartDashboard.putNumber("Pressure Reading", arm.getRawPressure());
+//        SmartDashboard.putNumber("Pressure Reading", arm.getRawPressure());
         SmartDashboard.putNumber("Estimated Pressure", arm.getEstimatedPressure());
 //        SmartDashboard.putNumber("Distance (in)", (drivetrain.getLeftEncPosition()+drivetrain.getRightEncPosition())/2/4096*Globals.Drivetrain.WHEEL_DIAMETER_IN * Math.PI);
 
