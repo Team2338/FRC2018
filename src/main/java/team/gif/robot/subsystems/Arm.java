@@ -52,9 +52,9 @@ public class Arm extends Subsystem {
         dart.configReverseSoftLimitThreshold(Globals.Arm.ARM_LOWER_SOFT_LIMIT, 0);
 
         dart.enableCurrentLimit(true);
-        dart.configContinuousCurrentLimit(30, 0);
-        dart.configPeakCurrentLimit(50, 0);
-        dart.configPeakCurrentDuration(250, 0);
+        dart.configContinuousCurrentLimit(20, 0);
+        dart.configPeakCurrentLimit(45, 0);
+        dart.configPeakCurrentDuration(100, 0);
     }
 
     public void setCompressor(boolean on) {
@@ -102,7 +102,7 @@ public class Arm extends Subsystem {
     public void tareDartPosition() {
 //        dart.setSelectedSensorPosition(GIFMath.map(dartPot.getValue(), Globals.Arm.ARM_POT_ZERO_POSITION,
 //                Globals.Arm.ARM_POT_ZERO_POSITION + 2500, 0 , 450000), 0, 0);
-        dart.setSelectedSensorPosition((int) Math.round((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 142.1), 0, 0);
+        dart.setSelectedSensorPosition((int) Math.round((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 127.35), 0, 0);
     }
 
     public int getDartPotPosition() {
@@ -114,15 +114,23 @@ public class Arm extends Subsystem {
     }
 
     public int getRawPressure() {
-        return pressureSensor.getAverageValue();
+        return pressureSensor.getValue();
     }
 
     public double getEstimatedPressure() {
         return 250 * (pressureSensor.getAverageVoltage()/ RobotController.getVoltage5V()) - 25;
     }
 
+    public double getCurrent() {
+        return dart.getOutputCurrent();
+    }
+
     public boolean hasCube() {
         return !cubeSensor.get(); // Inverted on practice
+    }
+
+    public boolean movementFinished() {
+        return Math.abs(dart.getClosedLoopError(0)) < 500;
     }
 
     protected void initDefaultCommand() {

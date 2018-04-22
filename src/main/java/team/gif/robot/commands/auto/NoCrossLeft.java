@@ -33,42 +33,49 @@ public class NoCrossLeft extends CommandGroup {
         //
 
         if (gameData.charAt(1) == 'L') {  // Left Scale
-            // Since Scale is on Left and we're stating on Left, take the shot on the Scale regardless of mode
-            // Move to Scale, turn, and shoot
-            addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
-            addSequential(new FollowPathForward(LeftToLeftScale));
-            addParallel(new ArmLaunchShort());
-            addSequential(new WaitCommand(0.5));
-
-            // Go to either the switch or scale some more
-            if((autoSecondaryMode == Robot.AutoSecondary.SWITCH ||
-                autoSecondaryMode == Robot.AutoSecondary.DOUBLESWITCH) && gameData.charAt(0) == 'L') { // Scale/Switch mode - head toward the switch to pick up cube
-                //  collect the corner cube of the switch
-                addSequential(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
-                addSequential(new FollowPathForward(LeftScaleToLeftSwitch));
-                addSequential(new WaitCommand(0.25));
-                addSequential(new CollectUntilCollect());
-                addSequential(new ArmDumbCollect(), 0.25);
-                addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-                addSequential(new DrivetrainConstantPercent(-0.2, 0.5));
-                addSequential(new DrivetrainConstantPercent(0.2, 1));
-                addSequential(new ArmEject(0.5), 1);
-                addSequential(new DrivetrainConstantPercent(-0.2, 1));
-                // else {} // Switch is on Right, do nothing
+            if( autoSecondaryMode == Robot.AutoSecondary.TRIPLESCALE ) {
+                // Triple Scale Right ... just go do that
+                // since NO_CROSS was selected, set it to true so it only does right side
+                addSequential(new TripleScaleLeft(gameData, true));
             } else {
-                addSequential(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
-                addSequential(new FollowPathForward(LeftScaleToLeftSwitch));
-                addSequential(new WaitCommand(0.25));
-                addSequential(new CollectUntilCollect());
-                addSequential(new ArmDumbCollect(), 0.75);
+                // Since Scale is on Left and we're stating on Left, take the shot on the Scale regardless of mode
+                // Move to Scale, turn, and shoot
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
-                addSequential(new DrivetrainConstantPercent(-0.3, 1.5));
-                addSequential(new RotateByAngle(100));
-                addSequential(new DrivetrainConstantPercent(-0.2, 0.5));
-                addSequential(new WaitCommand(0.25));
-                addSequential(new ArmLaunchShort());
+                addSequential(new FollowPathForward(LeftToLeftScale));
+                addParallel(new ArmLaunchShort());
+                addSequential(new WaitCommand(0.5));
+
+                // Go to either the switch or scale some more
+                if ((autoSecondaryMode == Robot.AutoSecondary.SWITCH ||
+                        autoSecondaryMode == Robot.AutoSecondary.DOUBLESWITCH) && gameData.charAt(0) == 'L') { // Scale/Switch mode - head toward the switch to pick up cube
+                    //  collect the corner cube of the switch
+                    addSequential(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+                    addSequential(new FollowPathForward(LeftScaleToLeftSwitch));
+                    addSequential(new WaitCommand(0.25));
+                    addSequential(new CollectUntilCollect());
+                    addSequential(new ArmDumbCollect(), 0.25);
+                    addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+                    addSequential(new DrivetrainConstantPercent(-0.2, 0.5));
+                    addSequential(new DrivetrainConstantPercent(0.2, 1));
+                    addSequential(new ArmEject(0.5), 1);
+                    addSequential(new DrivetrainConstantPercent(-0.2, 1));
+                    // else {} // Switch is on Right, do nothing
+                } else {
+                    addSequential(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+                    addSequential(new FollowPathForward(LeftScaleToLeftSwitch));
+                    addSequential(new WaitCommand(0.25));
+                    addSequential(new CollectUntilCollect());
+                    addSequential(new ArmDumbCollect(), 0.75);
+                    addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
+                    addSequential(new DrivetrainConstantPercent(-0.3, 1.5));
+                    addSequential(new RotateByAngle(100));
+                    addSequential(new DrivetrainConstantPercent(-0.2, 0.5));
+                    addSequential(new WaitCommand(0.25));
+                    addSequential(new ArmLaunchShort());
+                }
             }
         } else { // Right scale so go to left switch
+            System.out.println("No Cross from Left: Scale is on Right so switching to SwitchLeft path");
             addSequential(new SwitchLeft(gameData));
         }
     }

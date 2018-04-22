@@ -8,9 +8,7 @@ import jaci.pathfinder.Trajectory;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 import team.gif.robot.commands.subsystem.arm.*;
-import team.gif.robot.commands.subsystem.drivetrain.DrivetrainConstantPercent;
-import team.gif.robot.commands.subsystem.drivetrain.FollowPathForward;
-import team.gif.robot.commands.subsystem.drivetrain.RotateByAngle;
+import team.gif.robot.commands.subsystem.drivetrain.*;
 
 import java.io.File;
 
@@ -38,48 +36,57 @@ public class ScaleSwitchLeft extends CommandGroup {
         //
 
         if (gameData.charAt(1) == 'L') {  // Left Scale
-
-            // Since Scale is on Left and we're stating on Left, take the shot on the Scale regardless of mode
-            // Move to Scale, turn, and shoot
-            addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
-            addSequential(new FollowPathForward(LeftToLeftScale));
-            addParallel(new ArmLaunchShort());
-            addSequential(new WaitCommand(0.5));
-
-            // Go to either the switch or the safe area
-            if( autoSecondaryMode == Robot.AutoSecondary.SWITCH ||
-                autoSecondaryMode == Robot.AutoSecondary.DOUBLESWITCH) { // Scale/Switch mode - head toward the switch to pick up cube
-                //  collect the corner cube of the switch
-                addSequential(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
-                addSequential(new FollowPathForward(LeftScaleToLeftSwitch));
-                addSequential(new WaitCommand(0.25));
-                addSequential(new CollectUntilCollect());
-                addSequential(new ArmDumbCollect(), 0.25);
-                addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-                addSequential(new DrivetrainConstantPercent(-0.2, 0.5));
-                if (gameData.charAt(0) == 'L') { // Switch is on Left, drop in the cube
-                    addSequential(new DrivetrainConstantPercent(0.2, 1));
-                    addSequential(new ArmEject(0.5), 1);
-                    addSequential(new DrivetrainConstantPercent(-0.2, 1));
-                }
-                // else {} // Switch is on Right, do nothing
-            } else if (autoSecondaryMode == Robot.AutoSecondary.SCALE) {
-                addSequential(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
-//                addSequential(new FollowPathForward(LeftScaleToLeftSwitch));
-                addSequential(new RotateByAngle(-85));
-                addSequential(new WaitCommand(0.25));
-                addSequential(new DrivetrainConstantPercent(0.4, 0.9));
-//
-                addSequential(new CollectUntilCollect());
-                addSequential(new ArmDumbCollect(), 0.75);
+            if( autoSecondaryMode == Robot.AutoSecondary.TRIPLESCALE) {
+                // Triple Scale Left ... just go do that
+                // if NO_CROSS were selected, it would not come into this function, so set to false
+                addSequential(new TripleScaleLeft(gameData, false));
+            }
+            else {
+                // Since Scale is on Left and we're stating on Left, take the shot on the Scale regardless of mode
+                // Move to Scale, turn, and shoot
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
-                addSequential(new DrivetrainConstantPercent(-0.3, 1.5));
-                addSequential(new RotateByAngle(85));
+                addSequential(new FollowPathForward(LeftToLeftScale));
+                addParallel(new ArmLaunchShort());
+                addSequential(new WaitCommand(0.5));
+
+                // Go to either the switch or the safe area
+                if (autoSecondaryMode == Robot.AutoSecondary.SWITCH ||
+                        autoSecondaryMode == Robot.AutoSecondary.DOUBLESWITCH) { // Scale/Switch mode - head toward the switch to pick up cube
+                    //  collect the corner cube of the switch
+                    addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+
+                    // rotate and pick up corner cube
+                    addSequential(new RotateToAngle(-140));
+//            addSequential(new DriveAtAngle(0.4, 137, 0.9, false ));
+                    addSequential(new DriveAtAngle(0.6, -140, 0.6, false ));
+                    addSequential(new CollectUntilCollect());
+                    addSequential(new RotateCube(0.65), 0.4);
+                    addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+                    addSequential(new DrivetrainConstantPercent(-0.2, 0.5));
+                    if (gameData.charAt(0) == 'L') { // Switch is on Left, drop in the cube
+                        addSequential(new DrivetrainConstantPercent(0.2, 1));
+                        addSequential(new ArmEject(0.5), 1);
+                        addSequential(new DrivetrainConstantPercent(-0.2, 1));
+                    }
+                    // else {} // Switch is on Right, do nothing
+                } else if (autoSecondaryMode == Robot.AutoSecondary.SCALE) {
+                    addSequential(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+//                addSequential(new FollowPathForward(LeftScaleToLeftSwitch));
+                    addSequential(new RotateByAngle(-85));
+                    addSequential(new WaitCommand(0.25));
+                    addSequential(new DrivetrainConstantPercent(0.4, 0.9));
+//
+                    addSequential(new CollectUntilCollect());
+                    addSequential(new ArmDumbCollect(), 0.75);
+                    addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
+                    addSequential(new DrivetrainConstantPercent(-0.3, 1.5));
+                    addSequential(new RotateByAngle(85));
 //                addSequential(new DrivetrainConstantPercent(-0.2, 0.5));
-                addSequential(new WaitCommand(0.25));
-                addSequential(new ArmLaunchShort());
-            } else if ( autoSecondaryMode == Robot.AutoSecondary.SAFE ) { // go to safe area
-                addSequential(new FollowPathForward(LeftScaleToSafeArea));
+                    addSequential(new WaitCommand(0.25));
+                    addSequential(new ArmLaunchShort());
+                } else if (autoSecondaryMode == Robot.AutoSecondary.SAFE) { // go to safe area
+                    addSequential(new FollowPathForward(LeftScaleToSafeArea));
+                }
             }
         } else { // Right scale
             if (autoSecondaryMode == Robot.AutoSecondary.SWITCH ||
@@ -113,6 +120,8 @@ public class ScaleSwitchLeft extends CommandGroup {
                 }
             } else if ( autoSecondaryMode == Robot.AutoSecondary.SAFE ) { // safe mode - don't go to scale and just do mobility in order to stay out of way of alliance partner.
                 addSequential(new FollowPathForward(tenfeet));
+            } else if (autoSecondaryMode == Robot.AutoSecondary.TRIPLESCALE){
+                addSequential(new TripleScaleLeft(gameData, false));
             }
         }
     }

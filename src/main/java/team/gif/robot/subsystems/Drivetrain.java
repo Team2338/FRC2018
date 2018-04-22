@@ -49,6 +49,7 @@ public class Drivetrain extends Subsystem {
 
         MotorLogger.addMotor(leftMaster);
         MotorLogger.addMotor(rightMaster);
+        pigeon.enterCalibrationMode(PigeonIMU.CalibrationMode.Unknown, 100);
     }
 
     public void curvatureDrive(double speed, double rotation, boolean isQuickTurn) {
@@ -132,6 +133,10 @@ public class Drivetrain extends Subsystem {
     public double getHeading() {
         getPigeonGeneralStatus();
         return getPigeonFusionStatus().heading;
+//        double[] xyz_dps = new double[3];
+//        pigeon.getRawGyro(xyz_dps);
+//        pigeon.getAccumGyro(xyz_dps);
+//        return xyz_dps[1];
     }
 
     public boolean checkSystem() {

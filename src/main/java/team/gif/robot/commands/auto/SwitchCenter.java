@@ -6,13 +6,8 @@ import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
-import team.gif.robot.commands.subsystem.arm.ArmDumbCollect;
-import team.gif.robot.commands.subsystem.arm.ArmEject;
-import team.gif.robot.commands.subsystem.arm.ArmSetPosition;
-import team.gif.robot.commands.subsystem.arm.CollectUntilCollect;
-import team.gif.robot.commands.subsystem.drivetrain.DrivetrainConstantPercent;
-import team.gif.robot.commands.subsystem.drivetrain.FollowPathForward;
-import team.gif.robot.commands.subsystem.drivetrain.RotateByAngle;
+import team.gif.robot.commands.subsystem.arm.*;
+import team.gif.robot.commands.subsystem.drivetrain.*;
 
 import java.io.File;
 
@@ -29,52 +24,107 @@ public class SwitchCenter extends CommandGroup{
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
             addSequential(new FollowPathForward(centertoleftswitch));
             addSequential(new ArmEject(0.75), 0.5);
-            addSequential(new DrivetrainConstantPercent(-0.3, 2.5));
 
-            // collect head cube from stack
-            addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
-            addSequential(new FollowPathForward(leftsideswitchwalltocenter));
-            addSequential(new WaitCommand(0.25));
-            addSequential(new CollectUntilCollect());
-            addSequential(new ArmDumbCollect(), 0.5);
-            addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-            addSequential(new DrivetrainConstantPercent(-0.3, 1.9));
-            addSequential(new WaitCommand(0.25));
 
             // place second cube if selected
             if (autoSecondaryMode == Robot.AutoSecondary.DOUBLESWITCH) {
+                addSequential(new DrivetrainConstantPercent(-0.3, 2.5));
+
+                // collect head cube from stack
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+                addSequential(new FollowPathForward(leftsideswitchwalltocenter));
+                addSequential(new WaitCommand(0.25));
+                addSequential(new CollectUntilCollect());
+                addSequential(new ArmDumbCollect(), 0.5);
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+                addSequential(new DrivetrainConstantPercent(-0.3, 1.9));
+                addSequential(new WaitCommand(0.25));
                 //                addSequential(new FollowPathForward(SecondaryRightSwitch));
                 addSequential(new RotateByAngle(40));
                 addSequential(new DrivetrainConstantPercent(0.5, 1.2));
                 addSequential(new ArmEject(0.5), 0.5);
                 addSequential(new WaitCommand(0.25));
                 addSequential(new DrivetrainConstantPercent(-0.3, 2.5));
+            } else if (autoSecondaryMode == Robot.AutoSecondary.TRIPLESWITCH) {
+                addSequential(new DriveAtAngle(-0.6, 0, 0.7, false));
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+                addSequential(new RotateToAngle(-45));
+                addSequential(new DriveAtAngle(0.6, -45, 0.3, false));
+                addSequential(new CollectUntilCollect());
+//                addSequential(new RotateCube(0.5), 0.5);
+                addSequential(new ArmDumbCollect(), 0.25);
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+                addSequential(new DriveAtAngle(-0.6, -45, 0.55, false));
+                addSequential(new RotateToAngle(0));
+                addSequential(new DriveAtAngle(0.6, 0, 0.7, false));
+                addSequential(new WaitCommand(0.25));
+                addSequential(new ArmEject(0.75), 0.25);
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+                addSequential(new DriveAtAngle(-0.6, 0, 0.625, false));
+                addSequential(new RotateToAngle(-45));
+                addSequential(new DriveAtAngle(0.6, -45, 0.25, false));
+                addSequential(new CollectUntilCollect());
+//                addSequential(new RotateCube(0.5), 0.5);
+                addSequential(new ArmDumbCollect(), 0.25);
+                addSequential(new DriveAtAngle(-0.6, -45, 0.5, false));
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+                addSequential(new RotateToAngle(0));
+                addSequential(new DriveAtAngle(0.6, 0, 0.625, false));
+                addSequential(new WaitCommand(0.25));
+                addSequential(new ArmEject(0.5), 0.25);
             }
 
         } else { // 'R'
             addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
             addSequential(new FollowPathForward(centertorightswitch));
             addSequential(new ArmEject(0.75), 0.5);
-            addSequential(new DrivetrainConstantPercent(-0.325, 2.0));
-
-            // collect head cube from stack
-            addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
-            addSequential(new FollowPathForward(rightsideswitchwalltocenter));
-            addSequential(new WaitCommand(0.25));
-            addSequential(new CollectUntilCollect());
-            addSequential(new ArmDumbCollect(), 0.5);
-            addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
-            addSequential(new DrivetrainConstantPercent(-0.3, 1.9));
-            addSequential(new WaitCommand(0.25));
 
             // place second cube if selected
             if (autoSecondaryMode == Robot.AutoSecondary.DOUBLESWITCH) {
+                addSequential(new DrivetrainConstantPercent(-0.325, 2.0));
+
+                // collect head cube from stack
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+                addSequential(new FollowPathForward(rightsideswitchwalltocenter));
+                addSequential(new WaitCommand(0.25));
+                addSequential(new CollectUntilCollect());
+                addSequential(new ArmDumbCollect(), 0.5);
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+                addSequential(new DrivetrainConstantPercent(-0.3, 1.9));
+                addSequential(new WaitCommand(0.25));
                 //                addSequential(new FollowPathForward(SecondaryRightSwitch));
                 addSequential(new RotateByAngle(-40));
                 addSequential(new DrivetrainConstantPercent(0.5, 1.2));
                 addSequential(new ArmEject(0.5), 0.5);
                 addSequential(new WaitCommand(0.25));
                 addSequential(new DrivetrainConstantPercent(-0.3, 2.5));
+            } else if (autoSecondaryMode == Robot.AutoSecondary.TRIPLESWITCH) {
+                addSequential(new DriveAtAngle(-0.6, 0, 0.75, false));
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+                addSequential(new RotateToAngle(45));
+                addSequential(new DriveAtAngle(0.6, 45, 0.3, false));
+                addSequential(new CollectUntilCollect());
+//                addSequential(new RotateCube(0.5), 0.5);
+                addSequential(new ArmDumbCollect(), 0.25);
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+                addSequential(new DriveAtAngle(-0.6, 45, 0.55, false));
+                addSequential(new RotateToAngle(0));
+                addSequential(new DriveAtAngle(0.6, 0, 0.7, false));
+                addSequential(new WaitCommand(0.25));
+                addSequential(new ArmEject(0.75), 0.25);
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
+                addSequential(new DriveAtAngle(-0.6, 0, 0.625, false));
+                addSequential(new RotateToAngle(45));
+                addSequential(new DriveAtAngle(0.6, 45, 0.25, false));
+                addSequential(new CollectUntilCollect());
+//                addSequential(new RotateCube(0.5), 0.5);
+                addSequential(new ArmDumbCollect(), 0.25);
+                addSequential(new DriveAtAngle(-0.6, 45, 0.5, false));
+                addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
+                addSequential(new RotateToAngle(0));
+                addSequential(new DriveAtAngle(0.6, 0, 0.625, false));
+                addSequential(new WaitCommand(0.25));
+                addSequential(new ArmEject(0.5), 0.25);
             }
 
         }

@@ -1,10 +1,11 @@
 package team.gif.robot.commands.subsystem.arm;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import team.gif.robot.Globals;
 import team.gif.robot.subsystems.Arm;
 
-public class ArmSetPosition extends InstantCommand {
+public class ArmSetPosition extends Command {
 
     private Arm arm = Arm.getInstance();
     private int position;
@@ -19,5 +20,10 @@ public class ArmSetPosition extends InstantCommand {
         if (arm.hasCube() && this.position < Globals.Arm.ARM_TRAVEL_POSITION) {
             arm.setDartPosition(Globals.Arm.ARM_TRAVEL_POSITION);
         }
+    }
+
+    @Override
+    protected boolean isFinished() {
+        return arm.movementFinished();
     }
 }

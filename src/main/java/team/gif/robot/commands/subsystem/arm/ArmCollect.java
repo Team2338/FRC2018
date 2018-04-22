@@ -23,7 +23,7 @@ public class ArmCollect extends Command {
             arm.setIntakePercent(0.5);
             if (arm.getDartEncoderPosition() < Globals.Arm.ARM_TRAVEL_POSITION - 300) {
                 arm.setDartPosition(Globals.Arm.ARM_TRAVEL_POSITION);
-                new VibrateControllers(0.5).start();
+                new VibrateControllers(0.75).start();
             }
         } else {
             arm.setIntakePercent(1.0);

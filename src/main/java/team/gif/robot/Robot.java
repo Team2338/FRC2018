@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
     }
 
     public enum AutoSecondary {
-        NOTHING, SWITCH, SAFE, DOUBLESWITCH, SCALE
+        NOTHING, SWITCH, SAFE, DOUBLESWITCH, SCALE, TRIPLESCALE, TRIPLESWITCH
     }
 
 
@@ -63,7 +63,9 @@ public class Robot extends TimedRobot {
         autoSecondaryChooser.addObject("Scale->Switch", AutoSecondary.SWITCH);
         autoSecondaryChooser.addObject("Scale->Safe", AutoSecondary.SAFE);
         autoSecondaryChooser.addObject("Switch->Double Cube", AutoSecondary.DOUBLESWITCH);
+        autoSecondaryChooser.addObject("Switch->Triple Cube", AutoSecondary.TRIPLESWITCH);
         autoSecondaryChooser.addObject("Scale->Scale", AutoSecondary.SCALE);
+        autoSecondaryChooser.addObject("Triple Scale!", AutoSecondary.TRIPLESCALE);
 
         SmartDashboard.putData("Switch Safe Double", autoSecondaryChooser);
         SmartDashboard.putData("Strategy", strategyChooser);
@@ -178,10 +180,6 @@ public class Robot extends TimedRobot {
             limelight.setLEDMode(Limelight.LEDMode.OFF);
         }
 
-        if (OI.getInstance().dpadDown.get()) {
-            arm.setPunchReturn(true);
-        }
-
 //        SmartDashboard.putNumber("Left Velocity (rps)", drivetrain.getLeftEncVelociy()*10/4096);
 //        SmartDashboard.putNumber("Right Velocity (rps)", drivetrain.getRightEncVelocity()*10/4096);
 //        SmartDashboard.putNumber("Left Output", drivetrain.getLeftMaster().getMotorOutputPercent());
@@ -229,6 +227,7 @@ public class Robot extends TimedRobot {
 //        SmartDashboard.putNumber("Distance (in)", (drivetrain.getLeftEncPosition()+drivetrain.getRightEncPosition())/2/4096*Globals.Drivetrain.WHEEL_DIAMETER_IN * Math.PI);
 
         SmartDashboard.putBoolean("Cube", arm.hasCube());
+        SmartDashboard.putNumber("Dart Current", arm.getCurrent());
 
 //        SmartDashboard.putBoolean("Cube Vision", Limelight.getInstance().hasValidTarget());
     }

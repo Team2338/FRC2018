@@ -101,9 +101,9 @@ public class OI {
 
 //        dA.whenPressed(new RotateByAngle(90));
 
-        dX.whenPressed(new GeneratePaths());
+//        dX.whenPressed(new GeneratePaths());
 //        dX.whileHeld(new DrivetrainConstantPercent(0.2, 12));
-        dY.whenPressed(new TripleScaleRight("LLL"));
+//        dY.whenPressed(new TripleScaleRight("RLR", true));
 //        dB.whileHeld(new DrivetrainConstantPercent(0.4, 12));
 
 //        SmartDashboard.putData(new GeneratePaths());
@@ -115,7 +115,7 @@ public class OI {
 //        dLB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SECOND_POSITION));
 //        dRB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
 //        dB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_HIT_CUBE_POSITION));
-//        dY.whenPressed(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
+        dY.whenPressed(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
 
         dLT.whenPressed(new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
         dLB.whenPressed(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
@@ -129,6 +129,11 @@ public class OI {
         aA.whileHeld(new ArmOpen());
         aB.whenPressed(new ArmLaunchShort());
         aY.whenPressed(new ArmLaunchLong());
+        dpadLeft.whileHeld(new RotateCube(0.5));
+        dpadRight.whileHeld(new RotateCube(-0.5));
+        dpadDown.whenPressed(new TareDartPosition());
+
+
 
         // Ramp Stuff
         menuButons.whenPressed(new RampsDeploy());
