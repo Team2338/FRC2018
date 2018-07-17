@@ -102,7 +102,8 @@ public class Arm extends Subsystem {
     public void tareDartPosition() {
 //        dart.setSelectedSensorPosition(GIFMath.map(dartPot.getValue(), Globals.Arm.ARM_POT_ZERO_POSITION,
 //                Globals.Arm.ARM_POT_ZERO_POSITION + 2500, 0 , 450000), 0, 0);
-        dart.setSelectedSensorPosition((int) Math.round((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 127.35), 0, 0);
+        // Ratio is 127.35 on practice robot
+        dart.setSelectedSensorPosition((int) Math.round((dartPot.getValue() - Globals.Arm.ARM_POT_ZERO_POSITION) * 142.08), 0, 0);
     }
 
     public int getDartPotPosition() {
@@ -126,7 +127,7 @@ public class Arm extends Subsystem {
     }
 
     public boolean hasCube() {
-        return !cubeSensor.get(); // Inverted on practice
+        return cubeSensor.get(); // Inverted on practice
     }
 
     public boolean movementFinished() {

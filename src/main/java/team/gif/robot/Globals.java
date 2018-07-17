@@ -62,7 +62,7 @@ public class Globals {
         public static final int ARM_OPEN_SOFT_LIMIT = 238000;
 
         public static final int ARM_UPPER_SOFT_LIMIT  = 432500;
-        public static final int ARM_START_POSITION    = 400000;
+        public static final int ARM_START_POSITION    = 421000;
         public static final int ARM_SWITCH_POSITION   = 220000;
         public static final int ARM_SECOND_POSITION   = 110000;
         public static final int ARM_HIT_CUBE_POSITION =  35000;
@@ -70,7 +70,7 @@ public class Globals {
         public static final int ARM_COLLECT_POSITION  = -25700; // -45000
         public static final int ARM_LOWER_SOFT_LIMIT  = -25700; // -45000
 
-        public static final int ARM_POT_ZERO_POSITION = 541; // C = 402; P = 505;
+        public static final int ARM_POT_ZERO_POSITION = 413; // C = 413; P = 541;
     }
 
     public static double driveExtTime = 0;

@@ -156,6 +156,7 @@ public class Robot extends TimedRobot {
 
     public void teleopInit() {
         if (auto != null) auto.cancel();
+        arm.setCompressor(true);
         init();
 //        limelight.setCAMMode(Limelight.CAMMode.VISION);
     }

@@ -41,7 +41,7 @@ public class TripleScaleRight extends CommandGroup {
 
                 // head for the scale and shoot
                 addSequential(new FollowPathForward(RightToLeftScale));
-                addParallel(new ArmLaunchLong());
+                addParallel(new ArmLaunchShort());
                 addSequential(new WaitCommand(0.2));
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
 
@@ -50,13 +50,14 @@ public class TripleScaleRight extends CommandGroup {
                 addSequential(new DriveAtAngle(0.4, -142, 0.9, false));
                 addSequential(new CollectUntilCollect());
                 addSequential(new RotateCube(0.5), 0.5);
+                addParallel(new ArmDumbCollect(), 0.2);
 //            addSequential(new ArmDumbCollect(), 0.25);
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION)); // Confirmed Working
 
                 // drive backwards, rotate, and shoot
                 addSequential(new DriveAtAngle(-0.4, -142, 1.2, false));
                 addSequential(new RotateToAngle(-60));
-                addSequential(new WaitCommand(0.15));
+                addSequential(new WaitCommand(0.2));
                 addParallel(new ArmLaunchShort());
                 addSequential(new WaitCommand(0.2));
 
@@ -92,12 +93,13 @@ public class TripleScaleRight extends CommandGroup {
             addSequential(new DriveAtAngle(0.6, 140, 0.6, false ));
             addSequential(new CollectUntilCollect());
             addSequential(new RotateCube(-0.65), 0.4);
+            addParallel(new ArmDumbCollect(), 0.2);
 //            addSequential(new ArmDumbCollect(), 0.25);
             addParallel(new ArmSetPosition(Globals.Arm.ARM_START_POSITION)); // Confirmed Working
 //            addSequential(new DriveAtAngle(-0.4, 137 , 1.2, false));
 
             // drive backwards, rotate, and shoot
-            addSequential(new DriveAtAngle(-0.6, 140 , 0.65, false));
+            addSequential(new DriveAtAngle(-0.6, 140 , 0.7, false)); // 0.65 seconds
             addSequential(new RotateToAngle(60));
             addSequential(new WaitCommand(0.15));
             addParallel(new ArmLaunchShort());

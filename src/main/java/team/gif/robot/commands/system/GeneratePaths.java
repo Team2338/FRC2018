@@ -73,9 +73,9 @@ public class GeneratePaths extends InstantCommand {
             new Waypoint(0, 0, 0),
             new Waypoint(174.375, 0, 0),
             new Waypoint(213.75, -39.375, Pathfinder.d2r(-90)),
-            new Waypoint(213.75, -244 - 6, Pathfinder.d2r(-90)),
-            new Waypoint(213.75 + 18, -244 - 18 - 6, 0),
-            new Waypoint(213.75 + 18 + 22, -244 - 18 + 7 - 6, Pathfinder.d2r(45)),
+            new Waypoint(213.75, -244 - 6 + 3, Pathfinder.d2r(-90)),
+            new Waypoint(213.75 + 18, -244 - 18 - 6 + 3 , 0),
+            new Waypoint(213.75 + 18 + 22, -244 - 18 + 7 - 6 + 3, Pathfinder.d2r(45 + 3)),
 //            new Waypoint(255 - 14, -242 - 12, Pathfinder.d2r(45))
     };
 
@@ -90,9 +90,9 @@ public class GeneratePaths extends InstantCommand {
             new Waypoint(0, 0, 0),
             new Waypoint(174.375, 0, 0),
             new Waypoint(213.75, 39.375, Pathfinder.d2r(90)),
-            new Waypoint(213.75, 244 + 6, Pathfinder.d2r(90)),
-            new Waypoint(213.75 + 18, 244 + 18 + 6, 0),
-            new Waypoint(213.75 + 18 + 22, 244 + 18 - 7 + 6, Pathfinder.d2r(-45)),
+            new Waypoint(213.75, 244 + 6 + 3, Pathfinder.d2r(90)),
+            new Waypoint(213.75 + 18, 244 + 18 + 6 + 3, 0),
+            new Waypoint(213.75 + 18 + 22, 244 + 18 - 7 + 6 + 3, Pathfinder.d2r(-45 - 3)),
     };
 
 // SWITCH + SCALE PATHS

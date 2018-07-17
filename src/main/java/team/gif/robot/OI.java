@@ -101,12 +101,12 @@ public class OI {
 
 //        dA.whenPressed(new RotateByAngle(90));
 
-//        dX.whenPressed(new GeneratePaths());
+        dX.whenPressed(new GeneratePaths());
 //        dX.whileHeld(new DrivetrainConstantPercent(0.2, 12));
 //        dY.whenPressed(new TripleScaleRight("RLR", true));
 //        dB.whileHeld(new DrivetrainConstantPercent(0.4, 12));
 
-//        SmartDashboard.putData(new GeneratePaths());
+        SmartDashboard.putData(new GeneratePaths());
 //        SmartDashboard.putData(new CharacterizeDrivetrain());
 //        SmartDashboard.putData(new DrivetrainRampVoltage(8));
 
@@ -133,7 +133,7 @@ public class OI {
         dpadRight.whileHeld(new RotateCube(-0.5));
         dpadDown.whenPressed(new TareDartPosition());
 
-
+        SmartDashboard.putData("Start Config", new ArmSetPosition(Globals.Arm.ARM_START_POSITION));
 
         // Ramp Stuff
         menuButons.whenPressed(new RampsDeploy());

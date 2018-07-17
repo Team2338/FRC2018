@@ -46,7 +46,7 @@ public class SwitchCenter extends CommandGroup{
                 addSequential(new WaitCommand(0.25));
                 addSequential(new DrivetrainConstantPercent(-0.3, 2.5));
             } else if (autoSecondaryMode == Robot.AutoSecondary.TRIPLESWITCH) {
-                addSequential(new DriveAtAngle(-0.6, 0, 0.7, false));
+                addSequential(new DriveAtAngle(-0.6, 0, 0.75, false));
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
                 addSequential(new RotateToAngle(-45));
                 addSequential(new DriveAtAngle(0.6, -45, 0.3, false));
@@ -56,7 +56,7 @@ public class SwitchCenter extends CommandGroup{
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
                 addSequential(new DriveAtAngle(-0.6, -45, 0.55, false));
                 addSequential(new RotateToAngle(0));
-                addSequential(new DriveAtAngle(0.6, 0, 0.7, false));
+                addSequential(new DriveAtAngle(0.6, 0, 0.78, false));
                 addSequential(new WaitCommand(0.25));
                 addSequential(new ArmEject(0.75), 0.25);
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
@@ -109,7 +109,7 @@ public class SwitchCenter extends CommandGroup{
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_SWITCH_POSITION));
                 addSequential(new DriveAtAngle(-0.6, 45, 0.55, false));
                 addSequential(new RotateToAngle(0));
-                addSequential(new DriveAtAngle(0.6, 0, 0.7, false));
+                addSequential(new DriveAtAngle(0.6, 0, 0.78, false));
                 addSequential(new WaitCommand(0.25));
                 addSequential(new ArmEject(0.75), 0.25);
                 addParallel(new ArmSetPosition(Globals.Arm.ARM_COLLECT_POSITION));
@@ -131,6 +131,6 @@ public class SwitchCenter extends CommandGroup{
     }
 
     protected void end() {
-        System.out.println("This auto took " + timeSinceInitialized() + " seconds");
+        System.out.println("This auto took " + timeSinceInitialized() + " seconds.");
     }
 }
